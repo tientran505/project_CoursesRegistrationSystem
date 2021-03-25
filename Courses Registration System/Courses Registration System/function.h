@@ -1,0 +1,27 @@
+#ifndef _FUNCTION_H_
+#define _FUNCTION_H_
+
+#include <iostream>
+#include <fstream>
+#include <string>
+using namespace std;
+
+struct DATE {
+	int date, month, year;
+};
+
+struct Student {
+	int No;
+	int studentID;
+	char* firstName;
+	char* lastName;
+	char* gender;
+	DATE dob;
+};
+
+struct Node {
+	Student studentInfo;
+	Node* pNext;
+};
+
+#endif
