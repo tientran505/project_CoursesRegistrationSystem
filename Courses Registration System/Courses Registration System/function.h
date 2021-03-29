@@ -4,6 +4,8 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <ctime>
+
 using namespace std;
 
 struct DATE {
@@ -23,5 +25,7 @@ struct Node {
 	Student studentInfo;
 	Node* pNext;
 };
+
+void currentDateTime();
 
 #endif
