@@ -8,7 +8,7 @@ void currentDateTime() {
 	tm* ltm = localtime(&now);
 
 	cout << "Year: " << 1900 + ltm->tm_year << endl;
-	cout << "Month: " << ltm->tm_mon << endl;
+	cout << "Month: " << 1 + ltm->tm_mon << endl;
 	cout << "Day: " << ltm->tm_mday << endl;
 	cout << "Time: " << ltm->tm_hour << ":";
 	cout << ltm->tm_min << ":";

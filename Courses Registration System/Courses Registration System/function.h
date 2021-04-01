@@ -2,28 +2,33 @@
 #define _FUNCTION_H_
 
 #include <iostream>
+#include <fcntl.h>
 #include <fstream>
+#include <io.h>
+#include <codecvt>
 #include <string>
+#include <locale>
 #include <ctime>
 
 using namespace std;
 
-struct DATE {
-	int date, month, year;
+struct dateOfBirth {
+	int day, month, year;
 };
 
 struct Student {
 	int No;
 	int studentID;
-	char* firstName;
-	char* lastName;
-	char* gender;
-	DATE dob;
+	wstring firstName;
+	wstring lastName;
+	wstring gender;
+	dateOfBirth dob;
+	int socialID;
 };
 
-struct Node {
-	Student studentInfo;
-	Node* pNext;
+struct StudentList {
+	Student stu;
+	StudentList* pNext;
 };
 
 void currentDateTime();
