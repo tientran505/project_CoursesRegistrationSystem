@@ -5,7 +5,7 @@
 using namespace std;
 
 struct Class {
-	string Name_of_Subject; //ten mon hoc
+	wstring Name_of_Subject; //ten mon hoc
 	string ID_of_subject; //ma mon hoc
 	int credit; // so tin chi
 	string Name_of_Teacher;
@@ -26,8 +26,8 @@ struct Date {
 struct NodeStudent {
 	int Number_In_Class; //so thu tu trong lop
 	unsigned int ID;
-	string Firstname;
-	string Lastname;
+	wstring Firstname;
+	wstring Lastname;
 	string Class_of_student; // lop cua sv
 	string Gender; //gioi tinh
 	unsigned int Social_ID;
