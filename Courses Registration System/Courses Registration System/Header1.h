@@ -28,8 +28,8 @@ struct _Semester {
 
 // hoc sinh nam 1 nam 2 nam 3 nam 4
 Struct _Year{
-	_Course Course_Name;      
-	_Year * pNext,* pPrevious;
+	_Course Course_Name;
+	_Year* pNext,* pPrevious;
 };
 
 //dung cho ca staff va sv
@@ -51,7 +51,7 @@ struct session {
 	string Day; //Mon Tue Wedn ...
 	string hour;
 };
-struct _session{
+struct _session {
 	session data;
 	_session* pNext, * pPrevious;
 }
@@ -107,8 +107,8 @@ struct Other_Mark {
 
 struct Teacher_ScoreBoard {
 	int number;
-	Student student ; 
-	student_Scoreboard* student_score ; 
+	Student student;
+	student_Scoreboard* student_score;
 };
 
 
