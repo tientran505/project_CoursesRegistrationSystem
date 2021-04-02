@@ -2,8 +2,8 @@
 #define _STUDENT_H_
 #include "function.h"
 
-void loadStudentList(string path, StudentList*& head);
-void displayStudentList(string path, StudentList* head);
-void deleteStudentList(StudentList*& head);
+void loadStudentList(string path, _Student*& head);
+void displayStudentList(string path, _Student* head);
+void deleteStudentList(_Student*& head);
 
 #endif

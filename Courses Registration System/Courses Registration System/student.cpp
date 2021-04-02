@@ -1,6 +1,19 @@
  #include "function.h"
 
-void loadStudentList(string path, StudentList*& head) {
+wstring stringToWString(string& str) {
+	wstring tmp(str.length(), L' ');
+	copy(str.begin(), str.end(), tmp.begin());
+	return tmp;
+}
+
+string WStringToString(wstring& s)
+{
+	string temp(s.length(), ' ');
+	copy(s.begin(), s.end(), temp.begin());
+	return temp;
+}
+string a = ".csv";
+void loadStudentList(string path, _Student*& head) {
 	head = nullptr;
 	wifstream fileIn;
 	fileIn.open(path, ios_base::in);
@@ -13,32 +26,34 @@ void loadStudentList(string path, StudentList*& head) {
 
 	fileIn.imbue(std::locale(std::locale::empty(), new std::codecvt_utf8<wchar_t, 0x10ffff, std::generate_header>));
 	wchar_t a = ',', b = '/';
-	StudentList* pCur = head;
+	_Student* pCur = head;
+	path.erase(path.end() - 4, path.end());
 	while (!fileIn.eof()) {
 		if (head == nullptr) {
-			head = new StudentList;
+			head = new _Student;
 			pCur = head;
 		}
 		else {
-			pCur->pNext = new StudentList;
+			pCur->pNext = new _Student;
 			pCur = pCur->pNext;
 		}
-		fileIn >> pCur->stu.No >> a;
-		fileIn >> pCur->stu.studentID >> a;
-		getline(fileIn, pCur->stu.firstName, a);
-		getline(fileIn, pCur->stu.lastName, a);
-		getline(fileIn, pCur->stu.gender, a);
-		fileIn >> pCur->stu.dob.day >> b;
-		fileIn >> pCur->stu.dob.month >> b;
-		fileIn >> pCur->stu.dob.year >> a;
-		fileIn >> pCur->stu.socialID;
+		fileIn >> pCur->data.Number_In_Class >> a;
+		fileIn >> pCur->data.ID_Student >> a;
+		getline(fileIn, pCur->data.firstName, a);
+		getline(fileIn, pCur->data.lastName, a);
+		getline(fileIn, pCur->data.gender, a);
+		fileIn >> pCur->data.Date_Of_Birth.day >> b;
+		fileIn >> pCur->data.Date_Of_Birth.month >> b;
+		fileIn >> pCur->data.Date_Of_Birth.year >> a;
+		fileIn >> pCur->data.Social_ID;
+		pCur->data.class_Of_Student = path;
 		pCur->pNext = nullptr;
 	}
 
 	fileIn.close();
 }
 
-void displayStudentList(string path, StudentList* head) {
+void displayStudentList(string path, _Student* head) {
 	wofstream fileOut;
 	fileOut.open(path, ios_base::out);
 	fileOut.imbue(std::locale(std::locale::empty(), new std::codecvt_utf8<wchar_t, 0x10ffff, std::generate_header>));
@@ -48,24 +63,26 @@ void displayStudentList(string path, StudentList* head) {
 		fileOut.close();
 		return;
 	}
-
+	wstring strTmp;
 	while (head->pNext != nullptr) {
-		fileOut << head->stu.No << L",";
-		fileOut << head->stu.studentID << L",";
-		fileOut << head->stu.firstName << L",";
-		fileOut << head->stu.lastName << L",";
-		fileOut << head->stu.gender << L",";
-		fileOut << head->stu.dob.day << L"/" << head->stu.dob.month << L"/" << head->stu.dob.year << L",";
-		fileOut << head->stu.socialID << endl;
+		fileOut << head->data.Number_In_Class << ",";
+		fileOut << head->data.ID_Student << ",";
+		fileOut << head->data.firstName << ",";
+		fileOut << head->data.lastName << ",";
+		fileOut << head->data.gender << ",";
+		fileOut << head->data.Date_Of_Birth.day << "/" << head->data.Date_Of_Birth.month << "/" << head->data.Date_Of_Birth.year << ",";
+		fileOut << head->data.Social_ID << ",";
+		wstring tmp = stringToWString(head->data.class_Of_Student);
+		fileOut << tmp << endl;
 		head = head->pNext;
 	}
 
 	fileOut.close();
 }
 
-void deleteStudentList(StudentList*& head) {
+void deleteStudentList(_Student*& head) {
 	if (head == nullptr) return;
-	StudentList* cur = head;
+	_Student* cur = head;
 	while (head != nullptr) {
 		head = head->pNext;
 		delete cur;
