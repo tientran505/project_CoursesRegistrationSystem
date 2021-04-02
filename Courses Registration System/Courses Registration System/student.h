@@ -44,4 +44,5 @@ struct account {
 	string id;
 	string password;
 };
+void ReadStudent_CSV(const char* path, _NodeStudent*& students);
 #endif // !FUNCTION_H_
