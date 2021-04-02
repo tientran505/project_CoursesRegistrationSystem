@@ -22,12 +22,12 @@ struct _Semester {
 	int number;           // 1 2 3; bieu dien cho ki
 	Date Start_Day;
 	Date End_Day;
-	_Year* year;
+	_Year * year;
 };
 
 
 // hoc sinh nam 1 nam 2 nam 3 nam 4
-Struct _Year{
+struct _Year{
 	_Course Course_Name;
 	_Year* pNext,* pPrevious;
 };
@@ -54,8 +54,7 @@ struct session {
 struct _session {
 	session data;
 	_session* pNext, * pPrevious;
-}
-
+};
 
 struct GPA {
 	double GPA_semester;
