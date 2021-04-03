@@ -9,20 +9,19 @@ struct Date {
 	int day, month, year;
 };
 
-
 //struct cho nam hoc vd: nam 2019, 2020
 struct _Schoolyear {
 	_Semester data;
-	_Schoolyear* pNext, * pPrecious; //di tiep hoac lui lai 1 nam
+	_Schoolyear* pNext;
 };
 
 
 //hoc ki
-struct _Semester {        // 1 2 3; bieu dien cho ki
+struct _Semester {       
 	Date Start_Day;
 	Date End_Day;
 	_Year data;
-	_Semester *pNext, *pPrevious;
+	_Semester *pNext;
 
 };
 
@@ -30,20 +29,20 @@ struct _Semester {        // 1 2 3; bieu dien cho ki
 // hoc sinh nam 1 nam 2 nam 3 nam 4
 struct _Year{
 	_Course Course_Name;
-	_Year* pNext,* pPrevious;
+	_Year* pNext;
 };
 
-//dung cho ca staff va sv
-struct _Course {
-	bool regist;// 0 khong dang ki, 1// da dang ki -> staff
-	wstring Course_ID;    // staff +sv
-	wstring Teacher_Name;  //staff+sv
-	int Credits;   //staff+sv
-	_session Time_of_Session;   //staff+sv
 
-	int Max_Student_in_Class;   //staff 
-	Teacher_ScoreBoard NameCourse_ScoreBoard; // cai nay bao gom student_scoreborad // staff
-	_Course* pNext, * pPrevious; //qua lai cac mon khac nhau
+struct _Course {
+	bool regist;// 0 khong dang ki, 1// da dang ki 
+	string Course_ID;    
+	wstring Teacher_Name; 
+	int Credits;   
+	_session Time_of_Session;   
+
+	int Max_Student_in_Class;   
+	Teacher_ScoreBoard NameCourse_ScoreBoard; // cai nay bao gom student_scoreborad 
+	_Course* pNext; //qua cac mon khac nhau
 };
 
 
@@ -51,7 +50,7 @@ struct _Course {
 struct _session {
 	string Day; //Mon Tue Wedn ...
 	string hour;
-	_session* pNext, * pPrevious;
+	_session* pNext;
 };
 
 struct GPA {
@@ -74,16 +73,15 @@ struct Student {
 
 struct Class {
 	int num; //so thu tu sv trong lop
-	_Student* pNext, *pPrevious;
+	_Student* pNext;
 };
-//tui lam ho cai nay de lo thay muon co nhieu lop :)) co the khong sai
 struct _Class {
 	Class data;
-	_Class* pNext, * pPrevious;
+	_Class* pNext;
 };
 struct _Student {
 	Student data;
-	_Student* pNext, * pPrevious;
+	_Student* pNext;
 };
 struct student_Scoreboard {
 	double total_Mark;
@@ -96,11 +94,11 @@ struct student_Scoreboard {
 
 struct Other_Mark {
 	double data;
-	Other_Mark* pNext, * pPrevious;
+	Other_Mark* pNext;
 };
 struct _Student_Scoreboard {
 	student_Scoreboard student;
-	_Student_Scoreboard* pNext, * pPrevious;
+	_Student_Scoreboard* pNext;
 };
 
 struct Teacher_ScoreBoard {
