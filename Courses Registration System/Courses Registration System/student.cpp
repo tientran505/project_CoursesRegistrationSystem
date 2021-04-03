@@ -12,7 +12,7 @@ string WStringToString(wstring& s)
 	copy(s.begin(), s.end(), temp.begin());
 	return temp;
 }
-string a = ".csv";
+
 void loadStudentList(string path, _Student*& head) {
 	head = nullptr;
 	wifstream fileIn;
@@ -88,4 +88,51 @@ void deleteStudentList(_Student*& head) {
 		delete cur;
 		cur = head;
 	}
+}
+
+void convertAccountOfStudent(string path, _Student* head) {
+	ofstream fileOut;
+	fileOut.open(path, ios_base::out);
+	if (!fileOut.is_open()) {
+		cout << "Can't creat file" << endl;
+		fileOut.close();
+		return;
+	}
+
+	_Student* pCur = head;
+	while (pCur->pNext != nullptr) {
+		pCur->data.student_Account.ID = to_string(pCur->data.ID_Student);
+		string dayTmp = to_string(pCur->data.Date_Of_Birth.day);
+		string monthTmp = to_string(pCur->data.Date_Of_Birth.month);
+		string yearTmp = to_string(pCur->data.Date_Of_Birth.year);
+		if (pCur->data.Date_Of_Birth.day < 10) {
+			dayTmp = "0" + to_string(pCur->data.Date_Of_Birth.day);
+		}
+		if (pCur->data.Date_Of_Birth.month < 10) {
+			monthTmp = "0" + to_string(pCur->data.Date_Of_Birth.month);
+		}
+		pCur->data.student_Account.password = dayTmp + monthTmp + yearTmp;
+		fileOut << pCur->data.student_Account.ID << ",";
+		fileOut << pCur->data.student_Account.password << endl;
+		pCur = pCur->pNext;
+	}
+
+	fileOut.close();
+}
+
+void logInSystem_Student(_Student* head) {
+	string userNameTmp, passWordTmp;
+	cout << "Username: ";
+	cin >> userNameTmp;
+	cout << "Password: ";
+	cin >> passWordTmp;
+	_Student* pCur = head;
+	while (pCur->pNext != nullptr) {
+		if (userNameTmp == pCur->data.student_Account.ID && passWordTmp == pCur->data.student_Account.password) {
+			cout << "Login successfully" << endl;
+			return;
+		}
+		pCur = pCur->pNext;
+	}
+	cout << "Invalid login, please try again" << endl;
 }

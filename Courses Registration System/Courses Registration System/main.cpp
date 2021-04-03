@@ -16,6 +16,11 @@ int main() {
 	cout << "Name the file of List: ";
 	cin >> s;
 	displayStudentList(s + ".csv", head);
+	string acnt;
+	cout << "Pls name account file name of student: ";
+	cin >> acnt;
+	convertAccountOfStudent(acnt + ".txt", head);
+	logInSystem_Student(head);
 	deleteStudentList(head);
 	return 0;
 }

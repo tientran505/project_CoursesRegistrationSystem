@@ -12,19 +12,6 @@
 
 using namespace std;
 
-//struct Account;
-//struct Date;
-//struct Time;
-//struct Student_Schedule;
-//struct Course;
-//struct Student_ScoreBoard;
-//struct _Student_ScoreBoard;
-//struct Subjects;
-//struct _Subjects;
-//struct Student;
-//struct _Student;
-//struct Account;
-
 struct Date {
 	int day;
 	int month;
