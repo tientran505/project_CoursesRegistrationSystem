@@ -18,11 +18,12 @@ struct _Schoolyear {
 
 
 //hoc ki
-struct _Semester {
-	int number;           // 1 2 3; bieu dien cho ki
+struct _Semester {        // 1 2 3; bieu dien cho ki
 	Date Start_Day;
 	Date End_Day;
-	_Year * year;
+	_Year data;
+	_Semester *pNext, *pPrevious;
+
 };
 
 
@@ -34,7 +35,7 @@ struct _Year{
 
 //dung cho ca staff va sv
 struct _Course {
-	int regist;// 0 khong dang ki, 1// da dang ki -> staff
+	bool regist;// 0 khong dang ki, 1// da dang ki -> staff
 	wstring Course_ID;    // staff +sv
 	wstring Teacher_Name;  //staff+sv
 	int Credits;   //staff+sv
@@ -47,18 +48,15 @@ struct _Course {
 
 
 //thoi gian hoc
-struct session {
+struct _session {
 	string Day; //Mon Tue Wedn ...
 	string hour;
-};
-struct _session {
-	session data;
 	_session* pNext, * pPrevious;
 };
 
 struct GPA {
 	double GPA_semester;
-	double GPA_ovaral;
+	double GPA_overall;
 };
 
 struct Student {
@@ -69,21 +67,19 @@ struct Student {
 	unsigned int social_ID;
 	Class Name_Of_Class;
 	Date dob;
-	string email_Student;
-	string email;
-	unsigned int phone_Number;
-	student_Scoreboard student;
+	_Course* Name_Of_Course; //truy cap vo teacher-scoreboard -> studentscoreboard de lay diem thanh phan
 	//dung cho class:  lay bang diem cua lop, lay diem cuoi ki cua tat ca cac course trong semester
 	GPA gpa; // cai nay thay doi theo hoc ki luon nen khong can thiet lap nam hoc, hoc ki, hoc sinh nam may;
 };
 
-
-
-
 struct Class {
-	int num;
-	_Student* student;
-
+	int num; //so thu tu sv trong lop
+	_Student* pNext, *pPrevious;
+};
+//tui lam ho cai nay de lo thay muon co nhieu lop :)) co the khong sai
+struct _Class {
+	Class data;
+	_Class* pNext, * pPrevious;
 };
 struct _Student {
 	Student data;
@@ -96,20 +92,22 @@ struct student_Scoreboard {
 	Other_Mark other_Mark;
 	double gpa;
 	string grade; // C->A+
-
 };
+
 struct Other_Mark {
 	double data;
 	Other_Mark* pNext, * pPrevious;
 };
-
+struct _Student_Scoreboard {
+	student_Scoreboard student;
+	_Student_Scoreboard* pNext, * pPrevious;
+};
 
 struct Teacher_ScoreBoard {
 	int number;
 	Student student;
-	student_Scoreboard* student_score;
+	_Student_Scoreboard* student_score;
 };
-
 
 struct account {
 	string id;
