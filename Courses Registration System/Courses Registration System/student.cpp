@@ -1,12 +1,12 @@
  #include "function.h"
 
-wstring stringToWString(string& str) {
+wstring stringToWString(string str) {
 	wstring tmp(str.length(), L' ');
 	copy(str.begin(), str.end(), tmp.begin());
 	return tmp;
 }
 
-string WStringToString(wstring& s)
+string WStringToString(wstring s)
 {
 	string temp(s.length(), ' ');
 	copy(s.begin(), s.end(), temp.begin());
@@ -127,9 +127,20 @@ void logInSystem_Student(_Student* head) {
 	cout << "Password: ";
 	cin >> passWordTmp;
 	_Student* pCur = head;
+
+
+
 	while (pCur->pNext != nullptr) {
 		if (userNameTmp == pCur->data.student_Account.ID && passWordTmp == pCur->data.student_Account.password) {
-			cout << "Login successfully" << endl;
+			cout << "-------------------------------\n"<< "Login successfully" << endl;
+			cout << "Information of student" << endl;
+			_setmode(_fileno(stdout), _O_U8TEXT);
+			wcout << "Name: " << pCur->data.firstName << L" " << pCur->data.lastName << endl;
+			_setmode(_fileno(stdout), _O_TEXT);
+			cout << "Student ID: " << pCur->data.ID_Student << endl;
+			cout << "Gender: " << WStringToString(pCur->data.gender) << endl;
+			cout << "Date of Birth: " << pCur->data.Date_Of_Birth.day << "/" << pCur->data.Date_Of_Birth.month << "/" << pCur->data.Date_Of_Birth.year << endl;
+			cout << "Class: " << pCur->data.class_Of_Student << endl;
 			return;
 		}
 		pCur = pCur->pNext;
