@@ -1,45 +1,3 @@
-<<<<<<< HEAD
-#include "student.h"
-#include "function.h"
-void ReadStudent_CSV(const char* path, _NodeStudent*& students)
-{
-	students = nullptr;
-	int line = 0;
-	ifstream fin(path);
-	if (fin.bad())
-	{
-		cout << "File not found";
-		exit(0);
-	}
-	
-	_NodeStudent* stuCur = nullptr;
-	char a = ',',b = '/';
-	while (!fin.eof())
-	{
-		if (students == nullptr)
-		{
-			_NodeStudent* students = new _NodeStudent;
-			stuCur = students;
-		}
-
-		else {
-			stuCur->pNext = new _NodeStudent;
-			stuCur = stuCur->pNext;
-		}
-
-		fin >> stuCur->data.Number_In_Class >> a; 
-		fin >> stuCur->data.ID >> a;
-		getline(fin, stuCur->data.Firstname, ',');
-		getline(fin, stuCur->data.Lastname, ',');
-		getline(fin, stuCur->data.Gender, ',');
-		fin >> stuCur->data.Date_Of_Birth.day >> b;
-		fin >> stuCur->data.Date_Of_Birth.month >> b;
-		fin >> stuCur->data.Date_Of_Birth.year;
-		stuCur->pNext = nullptr;
-	}
-	fin.close();
-}
-=======
  #include "function.h"
 
 wstring stringToWString(string str) {
@@ -131,6 +89,8 @@ void deleteStudentList(_Student*& head) {
 		cur = head;
 	}
 }
+<<<<<<< HEAD
+=======
 
 void convertAccountOfStudent(string path, _Student* head) {
 	ofstream fileOut;
@@ -189,4 +149,4 @@ void logInSystem_Student(_Student* head) {
 	}
 	cout << "Invalid login, please try again" << endl;
 }
->>>>>>> 7b82da0fd62245d9b702b4532c8cc24cd028ff62
+>>>>>>> 0d2cc0d8c49dd354d3af4c6c8e95ce4e914a122f

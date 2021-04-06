@@ -1,5 +1,6 @@
 #include "function.h"
 
+#define _CRT_SECURE_NO_WARNINGS
 void currentDateTime() {
 	time_t now = time(0);
 

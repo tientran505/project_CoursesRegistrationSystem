@@ -1,9 +1,14 @@
-#ifndef FUNCTION_H_
-#define FUNCTION_H_
+#ifndef _STUDENT_H_
+#define _STUDENT_H_
+#include "function.h"
 
-#include<iostream> 
-using namespace std;
+void loadStudentList(string path, _Student*& head);
+void displayStudentList(string path, _Student* head);
+void deleteStudentList(_Student*& head);
+void convertAccountOfStudent(string path, _Student* head);
+void logInSystem_Student(_Student* head);
 
+<<<<<<< HEAD
 struct Class {
 	string Name_of_Subject; //ten mon hoc
 	string ID_of_subject; //ma mon hoc
@@ -46,3 +51,6 @@ struct account {
 };
 void ReadStudent_CSV(const char* path, _NodeStudent*& students);
 #endif // !FUNCTION_H_
+=======
+#endif
+>>>>>>> 7b82da0fd62245d9b702b4532c8cc24cd028ff62

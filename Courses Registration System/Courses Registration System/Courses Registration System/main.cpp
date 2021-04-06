@@ -1,19 +1,3 @@
-<<<<<<< HEAD
-#include "function.h"
-#include "student.h"
-
-int main() {
-	const char* path = "D:\\Desktop\\hello.csv";
-	_NodeStudent* student = nullptr;
-	currentDateTime();
-	ReadStudent_CSV(path, student);
-	_NodeStudent* pCur = student;
-	while (pCur != nullptr)
-	{
-		cout << pCur->data.Firstname;
-		pCur = pCur->pNext;
-	}
-=======
 ﻿#include <iostream>
 #include <io.h>
 #include <fcntl.h>
@@ -39,5 +23,4 @@ int main() {
 	logInSystem_Student(head);
 	deleteStudentList(head);
 	return 0;
->>>>>>> 7b82da0fd62245d9b702b4532c8cc24cd028ff62
 }
