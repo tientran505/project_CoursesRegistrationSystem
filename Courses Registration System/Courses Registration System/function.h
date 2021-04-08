@@ -1,6 +1,6 @@
 #ifndef _FUNCTION_H_
 #define _FUNCTION_H_
-#include "student.h"
+
 #include <iostream>
 #include <fcntl.h>
 #include <fstream>
@@ -11,6 +11,11 @@
 #include <ctime>
 
 using namespace std;
+
+const string dir = "E:/HCMUS/Sem 2/Programming Techniques/Project - A Courses Registration System/project_CoursesRegistrationSystem/Courses Registration System/Courses Registration System/";
+const string dirClass = "Class/";
+const string dirCourse = "Course/";
+const string dirRegis = "Registration/";
 
 struct Date {
 	int day;
@@ -93,5 +98,7 @@ struct _Student {
 
 
 void currentDateTime();
+wstring stringToWString(string str);
+string WStringToString(wstring s);
 
 #endif

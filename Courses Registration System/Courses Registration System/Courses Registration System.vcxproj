@@ -148,6 +148,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="function.h" />
+    <ClInclude Include="staff.h" />
     <ClInclude Include="struct.h" />
     <ClInclude Include="student.h" />
   </ItemGroup>
