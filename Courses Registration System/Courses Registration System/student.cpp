@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #include "student.h"
 #include "function.h"
 void ReadStudent_CSV(const char* path, _NodeStudent*& students)
@@ -11,9 +10,9 @@ void ReadStudent_CSV(const char* path, _NodeStudent*& students)
 		cout << "File not found";
 		exit(0);
 	}
-	
+
 	_NodeStudent* stuCur = nullptr;
-	char a = ',',b = '/';
+	char a = ',', b = '/';
 	while (!fin.eof())
 	{
 		if (students == nullptr)
@@ -27,7 +26,7 @@ void ReadStudent_CSV(const char* path, _NodeStudent*& students)
 			stuCur = stuCur->pNext;
 		}
 
-		fin >> stuCur->data.Number_In_Class >> a; 
+		fin >> stuCur->data.Number_In_Class >> a;
 		fin >> stuCur->data.ID >> a;
 		getline(fin, stuCur->data.Firstname, ',');
 		getline(fin, stuCur->data.Lastname, ',');
@@ -39,8 +38,6 @@ void ReadStudent_CSV(const char* path, _NodeStudent*& students)
 	}
 	fin.close();
 }
-=======
- #include "function.h"
 
 wstring stringToWString(string str) {
 	wstring tmp(str.length(), L' ');
@@ -189,4 +186,3 @@ void logInSystem_Student(_Student* head) {
 	}
 	cout << "Invalid login, please try again" << endl;
 }
->>>>>>> 7b82da0fd62245d9b702b4532c8cc24cd028ff62

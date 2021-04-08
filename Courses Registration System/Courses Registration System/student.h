@@ -51,6 +51,3 @@ struct account {
 };
 void ReadStudent_CSV(const char* path, _NodeStudent*& students);
 #endif // !FUNCTION_H_
-=======
-#endif
->>>>>>> 7b82da0fd62245d9b702b4532c8cc24cd028ff62
