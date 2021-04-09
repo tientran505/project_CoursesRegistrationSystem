@@ -1,4 +1,5 @@
 #include "staff.h"
+#include "student.h"
 
 void loadStudentList(string path, _Student*& head) {
 	head = nullptr;
@@ -51,6 +52,7 @@ void displayStudentList(string path, _Student* head) {
 		fileOut.close();
 		return;
 	}
+
 	wstring strTmp;
 	while (head->pNext != nullptr) {
 		fileOut << head->data.Number_In_Class << ",";
@@ -108,6 +110,53 @@ void deleteStudentList(_Student*& head) {
 	}
 }
 
-void listStudentsPush() {
+void listPush(_Student*& listStack, _Student* classPush) {
+	_Student* pTmp = classPush;
+	while (pTmp->pNext != nullptr) pTmp = pTmp->pNext;
+	pTmp->pNext = listStack;
+	listStack = classPush;
+}
 
+void listStudents(string path, _Student*& head) {
+	string year[5] = { "first-year", "second-year","third-year", "fourth-year", "fifth-year" };
+	_Student* headClass = nullptr;
+	int i = 0;
+	while (true) {
+		cout << "0. exit input list" << endl;
+		cout << "1. input next year student list" << endl;
+		cout << "2. input previous year student list" << endl;
+		cout << "Input to the list of " << year[i] << " students: ";
+		cin >> path;
+
+		if (path == "0") break;
+		if (path == "1") {
+			i++;
+			if (i > 4) i = 4;
+			continue;
+		}
+
+		if (path == "2") {
+			i--;
+			if (i < 0) i = 0;
+			continue;
+		}
+		
+		loadStudentList(dir + dirClass + path + ".csv", headClass);
+		displayStudentList(dir + dirClass + path + "_Info" + ".csv", headClass);
+		listPush(head, headClass);
+	}
+	convertAccountOfStudent(dir + dirClass + "Account" + ".txt", head);
+}
+
+void staff_Menu() {
+	//0. View info
+	//0.1 change password
+	//1. create a school year
+	//1.1. create a semester - school year - start date - end date
+	//2. creata classes for 1st year
+	//3. Course Registration
+	//3.1. course registration session: start date, end date.
+	//3.2. Add a course to this semester
+	//3
+	
 }

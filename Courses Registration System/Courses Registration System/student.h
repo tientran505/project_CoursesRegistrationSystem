@@ -3,7 +3,7 @@
 #define _STUDENT_H_
 #include "function.h"
 
-
+void showInfo_Student(_Student* Node);
 void logInSystem_Student(_Student* head);
 
 

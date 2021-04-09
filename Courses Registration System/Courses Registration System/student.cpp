@@ -28,6 +28,7 @@ void showInfo_Student(_Student* Node) {
 
 void logInSystem_Student(_Student* head) {
 	string userNameTmp, passWordTmp;
+
 	while (true) {
 		cout << "Username: ";
 		cin >> userNameTmp;
@@ -71,8 +72,8 @@ void editPassword(_Student* Node) {
 		}
 		else cout << "Enter a valid password and try again." << endl;
 	}
-
 }
+
 
 void menu_Student(_Student* Node) {
 	cout << "Choose your option" << endl;
@@ -99,17 +100,17 @@ void menu_Student(_Student* Node) {
 		}
 
 		case 3: {
-			cout << "This feature is still in processing. Please try again later" << endl;
+			cout << "This feature is still in progress. Please try again later" << endl;
 			break;
 		}
 
 		case 4: {
-			cout << "This feature is still in processing. Please try again later" << endl;
+			cout << "This feature is still in progress. Please try again later" << endl;
 			break;
 		}
 
 		case 5: {
-			cout << "This feature is still in processing. Please try again later" << endl;
+			cout << "This feature is still in progress. Please try again later" << endl;
 			break;
 
 		}
@@ -123,4 +124,4 @@ void menu_Student(_Student* Node) {
 		cout << "[6]. Logout" << endl;
 		cin >> choose;
 	}
-
+}
