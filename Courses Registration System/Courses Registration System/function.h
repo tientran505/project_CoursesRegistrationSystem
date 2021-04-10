@@ -95,7 +95,10 @@ struct _Student {
 	_Student* pNext;
 };
 
-
+struct subject {
+	string title;
+	string IDsubject;
+};
 
 void currentDateTime();
 wstring stringToWString(string str);

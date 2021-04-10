@@ -45,6 +45,53 @@ void logInSystem_Student(_Student* head) {
 		cout << "Invalid login, please try again" << endl;
 	}
 }
+void changePass(_Student* Node) {
+	string old, newPass;
+	cout << "Please input password: " << endl;
+	getline(cin, old);
+	while (true) {
+		if (old != Node->data.student_Account.password) {
+			cout << "Incorrect password... Please try again..." << endl;
+			getline(cin, old);
+		}
+		else {
+			cout << "Please input new password: ";
+			getline(cin, newPass);
+			int check = 1; int check2 = 1;
+			for (int i = 0; i < newPass.length(); i++) {
+				if (int(newPass[i]) > 64 && int(newPass[i]) < 91)
+					check *= 0;
+				else check *= 1;
+				if (int(newPass[i]) > 47 && int(newPass[i]) < 58)
+					check2 *= 0;
+				else check2 *= 1;
+			}
+			while (true) {
+				if (check == 1 || check2 == 1 || newPass.length() < 8) {
+					cout << "Password must include capital character(s) and number(s)..." << endl << "Please try another password..." << endl;
+					getline(cin, newPass);
+				}
+				else {
+					string confirm;
+					cout << "Please input new password again to confirm..." << endl;
+					while (true) {
+						if (confirm == newPass) {
+							Node->data.student_Account.password = newPass;
+							break;
+						}
+						else {
+							cout << "Confirm not match... One more time please! ";
+							cin >> confirm;
+						}
+					}
+					break;
+				}
+
+			}
+			break;
+		}
+	}
+}
 
 void editPassword(_Student* Node) {
 	string curPassword, newPassword, retype;
@@ -103,6 +150,7 @@ void readCourse(_Student* Node) {
 	delete[] temp;
 }
 
+
 void menu_Student(_Student* Node) {
 	cout << "Choose your option" << endl;
 	cout << "[1]. View Info" << endl;
@@ -151,5 +199,26 @@ void menu_Student(_Student* Node) {
 		cout << "[5]. View Scoreboard" << endl;
 		cout << "[6]. Logout" << endl;
 		cin >> choose;
+	}
+}
+
+void subjectsList() {
+	int n;
+	subject sub;
+	ofstream fout;
+	fout.open("subjectsList.txt", ios_base::out);
+	if (!fout.is_open()) {
+		cout << "Can not open file..." << endl;
+		return;
+	}
+	cout << "Please input number of subjects: ";
+	cin >> n;
+	for (int i = 1; i <= n; i++) {
+		cout<< endl << "Please input subject title: ";
+		cin >> sub.title;
+		fout << sub.title;
+		cout << endl << "Please input subject ID: ";
+		cin >> sub.IDsubject;
+		fout << sub.IDsubject;
 	}
 }
