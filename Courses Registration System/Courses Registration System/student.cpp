@@ -186,7 +186,7 @@ void subjectsList() {
 	cout << "Please input number of subjects: ";
 	cin >> n;
 	for (int i = 1; i <= n; i++) {
-		cout<<"Please input subject title: ";
+		cout<< endl << "Please input subject title: ";
 		cin >> sub.title;
 		fout << sub.title;
 		cout << endl << "Please input subject ID: ";
