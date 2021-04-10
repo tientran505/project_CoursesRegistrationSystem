@@ -13,7 +13,6 @@ string WStringToString(wstring s)
 	return temp;
 }
 
-void menu_Student(_Student* Node);
 
 void showInfo_Student(_Student* Node) {
 	cout << "Information of student" << endl;
@@ -74,6 +73,35 @@ void editPassword(_Student* Node) {
 	}
 }
 
+int stringToInt(string str) {
+	int sum = 0;
+	for (int i = 0; i < 8; i++) {
+		sum *= 10;
+		sum += (int)(str[i] - 48);
+	}
+	return sum;
+}
+void readCourse(_Student* Node) {
+	int a;
+	string tr;
+	fstream f;
+	f.open(Node->data.class_Of_Student + ".txt");
+	getline(f, tr, '\n');
+	a = stringToInt(tr);
+	while (a != Node->data.ID_Student) {
+		getline(f, tr, '\n');
+		a = stringToInt(tr);
+	}
+	string* temp = new string[tr.size() - 8];
+	for (int i = 8; i < tr.size(); i++) {
+		temp[i - 8] = tr[i];
+	}
+	f.close();
+	for (int i = 0; i < tr.size() - 8; i++) {
+		cout << temp[i];
+	}
+	delete[] temp;
+}
 
 void menu_Student(_Student* Node) {
 	cout << "Choose your option" << endl;
@@ -105,7 +133,7 @@ void menu_Student(_Student* Node) {
 		}
 
 		case 4: {
-			cout << "This feature is still in progress. Please try again later" << endl;
+			readCourse(Node);
 			break;
 		}
 
