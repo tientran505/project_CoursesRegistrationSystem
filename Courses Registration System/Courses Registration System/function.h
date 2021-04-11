@@ -16,6 +16,7 @@ const string dir = "E:/HCMUS/Sem 2/Programming Techniques/Project - A Courses Re
 const string dirClass = "Class/";
 const string dirCourse = "Course/";
 const string dirRegis = "Registration/";
+const string dirStaff = "Staff/";
 
 struct Date {
 	int day;
@@ -104,4 +105,5 @@ void currentDateTime();
 wstring stringToWString(string str);
 string WStringToString(wstring s);
 
+void log_In_System();
 #endif
