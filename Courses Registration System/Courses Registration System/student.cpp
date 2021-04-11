@@ -28,6 +28,7 @@ void showInfo_Student(_Student* Node) {
 
 _Student* logInSystem_Student(_Student* head) {
 	string userNameTmp, passWordTmp;
+
 	if (head == nullptr) {
 		cout << "There is nothing any student lists in system. Please contact to Academic Staff for more detail" << endl;
 		return nullptr;
@@ -96,6 +97,7 @@ void changePass(_Student* Node) {
 		}
 	}
 }
+
 
 void editPassword(_Student* Node) {
 	string curPassword, newPassword, retype;
