@@ -5,5 +5,3 @@
 
 void showInfo_Student(_Student* Node);
 void logInSystem_Student(_Student* head);
-
-

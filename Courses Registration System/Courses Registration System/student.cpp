@@ -13,6 +13,7 @@ string WStringToString(wstring s)
 	return temp;
 }
 
+void menu_Student(_Student* Node);
 
 void showInfo_Student(_Student* Node) {
 	cout << "Information of student" << endl;
@@ -221,4 +222,24 @@ void subjectsList() {
 		cin >> sub.IDsubject;
 		fout << sub.IDsubject;
 	}
+}
+void SignupCourse(Student* &CurStu, _Subjects* CurSub)
+{
+	_Subjects* temp = CurSub;
+	if (temp == NULL)
+	{
+		cout << "You dont have any course to add: ";
+		return;
+	}
+	while (temp != NULL)
+	{
+		cout << "List course can add: " << endl;
+		cout << temp->subjects_Data.course_Data.course_ID << " | ";
+		cout << temp->subjects_Data.course_Data.course_Name << " | ";
+		cout << temp->subjects_Data.course_Data.credit << " | ";
+		cout << temp->subjects_Data.course_Data.Name_of_Teacher << " | ";
+		cout << temp->subjects_Data.course_Data.number_Order_Course << endl;
+		temp = temp->data_Next;
+	}
+	while (CurSub != NULL);
 }

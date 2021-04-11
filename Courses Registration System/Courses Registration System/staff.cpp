@@ -147,7 +147,41 @@ void listStudents(string path, _Student*& head) {
 	}
 	convertAccountOfStudent(dir + dirClass + "Account" + ".txt", head);
 }
-
+void CreateCourseList(_Subjects*& LSub)
+{
+	int n;
+	LSub = new _Subjects;
+	ofstream fdataCourse("DataCourse.txt");
+	if (!fdataCourse)
+	{
+		cout << "File cannot found";
+		exit(0);
+	}
+	cout << "Type your number of course: ";
+	cin >> n;
+	for (int i = 1; i <= n; i++)
+	{
+		_Subjects* CurSub = LSub;
+		cout << "Type ID Course " << i <<": ";
+		cin >> CurSub->subjects_Data.course_Data.course_ID;
+		fdataCourse << CurSub->subjects_Data.course_Data.course_ID << endl;
+		cout << "Type name of Course " << i << ": ";
+		cin >> CurSub->subjects_Data.course_Data.course_Name;
+		fdataCourse << CurSub->subjects_Data.course_Data.course_Name << endl;
+		cout << "Credit course " << i << ": ";
+		cin >> CurSub->subjects_Data.course_Data.credit;
+		fdataCourse << CurSub->subjects_Data.course_Data.credit << endl;
+		cout << "Teacher name of this course " << i << ": ";
+		cin >> CurSub->subjects_Data.course_Data.Name_of_Teacher;
+		fdataCourse << CurSub->subjects_Data.course_Data.Name_of_Teacher << endl;
+		cout << "Max number order " << i << ": ";
+		cin >> CurSub->subjects_Data.course_Data.number_Order_Course;
+		fdataCourse << CurSub->subjects_Data.course_Data.number_Order_Course << endl;
+		CurSub->data_Next = new _Subjects;
+		CurSub = CurSub->data_Next;
+	}
+	cout << "Create completed" << endl;
+}
 void staff_Menu() {
 	//0. View info
 	//0.1 change password
