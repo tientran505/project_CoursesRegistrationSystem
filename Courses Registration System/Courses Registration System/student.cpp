@@ -1,4 +1,5 @@
 #include "function.h"
+#include "student.h"
 
 wstring stringToWString(string str) {
 	wstring tmp(str.length(), L' ');
@@ -25,9 +26,12 @@ void showInfo_Student(_Student* Node) {
 	cout << "Class: " << Node->data.class_Of_Student << endl;
 }
 
-void logInSystem_Student(_Student* head) {
+_Student* logInSystem_Student(_Student* head) {
 	string userNameTmp, passWordTmp;
-
+	if (head == nullptr) {
+		cout << "There is nothing any student lists in system. Please contact to Academic Staff for more detail" << endl;
+		return nullptr;
+	}
 	while (true) {
 		cout << "Username: ";
 		cin >> userNameTmp;
@@ -37,14 +41,14 @@ void logInSystem_Student(_Student* head) {
 		while (pCur->pNext != nullptr) {
 			if (userNameTmp == pCur->data.student_Account.ID && passWordTmp == pCur->data.student_Account.password) {
 				cout << "-------------------------------\n" << "Login successfully" << endl;
-				menu_Student(pCur);
-				return;
+				return pCur;
 			}
 			pCur = pCur->pNext;
 		}
 		cout << "Invalid login, please try again" << endl;
 	}
 }
+
 void changePass(_Student* Node) {
 	string old, newPass;
 	cout << "Please input password: " << endl;
@@ -128,6 +132,7 @@ int stringToInt(string str) {
 	}
 	return sum;
 }
+
 void readCourse(_Student* Node) {
 	int a;
 	string tr;
@@ -148,58 +153,6 @@ void readCourse(_Student* Node) {
 		cout << temp[i];
 	}
 	delete[] temp;
-}
-
-
-void menu_Student(_Student* Node) {
-	cout << "Choose your option" << endl;
-	cout << "[1]. View Info" << endl;
-	cout << "[2]. Change password" << endl;
-	cout << "[3]. Sign up for the course" << endl;
-	cout << "[4]. Courses registration results" << endl;
-	cout << "[5]. View Scoreboard" << endl;
-	cout << "[6]. Logout" << endl;
-
-	int choose;
-	cin >> choose;
-	while (choose != 6) {
-		switch (choose)
-		{
-		case 1: {
-			showInfo_Student(Node);
-			break;
-		}
-
-		case 2: {
-			editPassword(Node);
-			break;
-		}
-
-		case 3: {
-			cout << "This feature is still in progress. Please try again later" << endl;
-			break;
-		}
-
-		case 4: {
-			readCourse(Node);
-			break;
-		}
-
-		case 5: {
-			cout << "This feature is still in progress. Please try again later" << endl;
-			break;
-
-		}
-		}
-		cout << "--------------------------------------\nChoose your option" << endl;
-		cout << "[1]. View Info" << endl;
-		cout << "[2]. Change password" << endl;
-		cout << "[3]. Sign up for the course" << endl;
-		cout << "[4]. Courses registration results" << endl;
-		cout << "[5]. View Scoreboard" << endl;
-		cout << "[6]. Logout" << endl;
-		cin >> choose;
-	}
 }
 
 void subjectsList() {

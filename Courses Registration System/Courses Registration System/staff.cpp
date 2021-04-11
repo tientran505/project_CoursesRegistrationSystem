@@ -148,15 +148,49 @@ void listStudents(string path, _Student*& head) {
 	convertAccountOfStudent(dir + dirClass + "Account" + ".txt", head);
 }
 
-void staff_Menu() {
-	//0. View info
-	//0.1 change password
-	//1. create a school year
-	//1.1. create a semester - school year - start date - end date
-	//2. creata classes for 1st year
-	//3. Course Registration
-	//3.1. course registration session: start date, end date.
-	//3.2. Add a course to this semester
-	//3
+void staff_Login(string username) {
+	ifstream fileIn;
+	int running = true;
+	string password;
+	string userTmp, passTmp;
+	while (running) {
+		cout << "Username: ";
+		cin >> username;
+		cout << "Password: ";
+		cin >> password;
+		fileIn.open(dir + dirStaff + "Staff_Account.txt", ios_base::in);
+		while (!fileIn.eof()) {
+			string userTmp, passTmp;
+			getline(fileIn, userTmp, ',');
+			getline(fileIn, passTmp);
+			if (username == userTmp && passTmp == password) {
+				running = false;
+				break;
+			}
+		}
+		if (!running) cout << "Login Successfully!" << endl;
+		cout << "Invalid login, please try again" << endl;
+		fileIn.close();
+	}
 	
+}
+
+void showInfo_Staff(string username) {
+	ifstream fileIn;
+	fileIn.open(dir + dirStaff + "Staff_Info.txt", ios_base::in);
+	while (!fileIn.eof()) {
+		string tmp, name;
+		getline(fileIn, tmp, ',');
+		getline(fileIn, name);
+		if (tmp == username) {
+			cout << "Infomartion of staff" << endl;
+			_setmode(_fileno(stdout), _O_U8TEXT);
+			cout << "Name: " << name << endl;
+			_setmode(_fileno(stdout), _O_TEXT);
+			cout << "Department: Academic Staff" << endl;
+			break;
+		}
+	}
+	cout << "Infomation of this staff is currently not existed in the system " << endl;
+	fileIn.close();
 }
