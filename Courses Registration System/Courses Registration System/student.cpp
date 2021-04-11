@@ -1,4 +1,5 @@
 #include "function.h"
+#include "student.h"
 
 wstring stringToWString(string str) {
 	wstring tmp(str.length(), L' ');
@@ -13,7 +14,6 @@ string WStringToString(wstring s)
 	return temp;
 }
 
-void menu_Student(_Student* Node);
 
 void showInfo_Student(_Student* Node) {
 	cout << "Information of student" << endl;
@@ -26,8 +26,12 @@ void showInfo_Student(_Student* Node) {
 	cout << "Class: " << Node->data.class_Of_Student << endl;
 }
 
-void logInSystem_Student(_Student* head) {
+_Student* logInSystem_Student(_Student* head) {
 	string userNameTmp, passWordTmp;
+	if (head == nullptr) {
+		cout << "There is nothing any student lists in system. Please contact to Academic Staff for more detail" << endl;
+		return nullptr;
+	}
 	while (true) {
 		cout << "Username: ";
 		cin >> userNameTmp;
@@ -37,12 +41,59 @@ void logInSystem_Student(_Student* head) {
 		while (pCur->pNext != nullptr) {
 			if (userNameTmp == pCur->data.student_Account.ID && passWordTmp == pCur->data.student_Account.password) {
 				cout << "-------------------------------\n" << "Login successfully" << endl;
-				menu_Student(pCur);
-				return;
+				return pCur;
 			}
 			pCur = pCur->pNext;
 		}
 		cout << "Invalid login, please try again" << endl;
+	}
+}
+
+void changePass(_Student* Node) {
+	string old, newPass;
+	cout << "Please input password: " << endl;
+	getline(cin, old);
+	while (true) {
+		if (old != Node->data.student_Account.password) {
+			cout << "Incorrect password... Please try again..." << endl;
+			getline(cin, old);
+		}
+		else {
+			cout << "Please input new password: ";
+			getline(cin, newPass);
+			int check = 1; int check2 = 1;
+			for (int i = 0; i < newPass.length(); i++) {
+				if (int(newPass[i]) > 64 && int(newPass[i]) < 91)
+					check *= 0;
+				else check *= 1;
+				if (int(newPass[i]) > 47 && int(newPass[i]) < 58)
+					check2 *= 0;
+				else check2 *= 1;
+			}
+			while (true) {
+				if (check == 1 || check2 == 1 || newPass.length() < 8) {
+					cout << "Password must include capital character(s) and number(s)..." << endl << "Please try another password..." << endl;
+					getline(cin, newPass);
+				}
+				else {
+					string confirm;
+					cout << "Please input new password again to confirm..." << endl;
+					while (true) {
+						if (confirm == newPass) {
+							Node->data.student_Account.password = newPass;
+							break;
+						}
+						else {
+							cout << "Confirm not match... One more time please! ";
+							cin >> confirm;
+						}
+					}
+					break;
+				}
+
+			}
+			break;
+		}
 	}
 }
 
@@ -71,57 +122,56 @@ void editPassword(_Student* Node) {
 		}
 		else cout << "Enter a valid password and try again." << endl;
 	}
-
 }
 
-void menu_Student(_Student* Node) {
-	cout << "Choose your option" << endl;
-	cout << "[1]. View Info" << endl;
-	cout << "[2]. Change password" << endl;
-	cout << "[3]. Sign up for the course" << endl;
-	cout << "[4]. Courses registration results" << endl;
-	cout << "[5]. View Scoreboard" << endl;
-	cout << "[6]. Logout" << endl;
-
-	int choose;
-	cin >> choose;
-	while (choose != 6) {
-		switch (choose)
-		{
-		case 1: {
-			showInfo_Student(Node);
-			break;
-		}
-
-		case 2: {
-			editPassword(Node);
-			break;
-		}
-
-		case 3: {
-			cout << "This feature is still in processing. Please try again later" << endl;
-			break;
-		}
-
-		case 4: {
-			cout << "This feature is still in processing. Please try again later" << endl;
-			break;
-		}
-
-		case 5: {
-			cout << "This feature is still in processing. Please try again later" << endl;
-			break;
-
-		}
-		}
-		cout << "--------------------------------------\nChoose your option" << endl;
-		cout << "[1]. View Info" << endl;
-		cout << "[2]. Change password" << endl;
-		cout << "[3]. Sign up for the course" << endl;
-		cout << "[4]. Courses registration results" << endl;
-		cout << "[5]. View Scoreboard" << endl;
-		cout << "[6]. Logout" << endl;
-		cin >> choose;
+int stringToInt(string str) {
+	int sum = 0;
+	for (int i = 0; i < 8; i++) {
+		sum *= 10;
+		sum += (int)(str[i] - 48);
 	}
-	cout << "Log out successfully" << endl;
+	return sum;
+}
+
+void readCourse(_Student* Node) {
+	int a;
+	string tr;
+	fstream f;
+	f.open(Node->data.class_Of_Student + ".txt");
+	getline(f, tr, '\n');
+	a = stringToInt(tr);
+	while (a != Node->data.ID_Student) {
+		getline(f, tr, '\n');
+		a = stringToInt(tr);
+	}
+	string* temp = new string[tr.size() - 8];
+	for (int i = 8; i < tr.size(); i++) {
+		temp[i - 8] = tr[i];
+	}
+	f.close();
+	for (int i = 0; i < tr.size() - 8; i++) {
+		cout << temp[i];
+	}
+	delete[] temp;
+}
+
+void subjectsList() {
+	int n;
+	subject sub;
+	ofstream fout;
+	fout.open("subjectsList.txt", ios_base::out);
+	if (!fout.is_open()) {
+		cout << "Can not open file..." << endl;
+		return;
+	}
+	cout << "Please input number of subjects: ";
+	cin >> n;
+	for (int i = 1; i <= n; i++) {
+		cout<< endl << "Please input subject title: ";
+		cin >> sub.title;
+		fout << sub.title;
+		cout << endl << "Please input subject ID: ";
+		cin >> sub.IDsubject;
+		fout << sub.IDsubject;
+	}
 }
