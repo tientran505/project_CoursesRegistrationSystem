@@ -89,6 +89,7 @@ struct Student {
 	double GPA_Average;
 	double score_Average;
 	Account student_Account;
+	_Subjects* subregis;
 };
 
 struct _Student {
