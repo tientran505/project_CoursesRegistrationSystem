@@ -1,6 +1,26 @@
 #include "function.h"
 #include "staff.h"
 #include "student.h"
+#include <windows.h>
+
+void textcolor(int color) {
+	HANDLE hConsoleColor;
+	hConsoleColor = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleTextAttribute(hConsoleColor, color);
+	return;
+}
+
+void GotoXY(int x, int y) {
+
+	COORD coord;
+
+	coord.X = x;
+
+	coord.Y = y;
+
+	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
+	return;
+}
 
 void staff_Menu(string username, _Student*& headStu) {
 	headStu = nullptr;
