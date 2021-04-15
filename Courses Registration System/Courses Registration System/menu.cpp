@@ -1,13 +1,35 @@
 #include "function.h"
 #include "staff.h"
 #include "student.h"
-
+void menu_Course_Staff();
 
 void textcolor(int color) {
 	HANDLE hConsoleColor;
 	hConsoleColor = GetStdHandle(STD_OUTPUT_HANDLE);
 	SetConsoleTextAttribute(hConsoleColor, color);
 	return;
+}
+void ShowCur(bool CursorVisibility)
+{
+	HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
+	CONSOLE_CURSOR_INFO ConCurInf;
+
+	ConCurInf.dwSize = 10;
+	ConCurInf.bVisible = CursorVisibility;
+
+	SetConsoleCursorInfo(handle, &ConCurInf);
+}
+void FixConsoleWindow() {
+
+	HWND consoleWindow = GetConsoleWindow();
+
+	LONG style = GetWindowLong(consoleWindow, GWL_STYLE);
+
+	style = style & ~(WS_MAXIMIZEBOX) & ~(WS_THICKFRAME);
+
+	SetWindowLong(consoleWindow, GWL_STYLE, style);
+	return;
+
 }
 
 void GotoXY(int x, int y) {
@@ -22,18 +44,16 @@ void GotoXY(int x, int y) {
 	return;
 }
 
-void menu_Course_Staff();
-
 void staff_Menu(string username, _Student*& headStu) {
 	headStu = nullptr;
-	int choose;
 	Date schoolyear;
+	int choose;
 	do {
 		cout << "Choose your option" << endl;
 		cout << "1. View info" << endl;
 		cout << "2. Change Password" << endl;
 		cout << "3. Create School year" << endl;
-		cout << "4. Course System" << endl;
+		cout << "4. Courses System" << endl;
 		cout << "5. Add student lists to the system" << endl;
 		cout << "6. Log out" << endl;
 		cin >> choose;
@@ -56,12 +76,14 @@ void staff_Menu(string username, _Student*& headStu) {
 			break;
 		}
 		case 5: {
+			string path;
 			listStudents(headStu);
 			break;
 		}
 		}
 	} while (choose != 6);
 }
+
 
 void menu_Course_Staff() {
 	int choose, running = true;
@@ -94,6 +116,7 @@ void menu_Course_Staff() {
 	} while (choose != 5);
 }
 
+
 void student_Menu(_Student* Node) {
 	cout << "Choose your option" << endl;
 	cout << "[1]. View Info" << endl;
@@ -125,7 +148,6 @@ void student_Menu(_Student* Node) {
 		}
 
 		case 4: {
-		//	CourseRegistrationResult(Node);
 			break;
 		}
 
@@ -163,7 +185,6 @@ void log_In_System() {
 		{
 		case 1: {
 			_Student* Node = logInSystem_Student(head);
-			if (Node == nullptr) break;
 			student_Menu(Node);
 			break;
 		}
