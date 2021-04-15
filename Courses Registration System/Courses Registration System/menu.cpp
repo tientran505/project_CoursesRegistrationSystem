@@ -2,15 +2,18 @@
 #include "staff.h"
 #include "student.h"
 
+void menu_Course_Staff();
+
 void staff_Menu(string username, _Student*& headStu) {
 	headStu = nullptr;
 	int choose;
+	Date schoolyear;
 	do {
 		cout << "Choose your option" << endl;
 		cout << "1. View info" << endl;
 		cout << "2. Change Password" << endl;
 		cout << "3. Create School year" << endl;
-		cout << "4. Create Courses" << endl;
+		cout << "4. Course System" << endl;
 		cout << "5. Add student lists to the system" << endl;
 		cout << "6. Log out" << endl;
 		cin >> choose;
@@ -25,22 +28,51 @@ void staff_Menu(string username, _Student*& headStu) {
 			break;
 		}
 		case 3: {
-			cout << "This feature is still in progress. Please try again later" << endl;
+			add_Schoolyear(schoolyear);
 			break;
 		}
 		case 4: {
-			cout << "This feature is still in progress. Please try again later" << endl;
+			menu_Course_Staff();
 			break;
 		}
 		case 5: {
-			string path;
-			listStudents(path, headStu);
+			listStudents(headStu);
 			break;
 		}
 		}
 	} while (choose != 6);
 }
 
+void menu_Course_Staff() {
+	int choose, running = true;
+	do {
+		cout << "1. Create Course" << endl;
+		cout << "2. View list of Course" << endl;
+		cout << "3. Update Course infomation" << endl;
+		cout << "4. Delete a course" << endl;
+		cout << "5. Exit" << endl;
+		cin >> choose;
+
+		switch (choose) {
+		case 1: {
+			createCourseList(dir + dirCourse + "CoursesRegistration.txt");
+			break;
+		}
+		case 2: {
+			viewCourseList(dir + dirCourse + "CoursesRegistration.txt");
+			break;
+		}
+		case 3: {
+			update_Course_Info();
+			break;
+		}
+		case 4: {
+			delete_Courses();
+			break;
+		}
+		}
+	} while (choose != 5);
+}
 
 void student_Menu(_Student* Node) {
 	cout << "Choose your option" << endl;
@@ -110,6 +142,7 @@ void log_In_System() {
 		{
 		case 1: {
 			_Student* Node = logInSystem_Student(head);
+			if (Node == nullptr) break;
 			student_Menu(Node);
 			break;
 		}
