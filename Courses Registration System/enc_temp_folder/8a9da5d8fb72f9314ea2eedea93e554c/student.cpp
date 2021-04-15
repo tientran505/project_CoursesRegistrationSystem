@@ -193,15 +193,3 @@ void subjectsList() {
 		fout << sub.IDsubject;
 	}
 }
-void deletecourseRegis(_Student* StuCur)
-{
-	_Subjects* deletesub;
-	cout << "Type course ID remove: ";
-	cin >> deletesub->subjects_Data.course_Data.course_ID;
-	_Subjects* temp = StuCur->data.subregis;
-	while (deletesub->subjects_Data.course_Data.course_ID != temp->subjects_Data.course_Data.course_ID)
-	{
-		temp = temp->data_Next;
-	}
-	delete deletesub;
-}

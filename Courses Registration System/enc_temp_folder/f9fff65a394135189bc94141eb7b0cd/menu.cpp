@@ -1,39 +1,16 @@
 #include "function.h"
 #include "staff.h"
 #include "student.h"
-#include <windows.h>
-
-void textcolor(int color) {
-	HANDLE hConsoleColor;
-	hConsoleColor = GetStdHandle(STD_OUTPUT_HANDLE);
-	SetConsoleTextAttribute(hConsoleColor, color);
-	return;
-}
-
-void GotoXY(int x, int y) {
-
-	COORD coord;
-
-	coord.X = x;
-
-	coord.Y = y;
-
-	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
-	return;
-}
-
-void menu_Course_Staff();
 
 void staff_Menu(string username, _Student*& headStu) {
 	headStu = nullptr;
 	int choose;
-	Date schoolyear;
 	do {
 		cout << "Choose your option" << endl;
 		cout << "1. View info" << endl;
 		cout << "2. Change Password" << endl;
 		cout << "3. Create School year" << endl;
-		cout << "4. Course System" << endl;
+		cout << "4. Create Courses" << endl;
 		cout << "5. Add student lists to the system" << endl;
 		cout << "6. Log out" << endl;
 		cin >> choose;
@@ -48,51 +25,22 @@ void staff_Menu(string username, _Student*& headStu) {
 			break;
 		}
 		case 3: {
-			add_Schoolyear(schoolyear);
+			cout << "This feature is still in progress. Please try again later" << endl;
 			break;
 		}
 		case 4: {
-			menu_Course_Staff();
+			cout << "This feature is still in progress. Please try again later" << endl;
 			break;
 		}
 		case 5: {
-			listStudents(headStu);
+			string path;
+			listStudents(path, headStu);
 			break;
 		}
 		}
 	} while (choose != 6);
 }
 
-void menu_Course_Staff() {
-	int choose, running = true;
-	do {
-		cout << "1. Create Course" << endl;
-		cout << "2. View list of Course" << endl;
-		cout << "3. Update Course infomation" << endl;
-		cout << "4. Delete a course" << endl;
-		cout << "5. Exit" << endl;
-		cin >> choose;
-
-		switch (choose) {
-		case 1: {
-			createCourseList(dir + dirCourse + "CoursesRegistration.txt");
-			break;
-		}
-		case 2: {
-			viewCourseList(dir + dirCourse + "CoursesRegistration.txt");
-			break;
-		}
-		case 3: {
-			update_Course_Info();
-			break;
-		}
-		case 4: {
-			delete_Courses();
-			break;
-		}
-		}
-	} while (choose != 5);
-}
 
 void student_Menu(_Student* Node) {
 	cout << "Choose your option" << endl;
@@ -163,7 +111,6 @@ void log_In_System() {
 		{
 		case 1: {
 			_Student* Node = logInSystem_Student(head);
-			if (Node == nullptr) break;
 			student_Menu(Node);
 			break;
 		}
