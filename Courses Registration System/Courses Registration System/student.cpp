@@ -135,44 +135,45 @@ int stringToInt(string str) {
 	return sum;
 }
 
-void readCourse(_Student* Node) {
-	int a;
-	string tr;
-	fstream f;
-	f.open(Node->data.class_Of_Student + ".txt");
-	getline(f, tr, '\n');
-	a = stringToInt(tr);
-	while (a != Node->data.ID_Student) {
-		getline(f, tr, '\n');
-		a = stringToInt(tr);
-	}
-	string* temp = new string[tr.size() - 8];
-	for (int i = 8; i < tr.size(); i++) {
-		temp[i - 8] = tr[i];
-	}
-	f.close();
-	for (int i = 0; i < tr.size() - 8; i++) {
-		cout << temp[i];
-	}
-	delete[] temp;
-}
-void CoursesRegistration(_Student* Node) {
-	cout << " regist courses";
-	Node->data.stu_Score == nullptr;
-}
-void CourseRegistrationResult(_Student* Node) {
-	cout << " course registration result: ";
-	int t = 0;
-	while ((Node->data.stu_Score) != nullptr) {
-		int n = (Node->data.stu_Score->data_ScoreBoard.course_Data.course_Name).length();
-		for (int i = 0; i < n - 1; i++) {
-			cout << Node->data.stu_Score->data_ScoreBoard.course_Data.course_Name[i];
-		}
-		t++;
-		Node->data.stu_Score = Node->data.stu_Score->dataNext;
-	}
-	if (t == 0) { cout << " there is no result"; }
-}
+//void readCourse(_Student* Node) {
+//	int a;
+//	string tr;
+//	fstream f;
+//	f.open(Node->data.class_Of_Student + ".txt");
+//	getline(f, tr, '\n');
+//	a = stringToInt(tr);
+//	while (a != Node->data.ID_Student) {
+//		getline(f, tr, '\n');
+//		a = stringToInt(tr);
+//	}
+//	string* temp = new string[tr.size() - 8];
+//	for (int i = 8; i < tr.size(); i++) {
+//		temp[i - 8] = tr[i];
+//	}
+//	f.close();
+//	for (int i = 0; i < tr.size() - 8; i++) {
+//		cout << temp[i];
+//	}
+//	delete[] temp;
+//}
+//void CoursesRegistration(_Student* Node) {
+//	cout << " regist courses";
+//	Node->data.stu_Score == nullptr;
+//}
+//void CourseRegistrationResult(_Student* Node) {
+//	cout << " course registration result: ";
+//	int t = 0;
+//	while ((Node->data.stu_Score) != nullptr) {
+//		int n = (Node->data.stu_Score->data_ScoreBoard.course_Data.course_Name).length();
+//		for (int i = 0; i < n - 1; i++) {
+//			cout << Node->data.stu_Score->data_ScoreBoard.course_Data.course_Name[i];
+//		}
+//		t++;
+//		Node->data.stu_Score = Node->data.stu_Score->dataNext;
+//	}
+//	if (t == 0) { cout << " there is no result"; }
+//}
+
 void subjectsList() {
 	int n;
 	subject sub;
@@ -193,15 +194,16 @@ void subjectsList() {
 		fout << sub.IDsubject;
 	}
 }
-void deletecourseRegis(_Student* StuCur)
-{
-	_Subjects* deletesub;
-	cout << "Type course ID remove: ";
-	cin >> deletesub->subjects_Data.course_Data.course_ID;
-	_Subjects* temp = StuCur->data.subregis;
-	while (deletesub->subjects_Data.course_Data.course_ID != temp->subjects_Data.course_Data.course_ID)
-	{
-		temp = temp->data_Next;
-	}
-	delete deletesub;
-}
+
+//void deletecourseRegis(_Student* StuCur)
+//{
+//	_Subjects* deletesub;
+//	cout << "Type course ID remove: ";
+//	cin >> deletesub->subjects_Data.course_Data.course_ID;
+//	_Subjects* temp = StuCur->data.subregis;
+//	while (deletesub->subjects_Data.course_Data.course_ID != temp->subjects_Data.course_Data.course_ID)
+//	{
+//		temp = temp->data_Next;
+//	}
+//	delete deletesub;
+//}

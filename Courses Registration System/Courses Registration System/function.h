@@ -9,7 +9,7 @@
 #include <string>
 #include <locale>
 #include <ctime>
-#include <Windows.h>
+#include <windows.h>
 
 using namespace std;
 

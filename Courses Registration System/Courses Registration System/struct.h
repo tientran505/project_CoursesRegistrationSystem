@@ -1,9 +1,4 @@
-#ifndef FUNCTION_H_
-#define FUNCTION_H_
-#include<string>
-#include<iostream> 
-
-using namespace std;
+#include "function.h"
 
 struct Date {
 	int day, month, year;
@@ -111,4 +106,4 @@ struct account {
 	string id;
 	string password;
 };
-#endif // !FUNCTION_H_
+

@@ -185,10 +185,21 @@ void turnOffVietChar() {
 	_setmode(_fileno(stdout), _O_TEXT);
 }
 
+int check_Line(string path) {
+	ifstream f;
+	f.open(path, ios_base::in);
+	int lineCount = 0;
+	string line;
+	while (getline(f, line)) {
+		lineCount++;
+	}
+	f.close();
+	return lineCount;
+}
+
 void createCourseList(string path) {
 	int running = true;
 	wofstream fileOut;
-	int no = 1;
 	char* courseID, * courseName;
 	wchar_t* teacherName;
 	int credits;
@@ -198,13 +209,16 @@ void createCourseList(string path) {
 	int choose;
 	char sTmp[101];
 
-	fileOut.open(path, ios_base::app | ios_base::out);
+	fileOut.open(path, ios_base::app);
 	fileOut.imbue(std::locale(std::locale::empty(), new std::codecvt_utf8<wchar_t, 0x10ffff, std::generate_header>));
 
 	if (!fileOut.is_open()) {
 		cout << "Can't create file" << endl;
 		return;
 	}
+
+	int no = check_Line(path); 
+	cout << endl << "Curent Line: " << no << endl;
 
 	do {
 		cout << "INFORMATION OF COURSE!" << endl;
@@ -264,8 +278,8 @@ void createCourseList(string path) {
 		strcpy_s(session2, strlen(sTmp) + 1, sTmp);
 		cin.ignore(1000, '\n');
 
-		if (no != 1) fileOut << endl;
-		fileOut << no << ",";
+		if (no != 0) fileOut << endl;
+		fileOut << no + 1 << ",";
 		fileOut << courseID << ",";
 		_setmode(_fileno(stdout), _O_U16TEXT);
 		fileOut << courseName << ",";
@@ -299,20 +313,16 @@ void createCourseList(string path) {
 	fileOut.close();
 }
 
-bool empty_check(wifstream& fileIn) {
-	return (fileIn.get(), fileIn.eof());
-}
-
 void viewCourseList(string path) {
 	wifstream fileIn;
 	fileIn.open(path, ios_base::in);
-	if (!fileIn.is_open() || empty_check(fileIn)) {
+
+	if (!fileIn.is_open() || check_Line(path) == 0) {
 		cout << "You haven't created any course yet. Please create the course first" << endl;
 		fileIn.close();
 		return;
 	}
-	fileIn.close();
-	fileIn.open(path, ios_base::in);
+
 	fileIn.imbue(std::locale(std::locale::empty(), new std::codecvt_utf8<wchar_t, 0x10ffff, std::generate_header>));
 	cout << "VIEW LIST SYSTEM" << endl;
 	while (!fileIn.eof()) {
@@ -343,7 +353,9 @@ void viewCourseList(string path) {
 		_setmode(_fileno(stdout), _O_TEXT);
 		wcout << endl;
 	}
-	cout << "------------------------" << endl;
+	cout <<  "TOTAL OF COURSES: " << check_Line(path) << endl;
+	cout << "=============================" << endl;
+	
 }
 
 void update_Course_Info() {
@@ -550,9 +562,17 @@ void update_Course_Info() {
 
 void delete_Courses() {
 	wifstream fileOld;
-	wofstream fileNew;
 
 	fileOld.open(dir + dirCourse + "CoursesRegistration.txt", ios_base::in);
+	int line = check_Line(dir + dirCourse + "CoursesRegistration.txt");
+
+	if (!fileOld.is_open() || line == 0) {
+		cout << "NOTHING TO DELETE!\n" << "================================================" << endl;
+		fileOld.close();
+		return;
+	}
+
+	wofstream fileNew;
 	fileNew.open(dir + dirCourse + "change.txt", ios_base::out);
 
 	fileOld.imbue(std::locale(std::locale::empty(), new std::codecvt_utf8<wchar_t, 0x10ffff, std::generate_header>));
@@ -560,18 +580,26 @@ void delete_Courses() {
 
 	viewCourseList(dir + dirCourse + "CoursesRegistration.txt");
 	wchar_t a = ',';
+	cout << "TOTAL OF COURSES: " << line << endl;
 	cout << "Choose course to delete: " << endl;
 	int choose, count;
 	cin >> choose;
+	if (choose > line) {
+		cout << "Your chosen course is exceed the number of courses! Please try again!" << endl << "===================================" << endl;
+		fileOld.close();
+		fileNew.close();
+		return;
+	}
 	wstring junk;
 	_setmode(_fileno(stdout), _O_U16TEXT);
+	
 	while (!fileOld.eof()) {
 		fileOld >> count >> a;
 
 		if (count == choose) break;
 
 		getline(fileOld, junk);
-		if (choose != 1) fileNew << endl;
+		if (count != 1) fileNew << endl;
 		fileNew << count << "," << junk;
 	}
 
@@ -579,7 +607,7 @@ void delete_Courses() {
 	while (!fileOld.eof()) {
 		fileOld >> count >> a;
 		getline(fileOld, junk);
-		fileNew << endl;
+		if (count != 2) fileNew << endl;
 		fileNew << count - 1 << "," << junk;
 	}
 	_setmode(_fileno(stdout), _O_TEXT);
@@ -609,6 +637,7 @@ void showInfo_Staff(string username) {
 	cout << "Infomation of this staff is currently not existed in the system " << endl;
 	fileIn.close();
 }
+
 
 void add_Schoolyear(Date& schoolyear) {
 	int running = true;

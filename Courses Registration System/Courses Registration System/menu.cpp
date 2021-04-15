@@ -1,7 +1,7 @@
 #include "function.h"
 #include "staff.h"
 #include "student.h"
-#include <windows.h>
+
 
 void textcolor(int color) {
 	HANDLE hConsoleColor;
@@ -66,7 +66,7 @@ void staff_Menu(string username, _Student*& headStu) {
 void menu_Course_Staff() {
 	int choose, running = true;
 	do {
-		cout << "1. Create Course" << endl;
+		cout << "1. Create/Add Course" << endl;
 		cout << "2. View list of Course" << endl;
 		cout << "3. Update Course infomation" << endl;
 		cout << "4. Delete a course" << endl;
@@ -120,12 +120,12 @@ void student_Menu(_Student* Node) {
 
 		case 3: {
 			cout << "This feature is still in progress. Please try again later" << endl;
-			CoursesRegistration(Node);
+			//CoursesRegistration(Node);
 			break;
 		}
 
 		case 4: {
-			CourseRegistrationResult(Node);
+		//	CourseRegistrationResult(Node);
 			break;
 		}
 
