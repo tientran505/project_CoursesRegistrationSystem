@@ -9,7 +9,28 @@ void textcolor(int color) {
 	SetConsoleTextAttribute(hConsoleColor, color);
 	return;
 }
+void ShowCur(bool CursorVisibility)
+{
+	HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
+	CONSOLE_CURSOR_INFO ConCurInf;
 
+	ConCurInf.dwSize = 10;
+	ConCurInf.bVisible = CursorVisibility;
+
+	SetConsoleCursorInfo(handle, &ConCurInf);
+}
+void FixConsoleWindow() {
+
+	HWND consoleWindow = GetConsoleWindow();
+
+	LONG style = GetWindowLong(consoleWindow, GWL_STYLE);
+
+	style = style & ~(WS_MAXIMIZEBOX) & ~(WS_THICKFRAME);
+
+	SetWindowLong(consoleWindow, GWL_STYLE, style);
+	return;
+
+}
 void GotoXY(int x, int y) {
 
 	COORD coord;
@@ -21,7 +42,18 @@ void GotoXY(int x, int y) {
 	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
 	return;
 }
+void FixConsoleWindow() {
 
+	HWND consoleWindow = GetConsoleWindow();
+
+	LONG style = GetWindowLong(consoleWindow, GWL_STYLE);
+
+	style = style & ~(WS_MAXIMIZEBOX) & ~(WS_THICKFRAME);
+
+	SetWindowLong(consoleWindow, GWL_STYLE, style);
+	return;
+
+}
 void staff_Menu(string username, _Student*& headStu) {
 	headStu = nullptr;
 	int choose;
@@ -88,12 +120,12 @@ void student_Menu(_Student* Node) {
 
 		case 3: {
 			cout << "This feature is still in progress. Please try again later" << endl;
-			CoursesRegistration(Node);
+			//CoursesRegistration(Node);
 			break;
 		}
 
 		case 4: {
-			CourseRegistrationResult(Node);
+			//CourseRegistrationResult(Node);
 			break;
 		}
 
