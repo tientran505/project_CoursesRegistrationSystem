@@ -9,6 +9,7 @@
 #include <string>
 #include <locale>
 #include <ctime>
+#include <Windows.h>
 
 using namespace std;
 
@@ -38,7 +39,7 @@ struct Course {
 	string course_Name; //ten mon hoc
 	string course_ID; //ma mon hoc
 	int credit; // so tin chi
-	string Name_of_Teacher;
+	wstring Name_of_Teacher;
 };
 
 struct Student_ScoreBoard {
@@ -64,9 +65,6 @@ struct Subjects {
 
 struct _Subjects {
 	Subjects subjects_Data;
-	//bool registers; // 0: khong dang ki mon; 1: dang ki mon
-	//bool stranfer; // 0 khong doi lop; 1: co doi lop
-	//double score; // khong dang ki thi diem mac dinh -1; da dang ki thi co diem
 	_Subjects* data_Next;
 };
 
@@ -89,6 +87,7 @@ struct Student {
 	double GPA_Average;
 	double score_Average;
 	Account student_Account;
+	_Subjects* subregis;
 };
 
 struct _Student {
