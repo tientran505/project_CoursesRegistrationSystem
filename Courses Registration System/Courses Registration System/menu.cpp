@@ -67,6 +67,7 @@ void ChoosedStaff(int x, int y) {
 	GotoXY(20 + x, 4 + y);	cout << char(188);
 	textcolor(15);
 }
+
 void StaffChoose(int x, int y) {
 	GotoXY(3 + x, 2 + y); cout << "LOGIN AS STAFF";
 	GotoXY(x, y);
@@ -92,7 +93,6 @@ void StaffChoose(int x, int y) {
 	GotoXY(20 + x, 4 + y);	cout << char(217);
 }
 void ChoosedStudent(int a, int b) {
-
 	int x = a + 30, y = b;
 	textcolor(3);
 	GotoXY(3 + x, 2 + y); cout << "LOGIN AS STUDENT";
@@ -198,7 +198,7 @@ void staff_Menu(string username, _Student*& headStu) {
 	do {
 		cout << "Choose your option" << endl;
 		cout << "1. View info" << endl;
-		cout << "2. Change Password" << endl;
+		cout << "2. Create Course Registration Session" << endl;
 		cout << "3. Create School year" << endl;
 		cout << "4. Courses System" << endl;
 		cout << "5. Add student lists to the system" << endl;
@@ -211,7 +211,7 @@ void staff_Menu(string username, _Student*& headStu) {
 			break;
 		}
 		case 2: {
-			cout << "This feature is still in progress. Please try again later" << endl;
+			create_Course_Registration();
 			break;
 		}
 		case 3: {
@@ -289,8 +289,7 @@ void student_Menu(_Student* Node) {
 		}
 
 		case 3: {
-			cout << "This feature is still in progress. Please try again later" << endl;
-			//CoursesRegistration(Node);
+			register_Course(Node);
 			break;
 		}
 
