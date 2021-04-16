@@ -322,6 +322,8 @@ void log_In_System(int x, int y) {
 	int running = true;
 	do {
 		MainMenu(x, y);
+		cout << "1.student"<<endl;
+		cout << "2.staff"<<endl;
 		cin >> choose;
 
 		switch (choose)
