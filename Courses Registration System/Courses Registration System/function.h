@@ -104,5 +104,7 @@ void currentDateTime();
 wstring stringToWString(string str);
 string WStringToString(wstring s);
 
-void log_In_System();
+void log_In_System(int x, int y);
+void MainMenu(int x, int y);
+void FixConsoleWindow();
 #endif

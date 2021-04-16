@@ -1,6 +1,7 @@
 #include "function.h"
 #include "staff.h"
 #include "student.h"
+#include<conio.h> // de getchar
 void menu_Course_Staff();
 
 void textcolor(int color) {
@@ -19,18 +20,6 @@ void ShowCur(bool CursorVisibility)
 
 	SetConsoleCursorInfo(handle, &ConCurInf);
 }
-void FixConsoleWindow() {
-
-	HWND consoleWindow = GetConsoleWindow();
-
-	LONG style = GetWindowLong(consoleWindow, GWL_STYLE);
-
-	style = style & ~(WS_MAXIMIZEBOX) & ~(WS_THICKFRAME);
-
-	SetWindowLong(consoleWindow, GWL_STYLE, style);
-	return;
-
-}
 
 void GotoXY(int x, int y) {
 
@@ -43,6 +32,164 @@ void GotoXY(int x, int y) {
 	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
 	return;
 }
+void FixConsoleWindow() {
+
+	HWND consoleWindow = GetConsoleWindow();
+
+	LONG style = GetWindowLong(consoleWindow, GWL_STYLE);
+
+	style = style & ~(WS_MAXIMIZEBOX) & ~(WS_THICKFRAME);
+
+	SetWindowLong(consoleWindow, GWL_STYLE, style);
+	return;
+
+}
+void ChoosedStaff(int x, int y) {
+	textcolor(3);
+	GotoXY(3 + x, 2 + y); cout << "LOGIN AS STAFF";
+	GotoXY(x, y);	cout << char(201);
+	for (int i = x + 1; i < x + 20; i++) {
+		cout << char(205);
+	}
+	for (int i = y + 1; i < y + 4; i++) {
+		GotoXY(x, i);
+		cout << char(186);
+	}
+	GotoXY(x, 4 + y);	cout << char(200);
+	for (int i = x + 1; i < x + 20; i++) {
+		cout << char(205);
+	}
+	GotoXY(20 + x, y);	cout << char(187);
+	for (int i = y + 1; i < y + 4; i++) {
+		GotoXY(20 + x, i);
+		cout << char(186);
+	}
+	GotoXY(20 + x, 4 + y);	cout << char(188);
+	textcolor(15);
+}
+void StaffChoose(int x, int y) {
+	GotoXY(3 + x, 2 + y); cout << "LOGIN AS STAFF";
+	GotoXY(x, y);
+	for (int i = x; i < x + 20; i++) {
+		cout << char(196);
+	}
+	GotoXY(x, y);
+	for (int i = y; i < y + 5; i++) {
+		GotoXY(x, i);
+		cout << char(179);
+	}
+	GotoXY(x, y + 4);
+	for (int i = x; i < x + 20; i++) {
+		cout << char(196);
+	}
+	for (int i = 1; i < 4; i++) {
+		GotoXY(20 + x, y + i);
+		cout << char(179);
+	}
+	GotoXY(x, y);	cout << char(218);
+	GotoXY(x, 4 + y);	cout << char(192);
+	GotoXY(20 + x, y);	cout << char(191);
+	GotoXY(20 + x, 4 + y);	cout << char(217);
+}
+void ChoosedStudent(int a, int b) {
+
+	int x = a + 30, y = b;
+	textcolor(3);
+	GotoXY(3 + x, 2 + y); cout << "LOGIN AS STUDENT";
+	GotoXY(x, y);	cout << char(201);
+	for (int i = x + 1; i < x + 20; i++) {
+		cout << char(205);
+	}
+
+	for (int i = y + 1; i < y + 4; i++) {
+		GotoXY(x, i);
+		cout << char(186);
+	}
+	GotoXY(x, 4 + y);	cout << char(200);
+	for (int i = x + 1; i < x + 20; i++) {
+		cout << char(205);
+	}
+	GotoXY(20 + x, y);	cout << char(187);
+	for (int i = y + 1; i < y + 4; i++) {
+		GotoXY(20 + x, i);
+		cout << char(186);
+	}
+	GotoXY(20 + x, 4 + y);	cout << char(188);
+	textcolor(15);
+}
+void StudentChoose(int a, int y) {
+	int x = a + 30;
+	GotoXY(3 + x, 2 + y); cout << "LOGIN AS STUDENT";
+	GotoXY(x, y);
+
+	for (int i = x; i <= x + 20; i++) {
+		cout << char(196);
+	}
+	GotoXY(x, y);
+	for (int i = y + 1; i < y + 5; i++) {
+		GotoXY(x, i);
+		cout << char(179);
+	}
+	GotoXY(x, y + 4);
+	for (int i = x; i <= x + 20; i++) {
+		cout << char(196);
+	}
+	for (int i = 1; i < 4; i++) {
+		GotoXY(20 + x, y + i);
+		cout << char(179);
+	}
+	GotoXY(x, y);	cout << char(218);
+	GotoXY(x, 4 + y);	cout << char(192);
+	GotoXY(20 + x, y);	cout << char(191);
+	GotoXY(20 + x, 4 + y);	cout << char(217);
+}
+
+void menustaff(int x, int y) {
+
+}
+void menustudent(int x, int y) {
+
+}
+
+void MainMenu(int x, int y) {
+	int temp;
+	int i = 0;
+	//system("cls");
+	ShowCur(0);
+	ChoosedStaff(x, y);
+	StudentChoose(x, y);
+	while (true) {
+		//system("cls");
+		ShowCur;
+		if (i == 0) {
+			StudentChoose(x, y);
+			ChoosedStaff(x, y);
+		}
+		if (i == 1) {
+			ChoosedStudent(x, y);
+			StaffChoose(x, y);
+		}
+		temp = _getch();
+		if (temp == 'a' || temp == 'A' || temp == 75) {
+			if (i == 0) i++;
+			else i--;
+		}
+		if (temp == 'd' || temp == 'D' || temp == 77) {
+			if (i == 1) i--;
+			else i++;
+		}
+		else if (temp == 13 || temp == 32) {
+			switch (i) {
+			case 0: system("cls");
+				menustaff(x, y); break;
+			case 1:system("cls");
+				menustudent(x, y); break;
+			}
+		}
+		if (temp == 13 || temp == 32) break;
+	}
+}
+
 
 void staff_Menu(string username, _Student*& headStu) {
 	headStu = nullptr;
@@ -167,18 +314,14 @@ void student_Menu(_Student* Node) {
 		cin >> choose;
 	}
 }
-
-void log_In_System() {
+void log_In_System(int x, int y) {
 	_Student* head = nullptr;
 	string username;
 	int choose;
-	
+
 	int running = true;
 	do {
-		cout << "Log in:" << endl;
-		cout << "\t1. Students of HCMUS" << endl;
-		cout << "\t2. Academic Staff of HCMUS" << endl;
-
+		MainMenu(x, y);
 		cin >> choose;
 
 		switch (choose)
@@ -196,7 +339,8 @@ void log_In_System() {
 		default:
 			break;
 		}
-	} while (running); 
+	} while (running);
 
 	deleteStudentList(head);
 }
+

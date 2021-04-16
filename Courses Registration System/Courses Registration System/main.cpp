@@ -4,6 +4,7 @@
 
 int main() {
 	currentDateTime();
-	log_In_System();
+	FixConsoleWindow();
+	log_In_System(30, 10);
 	return 0;
 }
