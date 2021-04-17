@@ -655,3 +655,38 @@ void add_Schoolyear(Date& schoolyear) {
 		}
 	} while (running);
 }
+
+void studentRegisterSub() {
+	string sub;
+	string cl;
+	_Student* stu;
+	cout << "Input the subject title: ";
+	cin.ignore();
+	getline(cin, sub);
+	cout << endl << "Input the class: ";
+	cin.ignore();
+	getline(cin, cl);
+	wifstream fileIn;
+	wofstream fileOut;
+	Student x;
+	int count;
+	wchar_t a = ',';
+	wstring dob;
+	fileIn.open(cl + ".csv", ios_base::in);
+	if (!fileIn.is_open()) return;
+	fileOut.open(cl + "_" + sub + ".csv", ios_base::out);
+	if (!fileOut.is_open()) return;
+	fileOut << "No" << a << "ID" << a << "First Name" << a << "Last Name" << a << "Gender" << a << "Social ID" << endl;
+	while (!fileIn.eof()) {
+		fileIn >> x.Number_In_Class >> a >> x.ID_Student >> a >> x.firstName >> a >> x.lastName >> a >> x.gender >> a >> dob >> a >> x.Social_ID >> a;
+		while (x.subregis != nullptr) {
+			if (x.subregis->subjects_Data.course_Data.course_Name == sub) {
+				count++;
+				fileOut << count << a << x.ID_Student << a << x.firstName << a << x.lastName << a << x.gender << a << dob << a << x.Social_ID << a << endl;
+			}
+			x.subregis = x.subregis->data_Next;
+		}
+	}
+	fileIn.close();
+	fileOut.close();
+}

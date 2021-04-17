@@ -208,19 +208,3 @@ void subjectsList() {
 //	delete deletesub;
 //}
 
-/*void studentRegisterSub(_Student* Node) {
-	string sub;
-	string cl;
-	cout << "Input the subject title: ";
-	cin.ignore();
-	getline(cin, sub);
-	cout << endl << "Input the class: ";
-	cin.ignore();
-	getline(cin, cl);
-	ifstream fin;
-	fin.open(cl + ".csv");
-	if (!fin.is_open()) cout << endl << "File can not open...";
-	else {
-
-	}
-}*/
