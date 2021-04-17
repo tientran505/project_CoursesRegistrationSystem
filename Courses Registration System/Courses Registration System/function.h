@@ -10,14 +10,17 @@
 #include <locale>
 #include <ctime>
 #include <windows.h>
-
+#include <stdio.h>
 using namespace std;
 
-const string dir = "E:/HCMUS/Sem 2/Programming Techniques/Project - A Courses Registration System/project_CoursesRegistrationSystem/Courses Registration System/Courses Registration System/";
+const string dir = "C:/Users/huyvu/Desktop/ktlt/project_KTLT_Group09/Courses Registration System/Courses Registration System/";
 const string dirClass = "Class/";
 const string dirCourse = "Course/";
 const string dirRegis = "Registration/";
 const string dirStaff = "Staff/";
+const string dirCourse_Student = "Registration_Student/";
+
+
 
 struct Date {
 	int day;
@@ -26,7 +29,7 @@ struct Date {
 };
 
 struct Time {
-	int hour, minute, second;
+	int hour, minute;
 };
 
 struct Student_Schedule {
@@ -104,5 +107,13 @@ void currentDateTime();
 wstring stringToWString(string str);
 string WStringToString(wstring s);
 
-void log_In_System();
+void textcolor(int color);
+void ShowCur(bool CursorVisibility);
+void GotoXY(int x, int y);
+
+void viewCourseList(string path);
+
+void log_In_System(int x, int y);
+int MainMenu(int x, int y);
+void FixConsoleWindow();
 #endif
