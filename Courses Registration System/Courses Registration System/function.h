@@ -18,6 +18,9 @@ const string dirClass = "Class/";
 const string dirCourse = "Course/";
 const string dirRegis = "Registration/";
 const string dirStaff = "Staff/";
+const string dirCourse_Student = "Registration_Student/";
+
+
 
 struct Date {
 	int day;
@@ -26,7 +29,7 @@ struct Date {
 };
 
 struct Time {
-	int hour, minute, second;
+	int hour, minute;
 };
 
 struct Student_Schedule {
@@ -103,9 +106,13 @@ struct subject {
 void currentDateTime();
 wstring stringToWString(string str);
 string WStringToString(wstring s);
+
 void textcolor(int color);
 void ShowCur(bool CursorVisibility);
 void GotoXY(int x, int y);
+
+void viewCourseList(string path);
+
 void log_In_System(int x, int y);
 int MainMenu(int x, int y);
 void FixConsoleWindow();

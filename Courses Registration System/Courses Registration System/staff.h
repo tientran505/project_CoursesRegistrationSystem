@@ -10,7 +10,6 @@ void staff_Login(string& username);
 void showInfo_Staff(string username);
 void add_Schoolyear(Date& schoolyear);
 void createCourseList(string path);
-void viewCourseList(string path);
 void update_Course_Info();
 void delete_Courses();
-//void add_Course();
+void create_Course_Registration();

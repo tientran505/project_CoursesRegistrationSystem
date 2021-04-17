@@ -14,7 +14,6 @@ string WStringToString(wstring s)
 	return temp;
 }
 
-
 void showInfo_Student(_Student* Node) {
 	cout << "Information of student" << endl;
 	_setmode(_fileno(stdout), _O_U8TEXT);
@@ -102,7 +101,6 @@ void changePass(_Student* Node) {
 	}
 }
 
-
 void editPassword(_Student* Node) {
 	string curPassword, newPassword, retype;
 	cout << "Change password" << endl;
@@ -137,6 +135,88 @@ int stringToInt(string str) {
 		sum += (int)(str[i] - 48);
 	}
 	return sum;
+}
+
+bool compare_Time(Time timeCur, Time timeStart, Time timeEnd) { // check timeCur whether if is between timeStart & timeEnd
+	if (timeCur.hour >= timeStart.hour && timeCur.hour <= timeEnd.hour) {
+		if (timeCur.minute >= timeStart.minute && timeCur.minute <= timeEnd.minute) return true;
+		else return false;
+	}
+	else return false;
+}
+
+bool can_Register_Course(Date dateCur, Date dateStart, Date dateEnd, Time timeCur, Time timeStart, Time timeEnd) { // check dateFirst whether if is in betwwen dateStart & dateEnd
+	if (dateCur.year >= dateStart.year && dateCur.year <= dateEnd.year) {
+		if (dateCur.month >= dateStart.month && dateCur.month <= dateEnd.month) {
+			if (dateCur.day > dateStart.day && dateCur.day < dateEnd.day) return true;
+			else if (dateCur.day == dateEnd.day) return compare_Time(timeCur, timeStart, timeEnd);
+			else return false;
+		}
+		else return false;
+	}
+	else return false;
+}
+
+
+void register_Course(_Student* Node) {
+	string id_Stu = to_string(Node->data.ID_Student);
+	ofstream fileOut;
+	fileOut.open(dir + dirCourse_Student + id_Stu + "_RegistedCourses.txt", ios_base::out);
+
+	if (!fileOut.is_open()) {
+		cout << "Can't create Course. Pls try again!" << endl;
+		fileOut.close();
+		return;
+	}
+
+	time_t now = time(0);
+	tm* ltm = localtime(&now);
+
+	ifstream read;
+	read.open(dir + dirRegis + "Registration.txt", ios_base::in);
+
+	if (!read.is_open()) {
+		cout << "File is not found!" << endl;
+		fileOut.close();
+		read.close();
+		return;
+	}
+
+	Date dateStart, dateEnd;
+	Time timeStart, timeEnd;
+	
+	char a = '/', b = ':', c = ',';
+
+	read >> dateStart.day >> a >> dateStart.month >> a >> dateStart.year >> c;
+	read >> timeStart.hour >> b >> timeStart.minute;
+
+	read >> dateEnd.day >> a >> dateEnd.month >> a >> dateEnd.year >> c;
+	read >> timeEnd.hour >> b >> timeEnd.minute;
+
+	read.close();
+
+	Date dateCur;
+	dateCur.year = 1900 + ltm->tm_year;
+	dateCur.month = ltm->tm_mon + 1;
+	dateCur.day = ltm->tm_mday;
+
+	Time timeCur;
+	timeCur.hour = ltm->tm_hour;
+	timeCur.minute = ltm->tm_min;
+
+	cout << "Date: " << dateCur.day << "/" << dateCur.month << "/" << dateCur.year << endl;
+	cout << "Time: " << timeCur.hour << ":" << timeCur.minute << endl;
+	cout << can_Register_Course(dateCur, dateStart, dateEnd, timeCur, timeStart, timeEnd) << endl;
+
+	if (!can_Register_Course(dateCur, dateStart, dateEnd, timeCur, timeStart, timeEnd)) {
+		cout << "Registration has expired!" << endl;
+		fileOut.close();
+		return;
+	}
+
+	viewCourseList(dir + dirCourse + "CoursesRegistration.txt");
+
+	fileOut.close();
 }
 
 //void readCourse(_Student* Node) {

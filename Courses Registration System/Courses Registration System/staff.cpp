@@ -192,12 +192,12 @@ void staff_Login(string& username) {
 	}
 }
 
-void turnOnVietChar() {
+void turnOnVietText() {
 	_setmode(_fileno(stdin), _O_U16TEXT);
 	_setmode(_fileno(stdout), _O_U16TEXT);
 }
 
-void turnOffVietChar() {
+void turnOffVietText() {
 	_setmode(_fileno(stdin), _O_TEXT);
 	_setmode(_fileno(stdout), _O_TEXT);
 }
@@ -235,7 +235,6 @@ void createCourseList(string path) {
 	}
 
 	int no = check_Line(path); 
-	cout << endl << "Curent Line: " << no << endl;
 
 	do {
 		cout << "INFORMATION OF COURSE!" << endl;
@@ -254,14 +253,14 @@ void createCourseList(string path) {
 		strcpy_s(courseName, strlen(sTmp) + 1, sTmp);
 
 		cout << "Teacher Name: ";
-		turnOnVietChar();
+		turnOnVietText();
 		cin.ignore(1000, '\n');
 		wchar_t wsTmp[101];
 		wcin.get(wsTmp, 101, '\n');
 		teacherName = new wchar_t[wcslen(wsTmp) + 1];
 		wcscpy_s(teacherName, wcslen(wsTmp) + 1, wsTmp);
 		wcin.ignore(1000, '\n');
-		turnOffVietChar();
+		turnOffVietText();
 
 		cout << "Number of credits: ";
 		cin >> credits;
@@ -332,7 +331,7 @@ void createCourseList(string path) {
 
 void viewCourseList(string path) {
 	wifstream fileIn;
-	fileIn.open(path, ios_base::in);
+	fileIn.open(dir + dirCourse + "CoursesRegistration.txt", ios_base::in);
 
 	if (!fileIn.is_open() || check_Line(path) == 0) {
 		cout << "You haven't created any course yet. Please create the course first" << endl;
@@ -349,7 +348,7 @@ void viewCourseList(string path) {
 		wstring teacherName;
 		wchar_t a = ',';
 		wstring junk;
-		turnOnVietChar();
+		turnOnVietText();
 		fileIn >> no >> a;
 		getline(fileIn, courseID, a);
 		getline(fileIn, courseName, a);
@@ -360,7 +359,7 @@ void viewCourseList(string path) {
 		getline(fileIn, s1, a);
 		getline(fileIn, d2, a);
 		getline(fileIn, s2);
-		turnOffVietChar();
+		turnOffVietText();
 		_setmode(_fileno(stdout), _O_U8TEXT);
 		wcout << no << " - " << courseID << " - " << courseName << endl;
 		wcout << "Lecturer: " << teacherName << endl;
@@ -462,13 +461,13 @@ void update_Course_Info() {
 	case 3: {
 		wchar_t sTmp[101];
 		cout << "Enter new Teacher's name: ";
-		turnOnVietChar();
+		turnOnVietText();
 		cin.ignore(1000, '\n');
 		wcin.get(sTmp, 101, '\n');
 		wchar_t* teacherName = new wchar_t[wcslen(sTmp) + 1];
 		wcscpy_s(teacherName, wcslen(sTmp) + 1, sTmp);
 		wcin.ignore(1000, '\n');
-		turnOffVietChar();
+		turnOffVietText();
 		wstring tmp;
 		getline(fileOld, tmp, a);
 		fileNew << tmp << ",";
@@ -655,6 +654,64 @@ void showInfo_Staff(string username) {
 	fileIn.close();
 }
 
+void create_Course_Registration() {
+	ofstream fileOut;
+	bool running = true;
+
+	fileOut.open(dir + dirRegis + "Registration.txt", ios_base::out);
+
+	if (!fileOut.is_open()) {
+		cout << "Can't create Courese Registration. Pls try again!" << endl;
+		fileOut.close();
+		return;
+	}
+
+	Date dayStart, dayEnd;
+	int hourStart, hourEnd, minuteStart, minuteEnd;
+
+	do {
+		cout << "Input Date Course registration session is open (DD/MM/YYYY): ";
+		cin >> dayStart.day >> dayStart.month >> dayStart.year;
+		cout << "Time (24 Clock - HH:MM): ";
+		cin >> hourStart >> minuteStart;
+
+		cout << "Input Date Course registration seesion is close (DD/MM/YYYY): ";
+		cin >> dayEnd.day >> dayEnd.month >> dayEnd.year;
+		cout << "Time (24h Clock - HH:MM): ";
+		cin >> hourEnd >> minuteEnd;
+
+		string minuteTmp = to_string(minuteStart);
+		if (minuteStart < 10) minuteTmp = "0" + minuteTmp;
+
+		cout << "Pls confirm before creating registration session (Press Y to confirm, N to type again!" << endl;
+		cout << "Start Date: " << dayStart.day << "/" << dayStart.month << "/" << dayStart.year << endl;
+		cout << "Time: " << hourStart << ":" << minuteTmp << endl;
+
+		string minuteTmp_End = to_string(minuteEnd);
+		if (minuteEnd < 10) minuteTmp_End = "0" + minuteTmp_End;
+
+		cout << "End Date: " << dayEnd.day << "/" << dayEnd.month << "/" << dayEnd.year << endl;
+		cout << "Time: " << hourEnd << ":" << minuteTmp_End << endl;
+
+		string choose;
+		cout << "Confirm? ";
+		cin >> choose;
+
+		if (choose == "Y" || choose == "y") {
+			cout << "Course Registration completely created!" << endl;
+
+			fileOut << dayStart.day << "/" << dayStart.month << "/" << dayStart.year << ",";
+			fileOut << hourStart << ":" << minuteTmp << endl;
+			fileOut << dayEnd.day << "/" << dayEnd.month << "/" << dayEnd.year << ",";
+			fileOut << hourEnd << ":" << minuteTmp_End;
+
+			running = false;
+		}
+	} while (running);
+	
+
+	fileOut.close();
+}
 
 void add_Schoolyear(Date& schoolyear) {
 	int running = true;
