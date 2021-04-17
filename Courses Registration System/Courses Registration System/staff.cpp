@@ -1,5 +1,6 @@
 #include "staff.h"
 #include "student.h"
+#include "function.h"
 
 void loadStudentList(string path, _Student*& head) {
 	head = nullptr;
@@ -155,10 +156,13 @@ void staff_Login(string& username) {
 	string password;
 	string userTmp, passTmp;
 	while (running) {
+		GotoXY(25, 10);
 		cout << "Username: ";
 		cin >> username;
+		GotoXY(25, 12);
 		cout << "Password: ";
 		cin >> password;
+
 		fileIn.open(dir + dirStaff + "Staff_Account.txt", ios_base::in);
 		while (!fileIn.eof()) {
 			string userTmp, passTmp;
@@ -169,8 +173,21 @@ void staff_Login(string& username) {
 				break;
 			}
 		}
-		if (!running) cout << "Login Successfully!" << endl;
-		else cout << "Invalid login, please try again" << endl;
+		if (!running) {
+			system("cls");
+			GotoXY(35, 11);
+			cout << "Login Successfully!" << endl;
+			Sleep(200);
+			system("cls");
+		}
+		else {
+			
+			system("cls");
+			GotoXY(35, 11);
+			cout << "Invalid login, please try again" << endl;
+			Sleep(1000);
+			system("cls");
+		}
 		fileIn.close();
 	}
 }

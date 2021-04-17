@@ -143,15 +143,9 @@ void StudentChoose(int a, int y) {
 	GotoXY(20 + x, y);	cout << char(191);
 	GotoXY(20 + x, 4 + y);	cout << char(217);
 }
+void staff_Menu(string username, _Student*& headStu);
 
-void menustaff(int x, int y) {
-
-}
-void menustudent(int x, int y) {
-
-}
-
-void MainMenu(int x, int y) {
+int MainMenu(int x, int y) {
 	int temp;
 	int i = 0;
 	//system("cls");
@@ -181,12 +175,11 @@ void MainMenu(int x, int y) {
 		else if (temp == 13 || temp == 32) {
 			switch (i) {
 			case 0: system("cls");
-				menustaff(x, y); break;
+				return 1;
 			case 1:system("cls");
-				menustudent(x, y); break;
+				return 2;
 			}
 		}
-		if (temp == 13 || temp == 32) break;
 	}
 }
 
@@ -195,40 +188,84 @@ void staff_Menu(string username, _Student*& headStu) {
 	headStu = nullptr;
 	Date schoolyear;
 	int choose;
+	int i = 0;
+	int temp;
+	system("cls");
+	ShowCur(0);
+	GotoXY(40, 5);
+	string menu[6] = { "1. View info","2. Change Password", "3. Create School year","4. Courses System", "5. Add student lists to the system" , "6. Log out" };
 	do {
-		cout << "Choose your option" << endl;
-		cout << "1. View info" << endl;
-		cout << "2. Change Password" << endl;
-		cout << "3. Create School year" << endl;
-		cout << "4. Courses System" << endl;
-		cout << "5. Add student lists to the system" << endl;
-		cout << "6. Log out" << endl;
-		cin >> choose;
-		switch (choose)
+		while (true) {
+			system("cls");
+			for (int j = 0; j < 6; j++) {
+				if (j == i) {
+					textcolor(12);
+					GotoXY(39, 5 + j);
+					cout << " > " << menu[j] << " < " << endl;
+					textcolor(15);
+				}
+				else {
+					textcolor(15);
+					GotoXY(40, 5 + j);
+					cout << " " << menu[j] << " " << endl;
+				}
+			}
+			temp = _getch();
+			if (temp == 's' || temp == 'S' || temp == 80) {
+				i++;
+				if (i == 6) i = 0;
+			}
+			if (temp == 'w' || temp == 'W' || temp == 72) {
+				i--;
+				if (i == -1) i = 5;
+			}
+			if (temp == 13 || temp == 32) break;
+		}
+		system("cls");
+		i++;
+		switch (i)
 		{
 		case 1: {
 			showInfo_Staff(username);
+			cout << endl;
+			cout << " enter to continue";
+			choose = _getch();
+			
 			break;
 		}
 		case 2: {
 			cout << "This feature is still in progress. Please try again later" << endl;
+			cout << endl;
+			cout << " enter to continue";
+			choose = _getch();
 			break;
 		}
 		case 3: {
 			add_Schoolyear(schoolyear);
+			cout << endl;
+			cout << " enter to continue";
+			choose = _getch();
 			break;
 		}
 		case 4: {
 			menu_Course_Staff();
+			cout << endl;
+			cout << " enter to continue";
+			choose = _getch();
 			break;
 		}
 		case 5: {
 			string path;
 			listStudents(headStu);
+			cout << endl;
+			cout << " enter to continue";
+			choose = _getch();
 			break;
 		}
 		}
-	} while (choose != 6);
+		
+	} while (i != 6);
+
 }
 
 
@@ -321,19 +358,16 @@ void log_In_System(int x, int y) {
 
 	int running = true;
 	do {
-		MainMenu(x, y);
-		cout << "1.student"<<endl;
-		cout << "2.staff"<<endl;
-		cin >> choose;
-
+		choose=MainMenu(x, y);
+		
 		switch (choose)
 		{
-		case 1: {
+		case 2: {
 			_Student* Node = logInSystem_Student(head);
 			student_Menu(Node);
 			break;
 		}
-		case 2: {
+		case 1: {
 			staff_Login(username);
 			staff_Menu(username, head);
 			break;

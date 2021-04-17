@@ -10,10 +10,10 @@
 #include <locale>
 #include <ctime>
 #include <windows.h>
-
+#include <stdio.h>
 using namespace std;
 
-const string dir = "E:/HCMUS/Sem 2/Programming Techniques/Project - A Courses Registration System/project_CoursesRegistrationSystem/Courses Registration System/Courses Registration System/";
+const string dir = "C:/Users/huyvu/Desktop/ktlt/project_KTLT_Group09/Courses Registration System/Courses Registration System/";
 const string dirClass = "Class/";
 const string dirCourse = "Course/";
 const string dirRegis = "Registration/";
@@ -103,8 +103,10 @@ struct subject {
 void currentDateTime();
 wstring stringToWString(string str);
 string WStringToString(wstring s);
-
+void textcolor(int color);
+void ShowCur(bool CursorVisibility);
+void GotoXY(int x, int y);
 void log_In_System(int x, int y);
-void MainMenu(int x, int y);
+int MainMenu(int x, int y);
 void FixConsoleWindow();
 #endif
