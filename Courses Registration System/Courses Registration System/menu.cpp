@@ -44,6 +44,7 @@ void FixConsoleWindow() {
 	return;
 
 }
+
 void ChoosedStaff(int x, int y) {
 	textcolor(3);
 	GotoXY(3 + x, 2 + y); cout << "LOGIN AS STAFF";
@@ -91,6 +92,7 @@ void StaffChoose(int x, int y) {
 	GotoXY(20 + x, y);	cout << char(191);
 	GotoXY(20 + x, 4 + y);	cout << char(217);
 }
+
 void ChoosedStudent(int a, int b) {
 
 	int x = a + 30, y = b;
@@ -117,6 +119,7 @@ void ChoosedStudent(int a, int b) {
 	GotoXY(20 + x, 4 + y);	cout << char(188);
 	textcolor(15);
 }
+
 void StudentChoose(int a, int y) {
 	int x = a + 30;
 	GotoXY(3 + x, 2 + y); cout << "LOGIN AS STUDENT";
@@ -185,7 +188,6 @@ int MainMenu(int x, int y) {
 
 
 void staff_Menu(string username, _Student*& headStu) {
-	headStu = nullptr;
 	Date schoolyear;
 	int choose;
 	int i = 0;
@@ -193,7 +195,7 @@ void staff_Menu(string username, _Student*& headStu) {
 	system("cls");
 	ShowCur(0);
 	GotoXY(40, 5);
-	string menu[6] = { "1. View info","2. Change Password", "3. Create School year","4. Courses System", "5. Add student lists to the system" , "6. Log out" };
+	string menu[6] = { "1. View info","2. Create Course Registration Session", "3. Create School year","4. Courses System", "5. Add student lists to the system" , "6. Log out" };
 	do {
 		while (true) {
 			system("cls");
@@ -234,7 +236,7 @@ void staff_Menu(string username, _Student*& headStu) {
 			break;
 		}
 		case 2: {
-			cout << "This feature is still in progress. Please try again later" << endl;
+			create_Course_Registration();
 			cout << endl;
 			cout << " enter to continue";
 			choose = _getch();
@@ -255,7 +257,6 @@ void staff_Menu(string username, _Student*& headStu) {
 			break;
 		}
 		case 5: {
-			string path;
 			listStudents(headStu);
 			cout << endl;
 			cout << " enter to continue";
@@ -300,7 +301,6 @@ void menu_Course_Staff() {
 	} while (choose != 5);
 }
 
-
 void student_Menu(_Student* Node) {
 	cout << "Choose your option" << endl;
 	cout << "[1]. View Info" << endl;
@@ -326,8 +326,7 @@ void student_Menu(_Student* Node) {
 		}
 
 		case 3: {
-			cout << "This feature is still in progress. Please try again later" << endl;
-			//CoursesRegistration(Node);
+			register_Course(Node);
 			break;
 		}
 
@@ -353,8 +352,10 @@ void student_Menu(_Student* Node) {
 }
 void log_In_System(int x, int y) {
 	_Student* head = nullptr;
-	string username;
+	loadStu_Save(head);
+	cout << "Load success!" << endl;
 	int choose;
+	string username;
 
 	int running = true;
 	do {

@@ -13,13 +13,13 @@
 #include <stdio.h>
 using namespace std;
 
-const string dir = "C:/Users/huyvu/Desktop/ktlt/project_KTLT_Group09/Courses Registration System/Courses Registration System/";
+const string dir = "E:/HCMUS/Sem 2/Programming Techniques/Project - A Courses Registration System/project_CoursesRegistrationSystem/Courses Registration System/Courses Registration System/";
 const string dirClass = "Class/";
 const string dirCourse = "Course/";
 const string dirRegis = "Registration/";
 const string dirStaff = "Staff/";
 const string dirCourse_Student = "Registration_Student/";
-
+const string dirClass_Save = "Class_Save/";
 
 
 struct Date {
@@ -116,4 +116,5 @@ void viewCourseList(string path);
 void log_In_System(int x, int y);
 int MainMenu(int x, int y);
 void FixConsoleWindow();
+int check_Line(string path);
 #endif

@@ -122,6 +122,39 @@ void editPassword(_Student* Node) {
 			}
 			Node->data.student_Account.password = newPassword;
 			cout << "Change password successfully" << endl;
+			ifstream readFile;
+			ofstream fileOut;
+			readFile.open(dir + dirClass_Save + "save_Account_" + Node->data.class_Of_Student + ".txt", ios_base::in);
+			fileOut.open(dir + dirClass_Save + "change.txt", ios_base::out);
+			int i = 0;
+			while (!readFile.eof()) {
+				string idTmp;
+				if (i != 0) fileOut << endl;
+				getline(readFile, idTmp, ',');
+				fileOut << idTmp << ",";
+				if (idTmp == Node->data.student_Account.ID) {
+					fileOut << Node->data.student_Account.password;
+					getline(readFile, idTmp);
+				}
+				else {
+					getline(readFile, newPassword);
+					fileOut << newPassword;
+				}
+				i++;
+			}
+			readFile.close();
+			fileOut.close();
+			
+			string tmp = dir + dirClass_Save + "save_Account_" + Node->data.class_Of_Student + ".txt";
+			char* newName = new char[tmp.length() + 1];
+			strcpy_s(newName, tmp.length() + 1, tmp.c_str());
+			remove(newName);
+			string oldNameTmp = dir + dirClass_Save + "change.txt";
+			char* oldName = new char[oldNameTmp.length() + 1];
+			strcpy_s(oldName, oldNameTmp.length() + 1, oldNameTmp.c_str());
+			rename(oldName, newName);
+			delete[] newName;
+			delete[] oldName;
 			return;
 		}
 		else cout << "Enter a valid password and try again." << endl;
@@ -137,19 +170,20 @@ int stringToInt(string str) {
 	return sum;
 }
 
-bool compare_Time(Time timeCur, Time timeStart, Time timeEnd) { // check timeCur whether if is between timeStart & timeEnd
-	if (timeCur.hour >= timeStart.hour && timeCur.hour <= timeEnd.hour) {
-		if (timeCur.minute >= timeStart.minute && timeCur.minute <= timeEnd.minute) return true;
-		else return false;
-	}
-	else return false;
-}
-
 bool can_Register_Course(Date dateCur, Date dateStart, Date dateEnd, Time timeCur, Time timeStart, Time timeEnd) { // check dateFirst whether if is in betwwen dateStart & dateEnd
 	if (dateCur.year >= dateStart.year && dateCur.year <= dateEnd.year) {
 		if (dateCur.month >= dateStart.month && dateCur.month <= dateEnd.month) {
 			if (dateCur.day > dateStart.day && dateCur.day < dateEnd.day) return true;
-			else if (dateCur.day == dateEnd.day) return compare_Time(timeCur, timeStart, timeEnd);
+			else if (dateCur.day == dateStart.day) {
+				if (timeCur.hour > timeStart.hour) return true;
+				else if (timeCur.hour == timeStart.hour) return (timeCur.minute >= timeStart.minute);
+				else return false;
+			}
+			else if (dateCur.day == dateEnd.day) {
+				if (timeCur.hour < timeEnd.hour) return true;
+				else if (timeCur.hour == timeEnd.hour) return (timeCur.minute < timeEnd.minute);
+				else return false;
+			}
 			else return false;
 		}
 		else return false;
@@ -206,7 +240,6 @@ void register_Course(_Student* Node) {
 
 	cout << "Date: " << dateCur.day << "/" << dateCur.month << "/" << dateCur.year << endl;
 	cout << "Time: " << timeCur.hour << ":" << timeCur.minute << endl;
-	cout << can_Register_Course(dateCur, dateStart, dateEnd, timeCur, timeStart, timeEnd) << endl;
 
 	if (!can_Register_Course(dateCur, dateStart, dateEnd, timeCur, timeStart, timeEnd)) {
 		cout << "Registration has expired!" << endl;
