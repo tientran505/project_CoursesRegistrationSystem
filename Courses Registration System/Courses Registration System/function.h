@@ -11,9 +11,10 @@
 #include <ctime>
 #include <windows.h>
 #include <stdio.h>
+#include <conio.h>
 using namespace std;
 
-const string dir = "C:/Users/huyvu/Desktop/ktlt/project_KTLT_Group09/Courses Registration System/Courses Registration System/";
+const string dir = "E:/HCMUS/Sem 2/Programming Techniques/Project - A Courses Registration System/project_CoursesRegistrationSystem/Courses Registration System/Courses Registration System/";
 const string dirClass = "Class/";
 const string dirCourse = "Course/";
 const string dirRegis = "Registration/";

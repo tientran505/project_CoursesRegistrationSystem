@@ -3,6 +3,7 @@
 #include "student.h"
 
 void menu_Course_Staff();
+void staff_Menu(string username, _Student*& headStu);
 
 void textcolor(int color) {
 	HANDLE hConsoleColor;
@@ -68,6 +69,7 @@ void ChoosedStaff(int x, int y) {
 	GotoXY(20 + x, 4 + y);	cout << char(188);
 	textcolor(15);
 }
+
 void StaffChoose(int x, int y) {
 	GotoXY(3 + x, 2 + y); cout << "LOGIN AS STAFF";
 	GotoXY(x, y);
@@ -146,7 +148,8 @@ void StudentChoose(int a, int y) {
 	GotoXY(20 + x, y);	cout << char(191);
 	GotoXY(20 + x, 4 + y);	cout << char(217);
 }
-void staff_Menu(string username, _Student*& headStu);
+
+
 
 int MainMenu(int x, int y) {
 	int temp;
@@ -201,7 +204,6 @@ void staff_Menu(string username, _Student*& headStu) {
 	ShowCur(0);
 	GotoXY(40, 5);
 	string menu[6] = { "1. View info","2. Create Course Registration Session", "3. Create School year","4. Course Registration Management System", "5. Add student lists to the system" , "6. Log out" };
-	string menu[6] = { "1. View info","2. Create Course Registration Session", "3. Create School year","4. Courses System", "5. Add student lists to the system" , "6. Log out" };
 	do {
 		while (true) {
 			system("cls");
@@ -271,7 +273,6 @@ void staff_Menu(string username, _Student*& headStu) {
 	} while (i != 6);
 
 }
-
 
 void menu_Course_Staff() {
 	int choose;

@@ -193,7 +193,6 @@ bool can_Register_Course(Date dateCur, Date dateStart, Date dateEnd, Time timeCu
 	else return false;
 }
 
-
 void register_Course(_Student* Node) {
 	time_t now = time(0);
 	tm* ltm = localtime(&now);
@@ -240,7 +239,6 @@ void register_Course(_Student* Node) {
 	viewCourseList(dir + dirCourse + "CoursesRegistration.txt");
 	register_One_Course(Node);
 }
-
 
 void register_One_Course(_Student* Node) {
 	wifstream read;
@@ -307,8 +305,8 @@ void register_One_Course(_Student* Node) {
 			if (num_Of_Line != 0) fileOut << endl;
 
 			fileOut << num_Of_Line + 1 << ",";
-			fileOut << Node->data.firstName << " " << Node->data.lastName << ",";
 			fileOut << Node->data.ID_Student << ",";
+			fileOut << Node->data.firstName << " " << Node->data.lastName << ",";
 			fileOut << Node->data.gender << ",";
 			fileOut << Node->data.Date_Of_Birth.day << "/" << Node->data.Date_Of_Birth.month << "/" << Node->data.Date_Of_Birth.year;
 
@@ -320,7 +318,6 @@ void register_One_Course(_Student* Node) {
 		else getline(read, line);
 	}
 }
-
 
 void view_Reigstration_Results(_Subjects* Node) {
 	if (Node == nullptr) {
