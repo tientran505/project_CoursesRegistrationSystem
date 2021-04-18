@@ -19,7 +19,7 @@ const string dirCourse = "Course/";
 const string dirRegis = "Registration/";
 const string dirStaff = "Staff/";
 const string dirCourse_Student = "Registration_Student/";
-
+const string dirClass_Save = "Class_Save/";
 
 
 struct Date {
@@ -116,4 +116,5 @@ void viewCourseList(string path);
 void log_In_System(int x, int y);
 int MainMenu(int x, int y);
 void FixConsoleWindow();
+int check_Line(string path);
 #endif
