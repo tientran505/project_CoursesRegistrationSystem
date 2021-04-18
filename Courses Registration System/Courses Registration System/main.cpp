@@ -3,7 +3,7 @@
 #include "staff.h"
 
 int main() {
-	currentDateTime();
+	//currentDateTime();
 	FixConsoleWindow();
 	log_In_System(30, 10);
 	return 0;

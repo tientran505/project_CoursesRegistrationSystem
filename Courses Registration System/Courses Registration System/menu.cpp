@@ -1,7 +1,7 @@
 #include "function.h"
 #include "staff.h"
 #include "student.h"
-#include<conio.h> // de getchar
+
 void menu_Course_Staff();
 
 void textcolor(int color) {
@@ -151,13 +151,18 @@ void staff_Menu(string username, _Student*& headStu);
 int MainMenu(int x, int y) {
 	int temp;
 	int i = 0;
-	//system("cls");
+	system("cls");
 	ShowCur(0);
+	_Student* head = nullptr;
+	loadStu_Save(head);
+	cout << "Load success!" << endl;
+	currentDateTime();
 	ChoosedStaff(x, y);
 	StudentChoose(x, y);
 	while (true) {
 		//system("cls");
 		ShowCur;
+		//currentDateTime();
 		if (i == 0) {
 			StudentChoose(x, y);
 			ChoosedStaff(x, y);
@@ -196,6 +201,7 @@ void staff_Menu(string username, _Student*& headStu) {
 	ShowCur(0);
 	GotoXY(40, 5);
 	string menu[6] = { "1. View info","2. Create Course Registration Session", "3. Create School year","4. Course Registration Management System", "5. Add student lists to the system" , "6. Log out" };
+	string menu[6] = { "1. View info","2. Create Course Registration Session", "3. Create School year","4. Courses System", "5. Add student lists to the system" , "6. Log out" };
 	do {
 		while (true) {
 			system("cls");
@@ -251,9 +257,6 @@ void staff_Menu(string username, _Student*& headStu) {
 		}
 		case 4: {
 			menu_Course_Staff();
-			cout << endl;
-			cout << " enter to continue";
-			choose = _getch();
 			break;
 		}
 		case 5: {
@@ -271,34 +274,70 @@ void staff_Menu(string username, _Student*& headStu) {
 
 
 void menu_Course_Staff() {
-	int choose, running = true;
-	do {
-		cout << "1. Create/Add Course" << endl;
-		cout << "2. View list of Course" << endl;
-		cout << "3. Update Course infomation" << endl;
-		cout << "4. Delete a course" << endl;
-		cout << "5. Exit" << endl;
-		cin >> choose;
+	int choose;
+	int i = 0;
+	int temp;
+	system("cls");
+	ShowCur(0);
 
-		switch (choose) {
+	string menu[5] = { "1. Create/Add Course", "2. View list of Course", "3. Update Course infomation", "4. Delete a course", "5. Exit"};
+	do {
+		while (true) {
+			system("cls");
+			for (int j = 0; j < 5; j++) {
+				if (j == i) {
+					textcolor(12);
+					GotoXY(39, 5 + j);
+					cout << " > " << menu[j] << " < " << endl;
+					textcolor(15);
+				}
+				else {
+					textcolor(15);
+					GotoXY(40, 5 + j);
+					cout << " " << menu[j] << " " << endl;
+				}
+			}
+			temp = _getch();
+			if (temp == 's' || temp == 'S' || temp == 80) {
+				i++;
+				if (i == 5) i = 0;
+			}
+			if (temp == 'w' || temp == 'W' || temp == 72) {
+				i--;
+				if (i == -1) i = 4;
+			}
+			if (temp == 13 || temp == 32) break;
+		}
+		system("cls");
+		i++;
+		switch (i)
+		{
 		case 1: {
 			createCourseList(dir + dirCourse + "CoursesRegistration.txt");
+			cout << " enter to continue";
+			choose = _getch();
 			break;
 		}
 		case 2: {
 			viewCourseList(dir + dirCourse + "CoursesRegistration.txt");
+			cout << " enter to continue";
+			choose = _getch();
 			break;
 		}
 		case 3: {
 			update_Course_Info();
+			cout << " enter to continue";
+			choose = _getch();
 			break;
 		}
 		case 4: {
 			delete_Courses();
+			cout << " enter to continue";
+			choose = _getch();
 			break;
 		}
 		}
-	} while (choose != 5);
+	} while (i != 5);
 }
 
 void student_Course_Menu(_Student* Node) {
@@ -368,10 +407,9 @@ void student_Menu(_Student* Node) {
 		cout << "--------------------------------------\nChoose your option" << endl;
 		cout << "[1]. View Info" << endl;
 		cout << "[2]. Change password" << endl;
-		cout << "[3]. Sign up for the course" << endl;
-		cout << "[4]. Courses registration results" << endl;
-		cout << "[5]. View Scoreboard" << endl;
-		cout << "[6]. Logout" << endl;
+		cout << "[3]. Course Registration" << endl;
+		cout << "[4]. View Scoreboard" << endl;
+		cout << "[5]. Logout" << endl;
 		cin >> choose;
 	}
 }
@@ -385,6 +423,7 @@ void log_In_System(int x, int y) {
 
 	int running = true;
 	do {
+
 		choose=MainMenu(x, y);
 		
 		switch (choose)

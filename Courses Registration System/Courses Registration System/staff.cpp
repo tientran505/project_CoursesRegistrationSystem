@@ -2,15 +2,13 @@
 #include "student.h"
 #include "function.h"
 
-int check_Line(string path);
-
-void loadStudentList(string path, _Student*& head) { // create account with default password
+void loadStudentList(string path, _Student*& head) {
 	head = nullptr;
 	wifstream fileIn;
 	fileIn.open(path, ios_base::in);
 
 	if (!fileIn.is_open()) {
-		cout << "File is not found!" << endl;
+		cout << "File is not existed!" << endl;
 		fileIn.close();
 		return;
 	}
@@ -38,76 +36,16 @@ void loadStudentList(string path, _Student*& head) { // create account with defa
 		fileIn >> pCur->data.Date_Of_Birth.month >> b;
 		fileIn >> pCur->data.Date_Of_Birth.year >> a;
 		fileIn >> pCur->data.Social_ID;
-
-		pCur->data.student_Account.ID = to_string(pCur->data.ID_Student);
-		string dayTmp = to_string(pCur->data.Date_Of_Birth.day);
-		string monthTmp = to_string(pCur->data.Date_Of_Birth.month);
-		string yearTmp = to_string(pCur->data.Date_Of_Birth.year);
-		if (pCur->data.Date_Of_Birth.day < 10) {
-			dayTmp = "0" + to_string(pCur->data.Date_Of_Birth.day);
-		}
-		if (pCur->data.Date_Of_Birth.month < 10) {
-			monthTmp = "0" + to_string(pCur->data.Date_Of_Birth.month);
-		}
-		pCur->data.student_Account.password = dayTmp + monthTmp + yearTmp;
 		pCur->data.class_Of_Student = path;
 		pCur->data.number_Of_Courses = 0;
 		pCur->data.subregis = nullptr;
 		pCur->pNext = nullptr;
 	}
+
 	fileIn.close();
-}
-
-void loadStudentList_changedPassword(string path, _Student*& head) {
-	head = nullptr;
-	wifstream fileIn;
-	fileIn.open(path, ios_base::in);
-
-	if (!fileIn.is_open()) {
-		cout << "File is not found!" << endl;
-		fileIn.close();
-		return;
-	}
-	fileIn.imbue(std::locale(std::locale::empty(), new std::codecvt_utf8<wchar_t, 0x10ffff, std::generate_header>));
-	wchar_t a = ',', b = '/';
-	_Student* pCur = head;
-	path.erase(path.end() - 4, path.end());
-	path.erase(path.begin(), path.begin() + dir.length() + dirClass.length());
-	
-	ifstream read;
-	read.open(dir + dirClass_Save + "save_Account_" + path + ".txt", ios_base::in);
-
-	while (!fileIn.eof()) {
-		if (head == nullptr) {
-			head = new _Student;
-			pCur = head;
-		}
-		else {
-			pCur->pNext = new _Student;
-			pCur = pCur->pNext;
-		}
-		fileIn >> pCur->data.Number_In_Class >> a;
-		fileIn >> pCur->data.ID_Student >> a;
-		getline(fileIn, pCur->data.firstName, a);
-		getline(fileIn, pCur->data.lastName, a);
-		getline(fileIn, pCur->data.gender, a);
-		fileIn >> pCur->data.Date_Of_Birth.day >> b;
-		fileIn >> pCur->data.Date_Of_Birth.month >> b;
-		fileIn >> pCur->data.Date_Of_Birth.year >> a;
-		fileIn >> pCur->data.Social_ID;
-
-		getline(read, pCur->data.student_Account.ID, ',');
-		getline(read, pCur->data.student_Account.password);
-
-		pCur->data.class_Of_Student = path;
-		pCur->pNext = nullptr;
-	}
-	fileIn.close();
-	read.close();
 }
 
 void displayStudentList(string path, _Student* head) {
-	if (head == nullptr) return;
 	wofstream fileOut;
 	fileOut.open(path, ios_base::out);
 	fileOut.imbue(std::locale(std::locale::empty(), new std::codecvt_utf8<wchar_t, 0x10ffff, std::generate_header>));
@@ -136,7 +74,6 @@ void displayStudentList(string path, _Student* head) {
 }
 
 void convertAccountOfStudent(string path, _Student* head) {
-	if (head == nullptr) return;
 	ofstream fileOut;
 	fileOut.open(path, ios_base::out);
 	if (!fileOut.is_open()) {
@@ -147,6 +84,7 @@ void convertAccountOfStudent(string path, _Student* head) {
 
 	_Student* pCur = head;
 	while (pCur->pNext != nullptr) {
+		pCur->data.student_Account.ID = to_string(pCur->data.ID_Student);
 		string dayTmp = to_string(pCur->data.Date_Of_Birth.day);
 		string monthTmp = to_string(pCur->data.Date_Of_Birth.month);
 		string yearTmp = to_string(pCur->data.Date_Of_Birth.year);
@@ -156,10 +94,12 @@ void convertAccountOfStudent(string path, _Student* head) {
 		if (pCur->data.Date_Of_Birth.month < 10) {
 			monthTmp = "0" + to_string(pCur->data.Date_Of_Birth.month);
 		}
+		pCur->data.student_Account.password = dayTmp + monthTmp + yearTmp;
 		fileOut << pCur->data.student_Account.ID << ",";
 		fileOut << pCur->data.student_Account.password << endl;
 		pCur = pCur->pNext;
 	}
+
 	fileOut.close();
 }
 
@@ -174,32 +114,10 @@ void deleteStudentList(_Student*& head) {
 }
 
 void listPush(_Student*& listStack, _Student* classPush) {
-	if (classPush == nullptr) return;
-	if (listStack == nullptr) {
-		listStack = classPush;
-		return;
-	}
-	_Student* pTmp = listStack;
-	while (pTmp->pNext->pNext != nullptr) pTmp = pTmp->pNext;
-	_Student* pJunk = pTmp->pNext;
-	pTmp->pNext = classPush;
-	delete pJunk;
-}
-
-bool is_Class_In_System(string path, string input) {
-	ifstream line;
-	line.open(path, ios_base::app);
-	if (!line.is_open()) return true;
-	string tmp;
-	while (!line.eof()) {
-		getline(line, tmp);
-		if (input == tmp) {
-			line.close();
-			return false;
-		}
-	}
-	line.close();
-	return true;
+	_Student* pTmp = classPush;
+	while (pTmp->pNext != nullptr) pTmp = pTmp->pNext;
+	pTmp->pNext = listStack;
+	listStack = classPush;
 }
 
 void listStudents(_Student*& head) {
@@ -208,61 +126,30 @@ void listStudents(_Student*& head) {
 	_Student* headClass = nullptr;
 	int i = 0;
 	while (true) {
-		
 		cout << "0. exit input list" << endl;
 		cout << "1. input next year student list" << endl;
 		cout << "2. input previous year student list" << endl;
 		cout << "Input to the list of " << year[i] << " students: ";
 		cin >> path;
 
-		ofstream fileOut;
-		fileOut.open(dir + dirClass_Save + "classes_In_System.txt", ios_base::app);
-
-		if (path == "0") {
-			fileOut.close();
-			break;
-		}
-		else if (path == "1") {
+		if (path == "0") break;
+		if (path == "1") {
 			i++;
 			if (i > 4) i = 4;
 			continue;
 		}
-		else if (path == "2") {
+
+		if (path == "2") {
 			i--;
 			if (i < 0) i = 0;
 			continue;
 		}
-
-		if (!is_Class_In_System(dir + dirClass_Save + "classes_In_System.txt", path)) {
-			cout << path << " is already in system. Pls add another class" << endl;
-			continue;
-		}
-
 		
-
 		loadStudentList(dir + dirClass + path + ".csv", headClass);
 		displayStudentList(dir + dirClass + path + "_Info" + ".csv", headClass);
 		listPush(head, headClass);
-		fileOut << path << endl;
-		fileOut.close();
-		convertAccountOfStudent(dir + dirClass_Save + "save_Account_" + path + ".txt", headClass);
 	}
-}
-
-void loadStu_Save(_Student*& pHead) {
-	_Student* headClass = nullptr;
-	ifstream read;
-	read.open(dir + dirClass_Save + "classes_In_System.txt", ios_base::in);
-	if (!read.is_open()) return;
-	int line = check_Line(dir + dirClass_Save + "classes_In_System.txt");
-	for (int i = 1; i <= line; i++) {
-		string path;
-		getline(read, path);
-		cout << "Added " << path << " in the system" << endl;
-		loadStudentList_changedPassword(dir + dirClass + path + ".csv", headClass);
-		listPush(pHead, headClass);
-	}
-	read.close();
+	convertAccountOfStudent(dir + dirClass + "Account" + ".txt", head);
 }
 
 void staff_Login(string& username) {
@@ -845,37 +732,45 @@ void add_Schoolyear(Date& schoolyear) {
 	} while (running);
 }
 
-//void studentRegisterSub() {
-//	string sub;
-//	string cl;
-//	_Student* stu;
-//	cout << "Input the subject title: ";
-//	cin.ignore();
-//	getline(cin, sub);
-//	cout << endl << "Input the class: ";
-//	cin.ignore();
-//	getline(cin, cl);
-//	wifstream fileIn;
-//	wofstream fileOut;
-//	Student x;
-//	int count;
-//	wchar_t a = ',';
-//	wstring dob;
-//	fileIn.open(cl + ".csv", ios_base::in);
-//	if (!fileIn.is_open()) return;
-//	fileOut.open(cl + "_" + sub + ".csv", ios_base::out);
-//	if (!fileOut.is_open()) return;
-//	fileOut << "No" << a << "ID" << a << "First Name" << a << "Last Name" << a << "Gender" << a << "Social ID" << endl;
-//	while (!fileIn.eof()) {
-//		fileIn >> x.Number_In_Class >> a >> x.ID_Student >> a >> x.firstName >> a >> x.lastName >> a >> x.gender >> a >> dob >> a >> x.Social_ID >> a;
-//		while (x.subregis != nullptr) {
-//			if (x.subregis->subjects_Data.course_Data.course_Name == sub) {
-//				count++;
-//				fileOut << count << a << x.ID_Student << a << x.firstName << a << x.lastName << a << x.gender << a << dob << a << x.Social_ID << a << endl;
-//			}
-//			x.subregis = x.subregis->data_Next;
-//		}
-//	}
-//	fileIn.close();
-//	fileOut.close();
-//}
+void studentRegisterSub() {
+	string sub;
+	string cl;
+	_Student* stu;
+	cout << "Input the subject title: ";
+	cin.ignore();
+	getline(cin, sub);
+	cout << endl << "Input the class: ";
+	cin.ignore();
+	getline(cin, cl);
+	wifstream fileIn;
+	wofstream fileOut;
+	Student x;
+	int count = 0;
+	wchar_t a = ',';
+	wstring dob;
+	fileIn.open(cl + ".csv", ios_base::in);
+	if (!fileIn.is_open()) return;
+	fileOut.open(cl + "_" + sub + ".csv", ios_base::out);
+	if (!fileOut.is_open()) return;
+	fileOut << "No" << a << "ID" << a << "First Name" << a << "Last Name" << a << "Gender" << a << "Social ID" << endl;
+	while (!fileIn.eof()) {
+		fileIn >> x.Number_In_Class >> a >> x.ID_Student >> a >> x.firstName >> a >> x.lastName >> a >> x.gender >> a >> dob >> a >> x.Social_ID >> a;
+		while (x.subregis != nullptr) {
+			if (x.subregis->subjects_Data.course_Data.course_Name == sub) {
+				count++;
+				fileOut << count << a << x.ID_Student << a << x.firstName << a << x.lastName << a << x.gender << a << dob << a << x.Social_ID << a << endl;
+			}
+			x.subregis = x.subregis->data_Next;
+		}
+	}
+	fileIn.close();
+	fileOut.close();
+}
+
+void classRegisterSub() {
+	string sub;
+	cout << "Input the subject title: ";
+	cin.ignore();
+	getline(cin, sub);
+
+}
