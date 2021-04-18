@@ -743,7 +743,7 @@ void studentRegisterSub() {
 	wifstream fileIn;
 	wofstream fileOut;
 	Student x;
-	int count;
+	int count = 0;
 	wchar_t a = ',';
 	wstring dob;
 	fileIn.open(cl + ".csv", ios_base::in);
@@ -763,4 +763,12 @@ void studentRegisterSub() {
 	}
 	fileIn.close();
 	fileOut.close();
+}
+
+void classRegisterSub() {
+	string sub;
+	cout << "Input the subject title: ";
+	cin.ignore();
+	getline(cin, sub);
+
 }
