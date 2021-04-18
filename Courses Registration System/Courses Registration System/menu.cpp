@@ -195,7 +195,7 @@ void staff_Menu(string username, _Student*& headStu) {
 	system("cls");
 	ShowCur(0);
 	GotoXY(40, 5);
-	string menu[6] = { "1. View info","2. Create Course Registration Session", "3. Create School year","4. Courses System", "5. Add student lists to the system" , "6. Log out" };
+	string menu[6] = { "1. View info","2. Create Course Registration Session", "3. Create School year","4. Course Registration Management System", "5. Add student lists to the system" , "6. Log out" };
 	do {
 		while (true) {
 			system("cls");
@@ -301,18 +301,48 @@ void menu_Course_Staff() {
 	} while (choose != 5);
 }
 
+void student_Course_Menu(_Student* Node) {
+	bool running = true;
+	int choose;
+	do {
+		cout << "1. Register for the Course" << endl;
+		cout << "2. Remove the Course" << endl;
+		cout << "3. Courses registration results" << endl;
+		cout << "4. Exit" << endl;
+
+		cin >> choose;
+		switch (choose) {
+		case 1: {
+			register_Course(Node);
+			break;
+		}
+		case 2: {
+			remove_Courses(Node->data.subregis);
+			break;
+		}
+		case 3: {
+			view_Reigstration_Results(Node->data.subregis);
+			break;
+		}
+		default: {
+			running = false;
+			break;
+		}
+		}
+	} while (running);
+}
+
 void student_Menu(_Student* Node) {
 	cout << "Choose your option" << endl;
 	cout << "[1]. View Info" << endl;
 	cout << "[2]. Change password" << endl;
-	cout << "[3]. Sign up for the course" << endl;
-	cout << "[4]. Courses registration results" << endl;
-	cout << "[5]. View Scoreboard" << endl;
-	cout << "[6]. Logout" << endl;
+	cout << "[3]. Course Registration" << endl;
+	cout << "[4]. View Scoreboard" << endl;
+	cout << "[5]. Logout" << endl;
 
 	int choose;
 	cin >> choose;
-	while (choose != 6) {
+	while (choose != 5) {
 		switch (choose)
 		{
 		case 1: {
@@ -326,18 +356,13 @@ void student_Menu(_Student* Node) {
 		}
 
 		case 3: {
-			register_Course(Node);
+			student_Course_Menu(Node);
 			break;
 		}
 
 		case 4: {
-			break;
-		}
-
-		case 5: {
 			cout << "This feature is still in progress. Please try again later" << endl;
 			break;
-
 		}
 		}
 		cout << "--------------------------------------\nChoose your option" << endl;
@@ -350,6 +375,7 @@ void student_Menu(_Student* Node) {
 		cin >> choose;
 	}
 }
+
 void log_In_System(int x, int y) {
 	_Student* head = nullptr;
 	loadStu_Save(head);

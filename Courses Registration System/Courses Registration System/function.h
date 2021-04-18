@@ -32,25 +32,28 @@ struct Time {
 	int hour, minute;
 };
 
+struct Session {
+	string dayOfWeek;
+	string session;
+};
+
 struct Student_Schedule {
 	Date date_Sched;
 	Time time_Sched;
 };
 
 struct Course {
-	int number_Order_Course;
 	string course_Name; //ten mon hoc
 	string course_ID; //ma mon hoc
 	int credit; // so tin chi
 	wstring Name_of_Teacher;
+	Session first_Session;
+	Session second_Session;
 };
 
 struct Student_ScoreBoard {
 	Course course_Data;
-	double total_Mark;
-	double final_Mark;
-	double midterm_Mark;
-	double GPA;
+	double score;
 	string grade; // C- -> A+
 };
 
@@ -62,13 +65,13 @@ struct _Student_ScoreBoard {
 struct Subjects {
 	Course course_Data;
 	int number_Of_Student;
-	int session;
 	Student_Schedule study_Schedule;
 };
 
 struct _Subjects {
 	Subjects subjects_Data;
 	_Subjects* data_Next;
+	_Subjects* data_Prev;
 };
 
 struct Account {
@@ -85,12 +88,12 @@ struct Student {
 	wstring gender; //gioi tinh
 	int Social_ID;
 	Date Date_Of_Birth;
-	string email_Student;
 	_Student_ScoreBoard stu_Score;
 	double GPA_Average;
 	double score_Average;
 	Account student_Account;
 	_Subjects* subregis;
+	int number_Of_Courses;
 };
 
 struct _Student {

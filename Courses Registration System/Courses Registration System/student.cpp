@@ -14,6 +14,8 @@ string WStringToString(wstring s)
 	return temp;
 }
 
+void register_One_Course(_Student* Node);
+
 void showInfo_Student(_Student* Node) {
 	cout << "Information of student" << endl;
 	_setmode(_fileno(stdout), _O_U8TEXT);
@@ -193,16 +195,6 @@ bool can_Register_Course(Date dateCur, Date dateStart, Date dateEnd, Time timeCu
 
 
 void register_Course(_Student* Node) {
-	string id_Stu = to_string(Node->data.ID_Student);
-	ofstream fileOut;
-	fileOut.open(dir + dirCourse_Student + id_Stu + "_RegistedCourses.txt", ios_base::out);
-
-	if (!fileOut.is_open()) {
-		cout << "Can't create Course. Pls try again!" << endl;
-		fileOut.close();
-		return;
-	}
-
 	time_t now = time(0);
 	tm* ltm = localtime(&now);
 
@@ -210,15 +202,14 @@ void register_Course(_Student* Node) {
 	read.open(dir + dirRegis + "Registration.txt", ios_base::in);
 
 	if (!read.is_open()) {
-		cout << "File is not found!" << endl;
-		fileOut.close();
+		cout << "Staff had not create the course registration session. Please contact staff department for more detail!" << endl;
 		read.close();
 		return;
 	}
 
 	Date dateStart, dateEnd;
 	Time timeStart, timeEnd;
-	
+
 	char a = '/', b = ':', c = ',';
 
 	read >> dateStart.day >> a >> dateStart.month >> a >> dateStart.year >> c;
@@ -243,13 +234,157 @@ void register_Course(_Student* Node) {
 
 	if (!can_Register_Course(dateCur, dateStart, dateEnd, timeCur, timeStart, timeEnd)) {
 		cout << "Registration has expired!" << endl;
-		fileOut.close();
 		return;
 	}
 
 	viewCourseList(dir + dirCourse + "CoursesRegistration.txt");
+	register_One_Course(Node);
+}
 
-	fileOut.close();
+
+void register_One_Course(_Student* Node) {
+	wifstream read;
+	read.open(dir + dirCourse + "CoursesRegistration.txt", ios_base::in);
+	read.imbue(std::locale(std::locale::empty(), new std::codecvt_utf8<wchar_t, 0x10ffff, std::generate_header>));
+
+	wchar_t a = ',';
+	wstring nameCourse, line, nameTeacher;
+	int numberOfCredits, numOfStud;
+	wstring ss1, ss2, d1, d2;
+
+	cout << "Choose number of course the register: ";
+	int choose;
+	cin >> choose;
+	while (!read.eof()) {
+		int no;
+		read >> no >> a;
+		if (no == choose) {
+			getline(read, line, a);
+			getline(read, nameCourse, a);
+			getline(read, nameTeacher, a);
+			read >> numberOfCredits >> a;
+			read >> numOfStud >> a;
+			getline(read, d1, a);
+			getline(read, ss1, a);
+			getline(read, d2, a);
+			getline(read, ss2);
+
+			string NameCourses = WStringToString(nameCourse);
+
+			_Subjects* cur = Node->data.subregis;
+
+			if (Node->data.subregis == nullptr) {
+				Node->data.subregis = new _Subjects;
+				cur = Node->data.subregis;
+				cur->data_Prev = nullptr;
+			}
+
+			else {
+				while (cur->data_Next != nullptr) cur = cur->data_Next;
+				cur->data_Next = new _Subjects;
+				cur->data_Next->data_Prev = cur;
+				cur = cur->data_Next;
+			}
+
+			cur->subjects_Data.course_Data.course_ID = WStringToString(line);
+			cur->subjects_Data.course_Data.course_Name = NameCourses;
+			cur->subjects_Data.course_Data.Name_of_Teacher = nameTeacher;
+			cur->subjects_Data.course_Data.credit = numberOfCredits;
+			cur->subjects_Data.course_Data.first_Session.dayOfWeek = WStringToString(d1);
+			cur->subjects_Data.course_Data.first_Session.session = WStringToString(ss1);
+			cur->subjects_Data.course_Data.second_Session.dayOfWeek = WStringToString(d2);
+			cur->subjects_Data.course_Data.second_Session.session = WStringToString(ss2);
+			cur->data_Next = nullptr;
+
+			wofstream fileOut;
+			/*ofstream f;
+			f.open(dir + dirCourse_Student_Save + "student_Registered_Courses.txt", ios_base::app);*/
+
+			fileOut.open(dir + dirCourse_Student + NameCourses + ".txt", ios_base::app);
+			fileOut.imbue(std::locale(std::locale::empty(), new std::codecvt_utf8<wchar_t, 0x10ffff, std::generate_header>));
+
+			int num_Of_Line = check_Line(dir + dirCourse_Student + NameCourses + ".txt");
+			if (num_Of_Line != 0) fileOut << endl;
+
+			fileOut << num_Of_Line + 1 << ",";
+			fileOut << Node->data.firstName << " " << Node->data.lastName << ",";
+			fileOut << Node->data.ID_Student << ",";
+			fileOut << Node->data.gender << ",";
+			fileOut << Node->data.Date_Of_Birth.day << "/" << Node->data.Date_Of_Birth.month << "/" << Node->data.Date_Of_Birth.year;
+
+			wcout << nameCourse << " completely registered" << endl;
+			read.close();
+			fileOut.close();
+			return;
+		}
+		else getline(read, line);
+	}
+}
+
+
+void view_Reigstration_Results(_Subjects* Node) {
+	if (Node == nullptr) {
+		cout << "You have not registered any courses" << endl;
+		return;
+	}
+	int count = 1;
+	while (Node != nullptr) {
+		cout << "-----------------------------------------------" << endl;
+		cout << count++ << ". " << Node->subjects_Data.course_Data.course_Name << endl;
+		cout << "ID Course: " << Node->subjects_Data.course_Data.course_ID << endl;
+		_setmode(_fileno(stdout), _O_U8TEXT);
+		wcout << L"Lecturer: " << Node->subjects_Data.course_Data.Name_of_Teacher << endl;
+		_setmode(_fileno(stdout), _O_TEXT);
+		cout << "Number of credits: " << Node->subjects_Data.course_Data.credit << endl;
+		cout << "Schedule: " << endl;
+		cout << "- Session 1: " << Node->subjects_Data.course_Data.first_Session.dayOfWeek << " - " << Node->subjects_Data.course_Data.first_Session.session << endl;
+		cout << "- Session 2: " << Node->subjects_Data.course_Data.second_Session.dayOfWeek << " - " << Node->subjects_Data.course_Data.second_Session.session << endl;
+		cout << "-----------------------------------------------" << endl;
+		Node = Node->data_Next;
+	}
+}
+
+int list_Len(_Subjects* Node) {
+	if (Node == nullptr) return 0;
+	int count = 0;
+	while (Node != nullptr) {
+		Node = Node->data_Next;
+		count++;
+	}
+	return count;
+}
+
+void remove_Courses(_Subjects*& Node) {
+	bool running = true;
+	int choose;
+	do {
+		if (Node == nullptr) {
+			cout << "Nothing to delete" << endl;
+			return;
+		}
+		view_Reigstration_Results(Node);
+		cout << "Enter the number of course to remove (0 to exit): ";
+		int choose;
+		cin >> choose;
+		if (choose == 0) {
+			running = false;
+		}
+		else if (choose > list_Len(Node)) cout << "Your chosen course is exceed the number of courses! Please try again!" << endl;
+		else {
+			_Subjects* cur = Node;
+			for (int i = 1; i < choose; i++) cur = cur->data_Next;
+			string courseName = cur->subjects_Data.course_Data.course_Name;
+			if (cur->data_Next != nullptr) cur->data_Next->data_Prev = cur->data_Prev;
+			if (cur->data_Prev != nullptr) cur->data_Prev->data_Next = cur->data_Next;
+			if (cur == Node) Node = Node->data_Next;
+			delete cur;
+			cout << courseName << " had been completely deleted!" << endl;
+			cout << "1. Continue\t2.Exit" << endl;
+			cin >> choose;
+			if (choose == 2) running = false;
+		}
+	} while (running);
+	
 }
 
 //void readCourse(_Student* Node) {

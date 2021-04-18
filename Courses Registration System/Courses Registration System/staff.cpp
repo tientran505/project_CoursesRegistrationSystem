@@ -51,6 +51,8 @@ void loadStudentList(string path, _Student*& head) { // create account with defa
 		}
 		pCur->data.student_Account.password = dayTmp + monthTmp + yearTmp;
 		pCur->data.class_Of_Student = path;
+		pCur->data.number_Of_Courses = 0;
+		pCur->data.subregis = nullptr;
 		pCur->pNext = nullptr;
 	}
 	fileIn.close();
