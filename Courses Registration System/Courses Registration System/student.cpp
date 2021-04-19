@@ -428,7 +428,7 @@ void remove_Courses(_Subjects*& Node) {
 //		t++;
 //		Node->data.stu_Score = Node->data.stu_Score->dataNext;
 //	}
-//	if (t == 0) { cout << " there is no result"; }
+//	if (t == 0) { cout << " NO result"; }
 //}
 
 void subjectsList() {
@@ -452,16 +452,16 @@ void subjectsList() {
 	}
 }
 
-//void deletecourseRegis(_Student* StuCur)
-//{
-//	_Subjects* deletesub;
-//	cout << "Type course ID remove: ";
-//	cin >> deletesub->subjects_Data.course_Data.course_ID;
-//	_Subjects* temp = StuCur->data.subregis;
-//	while (deletesub->subjects_Data.course_Data.course_ID != temp->subjects_Data.course_Data.course_ID)
-//	{
-//		temp = temp->data_Next;
-//	}
-//	delete deletesub;
-//}
+void deletecourseRegis(_Student* StuCur)
+{
+	cout << "Type course ID remove: ";
+	_Subjects* deletesub;
+	cin >> deletesub->subjects_Data.course_Data.course_ID;
+	_Subjects* temp = StuCur->data.subregis;
+	while (deletesub->subjects_Data.course_Data.course_ID != temp->subjects_Data.course_Data.course_ID)
+	{
+		temp = temp->data_Next;
+	}
+	delete deletesub;
+}
 
