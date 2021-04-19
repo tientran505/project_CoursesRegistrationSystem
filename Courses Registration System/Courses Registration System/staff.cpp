@@ -1,7 +1,7 @@
 #include "staff.h"
 #include "student.h"
 #include "function.h"
-
+#include<conio.h>
 void loadStudentList(string path, _Student*& head) {
 	head = nullptr;
 	wifstream fileIn;
@@ -241,7 +241,7 @@ void loadStu_Save(_Student*& pHead) {
 	read.open(dir + dirClass_Save + "classes_In_System.txt", ios_base::in);
 	if (!read.is_open()) return;
 	int line = check_Line(dir + dirClass_Save + "classes_In_System.txt");
-	for (int i = 1; i <= line; i++) {
+	for (int i = 1; i <= line; i++)  {
 		string path;
 		getline(read, path);
 		cout << "Added " << path << " in the system" << endl;
@@ -255,6 +255,7 @@ void staff_Login(string& username) {
 	ifstream fileIn;
 	int running = true;
 	string password;
+	int temp;
 	string userTmp, passTmp;
 	while (running) {
 		GotoXY(25, 10);
@@ -286,7 +287,9 @@ void staff_Login(string& username) {
 			system("cls");
 			GotoXY(35, 11);
 			cout << "Invalid login, please try again" << endl;
-			Sleep(1000);
+			GotoXY(40, 13);
+			cout << " (enter to return)"<<endl;
+			temp = _getch();
 			system("cls");
 		}
 		fileIn.close();

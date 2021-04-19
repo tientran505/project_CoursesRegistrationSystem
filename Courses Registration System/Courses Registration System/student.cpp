@@ -1,6 +1,6 @@
 #include "function.h"
 #include "student.h"
-
+#include<conio.h>
 wstring stringToWString(string str) {
 	wstring tmp(str.length(), L' ');
 	copy(str.begin(), str.end(), tmp.begin());
@@ -31,10 +31,13 @@ _Student* logInSystem_Student(_Student* head) {
 	string userNameTmp, passWordTmp;
 
 	if (head == nullptr) {
+		GotoXY(30, 12);
 		cout << "There is nothing any student lists in system. Please contact to Academic Staff for more detail" << endl;
 		return nullptr;
 	}
 	while (true) {
+		int temp;
+		system("cls");
 		GotoXY(30, 12);
 		cout << "Username: ";
 		cin >> userNameTmp;
@@ -44,14 +47,19 @@ _Student* logInSystem_Student(_Student* head) {
 		_Student* pCur = head;
 		while (pCur->pNext != nullptr) {
 			if (userNameTmp == pCur->data.student_Account.ID && passWordTmp == pCur->data.student_Account.password) {
-				GotoXY(30, 15);
-				cout << "-------------------------------\n" << "Login successfully" << endl;
+				system("cls");
+				GotoXY(35, 13);
+				cout<<"Login successfully" << endl;
 				return pCur;
 			}
 			pCur = pCur->pNext;
 		}
 		GotoXY(30,15);
 		cout << "Invalid login, please try again" << endl;
+		GotoXY(35, 16);
+		cout << " (enter to return) "<<endl;
+
+		temp = _getch();
 	}
 }
 

@@ -373,46 +373,73 @@ void student_Course_Menu(_Student* Node) {
 }
 
 void student_Menu(_Student* Node) {
-	cout << "Choose your option" << endl;
-	cout << "[1]. View Info" << endl;
-	cout << "[2]. Change password" << endl;
-	cout << "[3]. Course Registration" << endl;
-	cout << "[4]. View Scoreboard" << endl;
-	cout << "[5]. Logout" << endl;
-
 	int choose;
-	cin >> choose;
-	while (choose != 5) {
-		switch (choose)
+	int i = 1;
+	int temp;
+	system("cls");
+	ShowCur(0);
+	GotoXY(40, 5);
+	string menu[6] = { "Choose your option","[1]. View Info", "[2]. Change password","[3]. Course Registration",  "[4]. View Scoreboard",  "[5]. Logout" };
+	do {
+		while (true) {
+			system("cls");
+			for (int j = 0; j < 6; j++) {
+				if (j == i) {
+					textcolor(12);
+					GotoXY(39, 5 + j);
+					cout << " > " << menu[j] << " < " << endl;
+					textcolor(15);
+				}
+				else {
+					textcolor(15);
+					GotoXY(40, 5 + j);
+					cout << " " << menu[j] << " " << endl;
+				}
+			}
+			temp = _getch();
+			if (temp == 's' || temp == 'S' || temp == 80) {
+				i++;
+				if (i == 6) i = 0;
+			}
+			if (temp == 'w' || temp == 'W' || temp == 72) {
+				i--;
+				if (i == 0) i = 5;
+			}
+			if (temp == 13 || temp == 32) break;
+		}
+		system("cls");
+		
+		switch (i)
 		{
 		case 1: {
 			showInfo_Student(Node);
+			cout << " enter to continue";
+			temp = _getch();
 			break;
 		}
 
 		case 2: {
 			editPassword(Node);
+			cout << " enter to continue";
+			temp = _getch();
 			break;
 		}
 
 		case 3: {
 			student_Course_Menu(Node);
+			cout << " enter to continue";
+			temp = _getch();
 			break;
 		}
 
 		case 4: {
 			cout << "This feature is still in progress. Please try again later" << endl;
+			cout << " enter to continue";
+			temp = _getch();
 			break;
 		}
 		}
-		cout << "--------------------------------------\nChoose your option" << endl;
-		cout << "[1]. View Info" << endl;
-		cout << "[2]. Change password" << endl;
-		cout << "[3]. Course Registration" << endl;
-		cout << "[4]. View Scoreboard" << endl;
-		cout << "[5]. Logout" << endl;
-		cin >> choose;
-	}
+	} while (i != 5);
 }
 
 void log_In_System(int x, int y) {
