@@ -263,9 +263,9 @@ void staff_Menu(string username, _Student*& headStu) {
 		}
 		case 5: {
 			listStudents(headStu);
-			cout << endl;
+			/*cout << endl;
 			cout << " enter to continue";
-			choose = _getch();
+			choose = _getch();*/
 			break;
 		}
 		}

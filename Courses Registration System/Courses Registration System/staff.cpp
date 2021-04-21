@@ -194,21 +194,20 @@ void listStudents(_Student*& head) {
 	string path;
 	int i = 0;
 	int temp;
-	int n = 1;
+	int n = 0;
 	string year[5] = { "first-year", "second-year","third-year", "fourth-year", "fifth-year" };
-	string menu[5] = { "0. exit input list" ,"1. input next year student list" ,"2. input previous year student list" ,"Input to the list of " , " students: " };
+	string menu[5] = { "Exit input list"  ,"Input to the list of " , " students: " };
 	_Student* headClass = nullptr;
-	
-	do {
 
+	do {
 		while (true) {
 			system("cls");
-			for (int j = 0; j < 4; j++) {
+			for (int j = 0; j < 2; j++) {
 				if (j == n) {
 					textcolor(12);
 					GotoXY(39, 5 + j);
-					if (j == 3) {
-						cout << " > " << menu[j] << year[i] << menu[j+1]<<"<"<<endl;
+					if (j == 1) {
+						cout << " > " << menu[j] << year[i] << menu[j + 1] << "<" << endl;
 					}
 					else { cout << " > " << menu[j] << " < " << endl; }
 					textcolor(15);
@@ -216,8 +215,8 @@ void listStudents(_Student*& head) {
 				else {
 					textcolor(15);
 					GotoXY(40, 5 + j);
-					if (j == 3) {
-						cout  << menu[j] << year[i] << menu[j + 1]  << endl;
+					if (j == 1) {
+						cout << menu[j] << year[i] << menu[j + 1] << endl;
 					}
 					else {
 						cout << " " << menu[j] << " " << endl;
@@ -227,51 +226,34 @@ void listStudents(_Student*& head) {
 			temp = _getch();
 			if (temp == 's' || temp == 'S' || temp == 80) {
 				n++;
-				if (n == 5) n = 0;
+				if (n == 4) n = 0;
 			}
 			if (temp == 'w' || temp == 'W' || temp == 72) {
 				n--;
-				if (n == -1) n = 4;
+				if (n == -1) n = 3;
 			}
 			if (temp == 13 || temp == 32) break;
 		}
 		system("cls");
+		if (n != 0) {
+			cin >> path;
+			ofstream fileOut;
+			fileOut.open(dir + dirClass_Save + "classes_In_System.txt", ios_base::app);
 
-		string path;
-		cin >> path;
-		ofstream fileOut;
-		fileOut.open(dir + dirClass_Save + "classes_In_System.txt", ios_base::app);
+			if (!is_Class_In_System(dir + dirClass_Save + "classes_In_System.txt", path)) {
+				cout << path << " is already in system. Pls add another class" << endl;
+				cout << " enter to continue";
+				temp = _getch();
+				continue;
+			}
 
-		if (path == "0") {
+			loadStudentList(dir + dirClass + path + ".csv", headClass);
+			displayStudentList(dir + dirClass + path + "_Info" + ".csv", headClass);
+			listPush(head, headClass);
+			fileOut << path << endl;
 			fileOut.close();
-			cout << " enter to continue";
-			temp = _getch();
-			break;
+			convertAccountOfStudent(dir + dirClass_Save + "save_Account_" + path + ".txt", headClass);
 		}
-		else if (path == "1") {
-			i++;
-			if (i > 4) i = 4;
-			continue;
-		}
-		else if (path == "2") {
-			i--;
-			if (i < 0) i = 0;
-			continue;
-		}
-
-		if (!is_Class_In_System(dir + dirClass_Save + "classes_In_System.txt", path)) {
-			cout << path << " is already in system. Pls add another class" << endl;
-			cout << " enter to continue";
-			temp = _getch();
-			continue;
-		}
-
-		loadStudentList(dir + dirClass + path + ".csv", headClass);
-		displayStudentList(dir + dirClass + path + "_Info" + ".csv", headClass);
-		listPush(head, headClass);
-		fileOut << path << endl;
-		fileOut.close();
-		convertAccountOfStudent(dir + dirClass_Save + "save_Account_" + path + ".txt", headClass);
 	} while (n != 0);
 }
 
