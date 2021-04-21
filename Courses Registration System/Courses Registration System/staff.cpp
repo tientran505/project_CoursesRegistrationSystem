@@ -194,12 +194,12 @@ void listStudents(_Student*& head) {
 	string path;
 	int i = 0;
 	int temp;
-	int n = 0;
+	int n = 1;
 	string year[5] = { "first-year", "second-year","third-year", "fourth-year", "fifth-year" };
 	string menu[5] = { "0. exit input list" ,"1. input next year student list" ,"2. input previous year student list" ,"Input to the list of " , " students: " };
 	_Student* headClass = nullptr;
 	
-	while (true) {
+	do {
 
 		while (true) {
 			system("cls");
@@ -237,8 +237,8 @@ void listStudents(_Student*& head) {
 		}
 		system("cls");
 
-		path = n;
-
+		string path;
+		cin >> path;
 		ofstream fileOut;
 		fileOut.open(dir + dirClass_Save + "classes_In_System.txt", ios_base::app);
 
@@ -251,7 +251,6 @@ void listStudents(_Student*& head) {
 		else if (path == "1") {
 			i++;
 			if (i > 4) i = 4;
-			
 			continue;
 		}
 		else if (path == "2") {
@@ -273,7 +272,7 @@ void listStudents(_Student*& head) {
 		fileOut << path << endl;
 		fileOut.close();
 		convertAccountOfStudent(dir + dirClass_Save + "save_Account_" + path + ".txt", headClass);
-	}
+	} while (n != 0);
 }
 
 void loadStu_Save(_Student*& pHead) {
