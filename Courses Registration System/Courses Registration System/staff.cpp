@@ -875,19 +875,18 @@ void add_Schoolyear(Date& schoolyear) {
 	} while (running);
 }
 
-void studentRegisterSub() {
+void studentRegisterSub(_Student* head) {
 	string sub;
 	string cl;
-	_Student* stu;
+	_Student* cur = head;
 	cout << "Input the subject title: ";
-	cin.ignore();
+	cin.ignore(1000, '\n');
 	getline(cin, sub);
 	cout << endl << "Input the class: ";
-	cin.ignore();
+	cin.ignore(1000, '\n');
 	getline(cin, cl);
 	wifstream fileIn;
 	wofstream fileOut;
-	Student x;
 	int count = 0;
 	wchar_t a = ',';
 	wstring dob;
@@ -897,18 +896,22 @@ void studentRegisterSub() {
 	if (!fileOut.is_open()) return;
 	fileOut << "No" << a << "ID" << a << "First Name" << a << "Last Name" << a << "Gender" << a << "Social ID" << endl;
 	while (!fileIn.eof()) {
-		fileIn >> x.Number_In_Class >> a >> x.ID_Student >> a >> x.firstName >> a >> x.lastName >> a >> x.gender >> a >> dob >> a >> x.Social_ID >> a;
-		while (x.subregis != nullptr) {
-			if (x.subregis->subjects_Data.course_Data.course_Name == sub) {
-				count++;
-				fileOut << count << a << x.ID_Student << a << x.firstName << a << x.lastName << a << x.gender << a << dob << a << x.Social_ID << a << endl;
+		while (cur != nullptr) {
+			fileIn >> cur->data.Number_In_Class >> a >> cur->data.ID_Student >> a >> cur->data.firstName >> a >> cur->data.lastName >> a >> cur->data.gender >> a >> dob >> a >> cur->data.Social_ID >> a;
+			while (cur->data.subregis != nullptr) {
+				if (cur->data.subregis->subjects_Data.course_Data.course_Name == sub) {
+					count++;
+					fileOut<<count<<a<<cur->data.ID_Student << a << cur->data.firstName << a << cur->data.lastName << a << cur->data.gender << a << dob << a << cur->data.Social_ID << a <<endl;
+				}
+				cur->data.subregis = cur->data.subregis->data_Next;
 			}
-			x.subregis = x.subregis->data_Next;
+			cur = cur->pNext;
 		}
 	}
 	fileIn.close();
 	fileOut.close();
 }
+
 
 void classRegisterSub() {
 	string sub;
