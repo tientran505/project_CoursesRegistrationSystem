@@ -344,24 +344,57 @@ void menu_Course_Staff() {
 void student_Course_Menu(_Student* Node) {
 	bool running = true;
 	int choose;
+	int temp;
+	int i = 0;
+	string menu[4] = { "1. Register for the Course","2. Remove the Course","3. Courses registration results","4. Exit" };
 	do {
-		cout << "1. Register for the Course" << endl;
-		cout << "2. Remove the Course" << endl;
-		cout << "3. Courses registration results" << endl;
-		cout << "4. Exit" << endl;
+		while (true) {
+			system("cls");
+			for (int j = 0; j < 4; j++) {
+				if (j == i) {
+					textcolor(12);
+					GotoXY(39, 5 + j);
+					cout << " > " << menu[j] << " < " << endl;
+					textcolor(15);
+				}
+				else {
+					textcolor(15);
+					GotoXY(40, 5 + j);
+					cout << " " << menu[j] << " " << endl;
+				}
+			}
+			temp = _getch();
+			if (temp == 's' || temp == 'S' || temp == 80) {
+				i++;
+				if (i == 4) i = 0;
+			}
+			if (temp == 'w' || temp == 'W' || temp == 72) {
+				i--;
+				if (i == -1) i = 3;
+			}
+			if (temp == 13 || temp == 32) break;
+		}
 
-		cin >> choose;
-		switch (choose) {
+		system("cls");
+
+		i++;
+		switch (i) {
 		case 1: {
 			register_Course(Node);
+			cout << " enter to continue";
+			choose = _getch();
 			break;
 		}
 		case 2: {
 			remove_Courses(Node->data.subregis);
+			cout << " enter to continue";
+			choose = _getch();
 			break;
 		}
 		case 3: {
 			view_Reigstration_Results(Node->data.subregis);
+			cout << " enter to continue";
+			choose = _getch();
 			break;
 		}
 		default: {
@@ -427,8 +460,7 @@ void student_Menu(_Student* Node) {
 
 		case 3: {
 			student_Course_Menu(Node);
-			cout << " enter to continue";
-			temp = _getch();
+			
 			break;
 		}
 

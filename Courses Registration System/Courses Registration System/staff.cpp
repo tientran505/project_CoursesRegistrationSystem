@@ -192,27 +192,66 @@ bool is_Class_In_System(string path, string input) {
 
 void listStudents(_Student*& head) {
 	string path;
-	string year[5] = { "first-year", "second-year","third-year", "fourth-year", "fifth-year" };
-	_Student* headClass = nullptr;
 	int i = 0;
+	int temp;
+	int n = 0;
+	string year[5] = { "first-year", "second-year","third-year", "fourth-year", "fifth-year" };
+	string menu[5] = { "0. exit input list" ,"1. input next year student list" ,"2. input previous year student list" ,"Input to the list of " , " students: " };
+	_Student* headClass = nullptr;
+	
 	while (true) {
 
-		cout << "0. exit input list" << endl;
-		cout << "1. input next year student list" << endl;
-		cout << "2. input previous year student list" << endl;
-		cout << "Input to the list of " << year[i] << " students: ";
-		cin >> path;
+		while (true) {
+			system("cls");
+			for (int j = 0; j < 4; j++) {
+				if (j == n) {
+					textcolor(12);
+					GotoXY(39, 5 + j);
+					if (j == 3) {
+						cout << " > " << menu[j] << year[i] << menu[j+1]<<"<"<<endl;
+					}
+					else { cout << " > " << menu[j] << " < " << endl; }
+					textcolor(15);
+				}
+				else {
+					textcolor(15);
+					GotoXY(40, 5 + j);
+					if (j == 3) {
+						cout  << menu[j] << year[i] << menu[j + 1]  << endl;
+					}
+					else {
+						cout << " " << menu[j] << " " << endl;
+					}
+				}
+			}
+			temp = _getch();
+			if (temp == 's' || temp == 'S' || temp == 80) {
+				n++;
+				if (n == 5) n = 0;
+			}
+			if (temp == 'w' || temp == 'W' || temp == 72) {
+				n--;
+				if (n == -1) n = 4;
+			}
+			if (temp == 13 || temp == 32) break;
+		}
+		system("cls");
+
+		path = n;
 
 		ofstream fileOut;
 		fileOut.open(dir + dirClass_Save + "classes_In_System.txt", ios_base::app);
 
 		if (path == "0") {
 			fileOut.close();
+			cout << " enter to continue";
+			temp = _getch();
 			break;
 		}
 		else if (path == "1") {
 			i++;
 			if (i > 4) i = 4;
+			
 			continue;
 		}
 		else if (path == "2") {
@@ -223,6 +262,8 @@ void listStudents(_Student*& head) {
 
 		if (!is_Class_In_System(dir + dirClass_Save + "classes_In_System.txt", path)) {
 			cout << path << " is already in system. Pls add another class" << endl;
+			cout << " enter to continue";
+			temp = _getch();
 			continue;
 		}
 
