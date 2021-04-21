@@ -1,6 +1,6 @@
 #include "function.h"
 #include "student.h"
-
+#include<conio.h>
 wstring stringToWString(string str) {
 	wstring tmp(str.length(), L' ');
 	copy(str.begin(), str.end(), tmp.begin());
@@ -31,10 +31,13 @@ _Student* logInSystem_Student(_Student* head) {
 	string userNameTmp, passWordTmp;
 
 	if (head == nullptr) {
+		GotoXY(30, 12);
 		cout << "There is nothing any student lists in system. Please contact to Academic Staff for more detail" << endl;
 		return nullptr;
 	}
 	while (true) {
+		int temp;
+		system("cls");
 		GotoXY(30, 12);
 		cout << "Username: ";
 		cin >> userNameTmp;
@@ -44,14 +47,19 @@ _Student* logInSystem_Student(_Student* head) {
 		_Student* pCur = head;
 		while (pCur->pNext != nullptr) {
 			if (userNameTmp == pCur->data.student_Account.ID && passWordTmp == pCur->data.student_Account.password) {
-				GotoXY(30, 15);
-				cout << "-------------------------------\n" << "Login successfully" << endl;
+				system("cls");
+				GotoXY(35, 13);
+				cout<<"Login successfully" << endl;
 				return pCur;
 			}
 			pCur = pCur->pNext;
 		}
 		GotoXY(30,15);
 		cout << "Invalid login, please try again" << endl;
+		GotoXY(35, 16);
+		cout << " (enter to return) "<<endl;
+
+		temp = _getch();
 	}
 }
 
@@ -440,25 +448,4 @@ void remove_Courses(_Subjects*& Node) {
 		}
 	} while (running);
 	
-}
-
-void subjectsList() {
-	int n;
-	subject sub;
-	ofstream fout;
-	fout.open("subjectsList.txt", ios_base::out);
-	if (!fout.is_open()) {
-		cout << "Can not open file..." << endl;
-		return;
-	}
-	cout << "Please input number of subjects: ";
-	cin >> n;
-	for (int i = 1; i <= n; i++) {
-		cout<< endl << "Please input subject title: ";
-		cin >> sub.title;
-		fout << sub.title;
-		cout << endl << "Please input subject ID: ";
-		cin >> sub.IDsubject;
-		fout << sub.IDsubject;
-	}
 }
