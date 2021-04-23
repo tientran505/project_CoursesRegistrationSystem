@@ -93,12 +93,12 @@ struct Student {
 	double GPA_Average;
 	double score_Average;
 	Account student_Account;
-	_Subjects* subregis;
 	int number_Of_Courses;
 };
 
 struct _Student {
 	Student data;
+	_Subjects* subregis;
 	_Student* pNext;
 };
 
@@ -121,4 +121,6 @@ void log_In_System(int x, int y);
 int MainMenu(int x, int y);
 void FixConsoleWindow();
 int check_Line(string path);
+int list_Len(_Subjects* Node);
+void view_Reigstration_Results(_Subjects* Node);
 #endif

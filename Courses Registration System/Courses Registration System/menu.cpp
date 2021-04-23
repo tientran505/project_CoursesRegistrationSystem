@@ -386,13 +386,13 @@ void student_Course_Menu(_Student* Node) {
 			break;
 		}
 		case 2: {
-			remove_Courses(Node->data.subregis);
+			remove_Courses(Node);
 			cout << " enter to continue";
 			choose = _getch();
 			break;
 		}
 		case 3: {
-			view_Reigstration_Results(Node->data.subregis);
+			view_Reigstration_Results(Node->subregis);
 			cout << " enter to continue";
 			choose = _getch();
 			break;
@@ -406,7 +406,6 @@ void student_Course_Menu(_Student* Node) {
 }
 
 void student_Menu(_Student* Node) {
-	int choose;
 	int i = 1;
 	int temp;
 	system("cls");
@@ -460,7 +459,6 @@ void student_Menu(_Student* Node) {
 
 		case 3: {
 			student_Course_Menu(Node);
-			
 			break;
 		}
 

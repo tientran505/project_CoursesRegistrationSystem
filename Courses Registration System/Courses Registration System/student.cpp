@@ -1,6 +1,7 @@
 #include "function.h"
 #include "student.h"
 #include<conio.h>
+
 wstring stringToWString(string str) {
 	wstring tmp(str.length(), L' ');
 	copy(str.begin(), str.end(), tmp.begin());
@@ -217,11 +218,11 @@ _Subjects* is_Same_Session(_Subjects* Node, Session ss1, Session ss2) {
 		if (ssTmp.dayOfWeek == ss1.dayOfWeek || ssTmp.dayOfWeek == ss2.dayOfWeek) {
 			if (ssTmp.session == ss1.session || ssTmp.session == ss2.session) return Node;
 		}
-		ssTmp = Node->subjects_Data.course_Data.second_Session;
-		if (ssTmp.dayOfWeek == ss1.dayOfWeek || ssTmp.dayOfWeek == ss2.dayOfWeek) {
-			if (ssTmp.session == ss1.session || ssTmp.session == ss2.session) return Node;
-		}
-		Node = Node->data_Next;
+ssTmp = Node->subjects_Data.course_Data.second_Session;
+if (ssTmp.dayOfWeek == ss1.dayOfWeek || ssTmp.dayOfWeek == ss2.dayOfWeek) {
+	if (ssTmp.session == ss1.session || ssTmp.session == ss2.session) return Node;
+}
+Node = Node->data_Next;
 	}
 	return nullptr;
 }
@@ -281,7 +282,7 @@ void register_Course(_Student* Node) {
 
 	bool running = true;
 	do {
-		if (list_Len(Node->data.subregis) >= 5) {
+		if (list_Len(Node->subregis) >= 5) {
 			cout << "Only 5 courses are allowed per semester!" << endl;
 			return;
 		}
@@ -291,13 +292,72 @@ void register_Course(_Student* Node) {
 		int option;
 		cin >> option;
 		if (option == 1) {
-			if (list_Len(Node->data.subregis) >= 5) {
+			if (list_Len(Node->subregis) >= 5) {
 				cout << "Only 5 courses are allowed per semester!" << endl;
 				running = false;
-			} 
+			}
 		}
 		else running = false;
 	} while (running);
+}
+
+void register_One_Course_TextFile(_Student* Node) {
+	wifstream fileOld;
+	wofstream fileNew;
+
+	string oldName = dir + dirCourse_Student + "Registered_Course_" + Node->data.class_Of_Student + ".txt";
+	string newName = dir + dirCourse_Student + "Tmp" + Node->data.class_Of_Student + ".txt";
+	fileOld.open(oldName, ios_base::in);
+	fileNew.open(newName, ios_base::out);
+
+	fileOld.imbue(std::locale(std::locale::empty(), new std::codecvt_utf8<wchar_t, 0x10ffff, std::generate_header>));
+	fileNew.imbue(std::locale(std::locale::empty(), new std::codecvt_utf8<wchar_t, 0x10ffff, std::generate_header>));
+
+	wstring line;
+	int courseID;
+	int numOfCourse;
+	wchar_t a = ',';
+	int k = 0;
+	while (!fileOld.eof()) {
+		fileOld >> courseID >> a;
+		if (k != 0) fileNew << endl;
+		fileNew << courseID << ",";
+		if (to_string(courseID) == Node->data.student_Account.ID) {
+			fileOld >> numOfCourse;
+			fileNew << numOfCourse + 1;
+			getline(fileOld, line);
+			for (int i = 1; i <= numOfCourse; i++) {
+				getline(fileOld, line);
+				fileNew << endl << line;
+			}
+			_Subjects* cur = Node->subregis;
+			for (int i = 1; i <= numOfCourse; i++) cur = cur->data_Next;
+			fileNew << endl << stringToWString(cur->subjects_Data.course_Data.course_ID) << ",";
+			fileNew << stringToWString(cur->subjects_Data.course_Data.course_Name) << ",";
+			fileNew << cur->subjects_Data.course_Data.Name_of_Teacher << ",";
+			fileNew << cur->subjects_Data.course_Data.credit << ",";
+			fileNew << stringToWString(cur->subjects_Data.course_Data.first_Session.dayOfWeek) << ",";
+			fileNew << stringToWString(cur->subjects_Data.course_Data.first_Session.session) << ",";
+			fileNew << stringToWString(cur->subjects_Data.course_Data.second_Session.dayOfWeek) << ",";
+			fileNew << stringToWString(cur->subjects_Data.course_Data.second_Session.session);
+		}
+		else {
+			fileOld >> numOfCourse;
+			fileNew << numOfCourse;
+			getline(fileOld, line);
+			for (int i = 1; i <= numOfCourse; i++) {
+				getline(fileOld, line);
+				fileNew << endl << line;
+			}
+		}
+		k++;
+	}
+
+	fileOld.close();
+	fileNew.close();
+
+	remove(oldName.c_str());
+	rename(newName.c_str(), oldName.c_str());
 }
 
 void register_One_Course(_Student* Node) {
@@ -334,25 +394,25 @@ void register_One_Course(_Student* Node) {
 			session2.dayOfWeek = WStringToString(d2);
 			session2.session = WStringToString(ss2);
 
-			if (!is_Same_Course(Node->data.subregis, NameCourses)) {
+			if (!is_Same_Course(Node->subregis, NameCourses)) {
 				cout << "You have already registered " << NameCourses << ". Pls register another course!" << endl;
 				return;
 			}
 
 			_Subjects* course_Confilct = new _Subjects;
-			course_Confilct = is_Same_Session(Node->data.subregis, session1, session2);
-			
+			course_Confilct = is_Same_Session(Node->subregis, session1, session2);
+		
 			if (course_Confilct != nullptr) {
 				cout << NameCourses << " is conflicted with " << course_Confilct->subjects_Data.course_Data.course_Name << "! Pls register anthore corse" << endl;
 				return;
 			}
 			delete course_Confilct;
 
-			_Subjects* cur = Node->data.subregis;
+			_Subjects* cur = Node->subregis;
 
-			if (Node->data.subregis == nullptr) {
-				Node->data.subregis = new _Subjects;
-				cur = Node->data.subregis;
+			if (Node->subregis == nullptr) {
+				Node->subregis = new _Subjects;
+				cur = Node->subregis;
 				cur->data_Prev = nullptr;
 			}
 
@@ -372,6 +432,8 @@ void register_One_Course(_Student* Node) {
 			cur->subjects_Data.course_Data.second_Session.dayOfWeek = session2.dayOfWeek;
 			cur->subjects_Data.course_Data.second_Session.session = session2.session;
 			cur->data_Next = nullptr;
+
+			register_One_Course_TextFile(Node);
 
 			wofstream fileOut;
 			fileOut.open(dir + dirCourse_Student + NameCourses + ".txt", ios_base::app);
@@ -417,29 +479,88 @@ void view_Reigstration_Results(_Subjects* Node) {
 	}
 }
 
-void remove_Courses(_Subjects*& Node) {
+void remove_Courses_TextFile(_Student* Node, string courseID) {
+	wifstream fileOld;
+	wofstream fileNew;
+
+	string oldName = dir + dirCourse_Student + "Registered_Course_" + Node->data.class_Of_Student + ".txt";
+	string newName = dir + dirCourse_Student + "Tmp" + Node->data.class_Of_Student + ".txt";
+
+	fileOld.open(oldName, ios_base::in);
+	fileNew.open(newName, ios_base::out);
+
+	fileOld.imbue(std::locale(std::locale::empty(), new std::codecvt_utf8<wchar_t, 0x10ffff, std::generate_header>));
+	fileNew.imbue(std::locale(std::locale::empty(), new std::codecvt_utf8<wchar_t, 0x10ffff, std::generate_header>));
+
+	int k = 0;
+	wstring line;
+	int IDStu, numOfCourse;
+	wchar_t a = ',';
+	while (!fileOld.eof()) {
+		if (k != 0) fileNew << endl;
+		fileOld >> IDStu >> a;
+		fileNew << IDStu << ",";
+		if (IDStu == Node->data.ID_Student) {
+			fileOld >> numOfCourse;
+			fileNew << numOfCourse - 1;
+			getline(fileOld, line);
+			for (int i = 1; i <= numOfCourse; i++) {
+				getline(fileOld, line, a);
+				if (line == stringToWString(courseID)) getline(fileOld, line);
+				else {
+					fileNew << endl << line << ",";
+					getline(fileOld, line);
+					fileNew << line;
+				}
+			}
+		}
+
+		else {
+			fileOld >> numOfCourse;
+			fileNew << numOfCourse;
+			getline(fileOld, line);
+			for (int i = 1; i <= numOfCourse; i++) {
+				getline(fileOld, line);
+				fileNew << endl << line;
+			}
+		}
+		k++;
+	}
+	
+	fileOld.close();
+	fileNew.close();
+
+	remove(oldName.c_str());
+	rename(newName.c_str(), oldName.c_str());
+}
+
+void remove_Courses(_Student*& Node) {
 	bool running = true;
 	int choose;
+	ifstream fileOld;
+	ofstream fileNew;
 	do {
 		if (Node == nullptr) {
 			cout << "Nothing to delete" << endl;
 			return;
 		}
-		view_Reigstration_Results(Node);
+		view_Reigstration_Results(Node->subregis);
 		cout << "Enter the number of course to remove (0 to exit): ";
 		int choose;
 		cin >> choose;
-		if (choose == 0) {
+		if (choose <= 0) {
 			running = false;
 		}
-		else if (choose > list_Len(Node)) cout << "Your chosen course is exceed the number of courses! Please try again!" << endl;
+
+		else if (choose > list_Len(Node->subregis)) cout << "Your chosen course is exceed the number of courses! Please try again!" << endl;
 		else {
-			_Subjects* cur = Node;
+			_Subjects* cur = Node->subregis;
 			for (int i = 1; i < choose; i++) cur = cur->data_Next;
 			string courseName = cur->subjects_Data.course_Data.course_Name;
+			remove_Courses_TextFile(Node, cur->subjects_Data.course_Data.course_ID);
 			if (cur->data_Next != nullptr) cur->data_Next->data_Prev = cur->data_Prev;
 			if (cur->data_Prev != nullptr) cur->data_Prev->data_Next = cur->data_Next;
-			if (cur == Node) Node = Node->data_Next;
+			if (cur == Node->subregis) Node->subregis = Node->subregis->data_Next;
 			delete cur;
 			cout << courseName << " had been completely deleted!" << endl;
 			cout << "1. Continue\t2.Exit" << endl;
@@ -447,5 +568,4 @@ void remove_Courses(_Subjects*& Node) {
 			if (choose == 2) running = false;
 		}
 	} while (running);
-	
 }

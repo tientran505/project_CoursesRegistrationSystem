@@ -2,6 +2,7 @@
 #include "student.h"
 #include "function.h"
 #include<conio.h>
+
 void loadStudentList(string path, _Student*& head) {
 	head = nullptr;
 	wifstream fileIn;
@@ -38,24 +39,30 @@ void loadStudentList(string path, _Student*& head) {
 		fileIn >> pCur->data.Social_ID;
 		pCur->data.class_Of_Student = path;
 		pCur->data.number_Of_Courses = 0;
-		pCur->data.subregis = nullptr;
+		pCur->subregis = nullptr;
 		pCur->pNext = nullptr;
 	}
 
 	fileIn.close();
 }
 
-void loadStudentList_changedPassword(string path, _Student*& head) {
+void loadStudentList_changedPassword(string path,string path_Course ,_Student*& head) {
 	head = nullptr;
 	wifstream fileIn;
+	wifstream readCourse;
+
 	fileIn.open(path, ios_base::in);
+	readCourse.open(path_Course, ios_base::in);
 
 	if (!fileIn.is_open()) {
 		cout << "File is not found!" << endl;
 		fileIn.close();
 		return;
 	}
+
 	fileIn.imbue(std::locale(std::locale::empty(), new std::codecvt_utf8<wchar_t, 0x10ffff, std::generate_header>));
+	readCourse.imbue(std::locale(std::locale::empty(), new std::codecvt_utf8<wchar_t, 0x10ffff, std::generate_header>));
+
 	wchar_t a = ',', b = '/';
 	_Student* pCur = head;
 	path.erase(path.end() - 4, path.end());
@@ -63,6 +70,9 @@ void loadStudentList_changedPassword(string path, _Student*& head) {
 
 	ifstream read;
 	read.open(dir + dirClass_Save + "save_Account_" + path + ".txt", ios_base::in);
+
+	int stuID, numOfCourse;
+	wstring line;
 
 	while (!fileIn.eof()) {
 		if (head == nullptr) {
@@ -86,6 +96,39 @@ void loadStudentList_changedPassword(string path, _Student*& head) {
 		getline(read, pCur->data.student_Account.ID, ',');
 		getline(read, pCur->data.student_Account.password);
 
+		readCourse >> stuID >> a >> numOfCourse;
+		getline(readCourse, line);
+
+		pCur->subregis = nullptr;
+		_Subjects* subCur = pCur->subregis;
+
+		for (int i = 1; i <= numOfCourse; i++) {
+			if (pCur->subregis == nullptr) {
+				pCur->subregis = new _Subjects;
+				subCur = pCur->subregis;
+				subCur->data_Prev = nullptr;
+			}
+			else {
+				subCur->data_Next = new _Subjects;
+				subCur->data_Next->data_Prev = subCur;
+				subCur = subCur->data_Next;
+			}
+			getline(readCourse, line, a);
+			subCur->subjects_Data.course_Data.course_ID = WStringToString(line);
+			getline(readCourse, line, a);
+			subCur->subjects_Data.course_Data.course_Name = WStringToString(line);
+			getline(readCourse, subCur->subjects_Data.course_Data.Name_of_Teacher, a);
+			readCourse >> subCur->subjects_Data.course_Data.credit >> a;
+			getline(readCourse, line, a);
+			subCur->subjects_Data.course_Data.first_Session.dayOfWeek = WStringToString(line);
+			getline(readCourse, line, a);
+			subCur->subjects_Data.course_Data.first_Session.session = WStringToString(line);
+			getline(readCourse, line, a);
+			subCur->subjects_Data.course_Data.second_Session.dayOfWeek = WStringToString(line);
+			getline(readCourse, line);
+			subCur->subjects_Data.course_Data.second_Session.session = WStringToString(line);
+			subCur->data_Next = nullptr;
+		}
 		pCur->data.class_Of_Student = path;
 		pCur->pNext = nullptr;
 	}
@@ -148,6 +191,22 @@ void convertAccountOfStudent(string path, _Student* head) {
 		pCur = pCur->pNext;
 	}
 
+	fileOut.close();
+}
+
+void convertCourseOfStudent(string path, _Student* head) {
+	ofstream fileOut;
+	fileOut.open(path, ios_base::out);
+	if (!fileOut.is_open()) {
+		return;
+	}
+
+	_Student* pCur = head;
+	while (pCur->pNext != nullptr) {
+		if (pCur != head) fileOut << endl;
+		fileOut << pCur->data.ID_Student << "," << list_Len(pCur->subregis);
+		pCur = pCur->pNext;
+	}
 	fileOut.close();
 }
 
@@ -253,6 +312,7 @@ void listStudents(_Student*& head) {
 			fileOut << path << endl;
 			fileOut.close();
 			convertAccountOfStudent(dir + dirClass_Save + "save_Account_" + path + ".txt", headClass);
+			convertCourseOfStudent(dir + dirCourse_Student + "Registered_Course_" + path + ".txt", headClass);
 		}
 	} while (n != 0);
 }
@@ -267,8 +327,9 @@ void loadStu_Save(_Student*& pHead) {
 		string path;
 		getline(read, path);
 		cout << "Added " << path << " in the system" << endl;
-		loadStudentList_changedPassword(dir + dirClass + path + ".csv", headClass);
+		loadStudentList_changedPassword(dir + dirClass + path + ".csv", dir + dirCourse_Student + "Registered_Course_" + path + ".txt",headClass);
 		listPush(pHead, headClass);
+		
 	}
 	read.close();
 }
@@ -504,14 +565,16 @@ void update_Course_Info() {
 	wifstream fileOld;
 	wofstream fileNew;
 
-	
-	fileOld.open(dir + dirCourse + "CoursesRegistration.txt", ios_base::in);
-	fileNew.open(dir + dirCourse + "change.txt", ios_base::out);
+	string dirOld = dir + dirCourse + "CoursesRegistration.txt";
+	string dirNew = dir + dirCourse + "change.txt";
+
+	fileOld.open(dirOld, ios_base::in);
+	fileNew.open(dirNew, ios_base::out);
 
 	fileOld.imbue(std::locale(std::locale::empty(), new std::codecvt_utf8<wchar_t, 0x10ffff, std::generate_header>));
 	fileNew.imbue(std::locale(std::locale::empty(), new std::codecvt_utf8<wchar_t, 0x10ffff, std::generate_header>));
 
-	viewCourseList(dir + dirCourse + "CoursesRegistration.txt");
+	viewCourseList(dirOld);
 	wchar_t a = ',';
 	cout << "Choose course to update: " << endl;
 	int choose;
@@ -613,10 +676,9 @@ void update_Course_Info() {
 	}
 
 	case 4: {
-		int* credit;
+		int credit;
 		cout << "Enter new credits of course: ";
-		credit = new int;
-		cin >> *credit;
+		cin >> credit;
 		wstring tmp;
 		getline(fileOld, tmp, a);
 		fileNew << tmp << ",";
@@ -631,14 +693,13 @@ void update_Course_Info() {
 			fileNew << junk;
 			if (!fileOld.eof()) fileNew << endl;
 		}
-		delete credit;
 		break;
 	}
 
 	case 5: {
 		cout << "Enter new maximum number of students in course: ";
-		int* num = new int;
-		cin >> *num;
+		int num;
+		cin >> num;
 		wstring tmp;
 		getline(fileOld, tmp, a);
 		fileNew << tmp << ",";
@@ -648,14 +709,14 @@ void update_Course_Info() {
 		fileNew << tmp << ",";
 		int intTmp;
 		fileOld >> intTmp >> a;
-		fileNew << intTmp << ",";
+		fileNew << intTmp << "," << num << ",";
 		wstring junk;
 		getline(fileOld, tmp, a);
 		while (!fileOld.eof()) {
 			getline(fileOld, junk);
-			fileNew << junk << endl;
+			fileNew << junk;
+			if (!fileOld.eof()) fileNew << endl;
 		}
-		delete num;
 		break;
 	}
 
@@ -698,14 +759,17 @@ void update_Course_Info() {
 	cout << "Infomation updated!" << endl;
 	fileOld.close();
 	fileNew.close();
-	remove("E:/HCMUS/Sem 2/Programming Techniques/Project - A Courses Registration System/project_CoursesRegistrationSystem/Courses Registration System/Courses Registration System/Course/CoursesRegistration.txt");
-	rename("E:/HCMUS/Sem 2/Programming Techniques/Project - A Courses Registration System/project_CoursesRegistrationSystem/Courses Registration System/Courses Registration System/Course/change.txt", "E:/HCMUS/Sem 2/Programming Techniques/Project - A Courses Registration System/project_CoursesRegistrationSystem/Courses Registration System/Courses Registration System/Course/CoursesRegistration.txt");
+	remove(dirOld.c_str());
+	rename(dirNew.c_str(), dirOld.c_str());
+//	remove("E:/HCMUS/Sem 2/Programming Techniques/Project - A Courses Registration System/project_CoursesRegistrationSystem/Courses Registration System/Courses Registration System/Course/CoursesRegistration.txt");
+//	rename("E:/HCMUS/Sem 2/Programming Techniques/Project - A Courses Registration System/project_CoursesRegistrationSystem/Courses Registration System/Courses Registration System/Course/change.txt", "E:/HCMUS/Sem 2/Programming Techniques/Project - A Courses Registration System/project_CoursesRegistrationSystem/Courses Registration System/Courses Registration System/Course/CoursesRegistration.txt");
 }
 
 void delete_Courses() {
 	wifstream fileOld;
 
-	fileOld.open(dir + dirCourse + "CoursesRegistration.txt", ios_base::in);
+	string dirFileOld = dir + dirCourse + "CoursesRegistration.txt";
+	fileOld.open(dirFileOld, ios_base::in);
 	int line = check_Line(dir + dirCourse + "CoursesRegistration.txt");
 
 	if (!fileOld.is_open() || line == 0) {
@@ -715,7 +779,8 @@ void delete_Courses() {
 	}
 
 	wofstream fileNew;
-	fileNew.open(dir + dirCourse + "change.txt", ios_base::out);
+	string dirFileNew = dir + dirCourse + "change.txt";
+	fileNew.open(dirFileNew, ios_base::out);
 
 	fileOld.imbue(std::locale(std::locale::empty(), new std::codecvt_utf8<wchar_t, 0x10ffff, std::generate_header>));
 	fileNew.imbue(std::locale(std::locale::empty(), new std::codecvt_utf8<wchar_t, 0x10ffff, std::generate_header>));
@@ -757,8 +822,8 @@ void delete_Courses() {
 
 	fileOld.close();
 	fileNew.close();
-	remove("E:/HCMUS/Sem 2/Programming Techniques/Project - A Courses Registration System/project_CoursesRegistrationSystem/Courses Registration System/Courses Registration System/Course/CoursesRegistration.txt");
-	rename("E:/HCMUS/Sem 2/Programming Techniques/Project - A Courses Registration System/project_CoursesRegistrationSystem/Courses Registration System/Courses Registration System/Course/change.txt", "E:/HCMUS/Sem 2/Programming Techniques/Project - A Courses Registration System/project_CoursesRegistrationSystem/Courses Registration System/Courses Registration System/Course/CoursesRegistration.txt");
+	remove(dirFileOld.c_str());
+	rename(dirFileNew.c_str(), dirFileOld.c_str());
 }
 
 void showInfo_Staff(string username) {
@@ -879,12 +944,12 @@ void studentRegisterSub(_Student* head) {
 	while (!fileIn.eof()) {
 		while (cur != nullptr) {
 			fileIn >> cur->data.Number_In_Class >> a >> cur->data.ID_Student >> a >> cur->data.firstName >> a >> cur->data.lastName >> a >> cur->data.gender >> a >> dob >> a >> cur->data.Social_ID >> a;
-			while (cur->data.subregis != nullptr) {
-				if (cur->data.subregis->subjects_Data.course_Data.course_Name == sub) {
+			while (cur->subregis != nullptr) {
+				if (cur->subregis->subjects_Data.course_Data.course_Name == sub) {
 					count++;
 					fileOut<<count<<a<<cur->data.ID_Student << a << cur->data.firstName << a << cur->data.lastName << a << cur->data.gender << a << dob << a << cur->data.Social_ID << a <<endl;
 				}
-				cur->data.subregis = cur->data.subregis->data_Next;
+				cur->subregis = cur->subregis->data_Next;
 			}
 			cur = cur->pNext;
 		}
