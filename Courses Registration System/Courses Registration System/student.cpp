@@ -534,6 +534,50 @@ void remove_Courses_TextFile(_Student* Node, string courseID) {
 	rename(newName.c_str(), oldName.c_str());
 }
 
+void remove_From_List(_Student* Node, string courseName) {
+	string oldName = dir + dirCourse_Student + courseName + ".txt";
+	string newName = dir + dirCourse_Student + "change.txt";
+	
+	if (check_Line(oldName) == 1) {
+		remove(oldName.c_str());
+		return;
+	}
+
+	wifstream fileOld;
+	wofstream fileNew;
+
+	fileOld.imbue(std::locale(std::locale::empty(), new std::codecvt_utf8<wchar_t, 0x10ffff, std::generate_header>));
+	fileNew.imbue(std::locale(std::locale::empty(), new std::codecvt_utf8<wchar_t, 0x10ffff, std::generate_header>));
+
+	fileOld.open(oldName, ios_base::in);
+	fileNew.open(newName, ios_base::out);
+
+	int no, stuID;
+	int noTmp;
+	wstring line;
+	wchar_t a = ',';
+	int i = 1;
+	while (!fileOld.eof()) {
+		fileOld >> no >> a;
+		fileOld >> stuID >> a;
+		if (stuID == Node->data.ID_Student) getline(fileOld, line);
+		else {
+			if (i != 1) fileNew << endl;
+			fileNew << i << "," << stuID << ",";
+			getline(fileOld, line);
+			fileNew << line;
+			i++;
+		}
+	}
+
+	fileOld.close();
+	fileNew.close();
+
+	remove(oldName.c_str());
+	rename(newName.c_str(), oldName.c_str());
+	
+}
+
 void remove_Courses(_Student*& Node) {
 	bool running = true;
 	int choose;
@@ -557,6 +601,7 @@ void remove_Courses(_Student*& Node) {
 			_Subjects* cur = Node->subregis;
 			for (int i = 1; i < choose; i++) cur = cur->data_Next;
 			string courseName = cur->subjects_Data.course_Data.course_Name;
+			remove_From_List(Node, courseName);
 			remove_Courses_TextFile(Node, cur->subjects_Data.course_Data.course_ID);
 			if (cur->data_Next != nullptr) cur->data_Next->data_Prev = cur->data_Prev;
 			if (cur->data_Prev != nullptr) cur->data_Prev->data_Next = cur->data_Next;
