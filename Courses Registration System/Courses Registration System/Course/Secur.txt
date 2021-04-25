@@ -1,5 +1,9 @@
-1,BAA00005,Basic Economic,Trung Kien,2,40,FRI,S1,FRI,S2
-2,CSC00004,Introduction to IT,Phan Huy Hoang,4,40,MON,S3,MON,S4
-3,CSC10001,Programming 1,Truong Toan Thinh,4,50,SAT,S3,SAT,S4
-4,CSC10001,Soft Skill,Nguyen Viet Minh,4,49,THU,S1,THU,S2
-5,MTH00009,Discrete Mathematics,Pham Viet Dong,4,50,MON,S1,MON,S2
+﻿1,BAA00005,Basic Economics,Phạm Xuân Kiên,2,15,FRI,S1,FRI,S2
+2,CSC00004,Introducing to IT,Trần Thái Sơn,4,15,THU,S3,THU,S4
+3,CSC10001,Programing 1,Trương Toàn Thịnh,4,15,SAT,S3,SAT,S4
+4,CSC10101,Soft Skills,Lương Vĩ Minh,4,20,THU,S1,THU,S2
+5,MTH00009,Discrete Mathematics,Nguyễn Viết Đông,4,16,MON,S1,MON,S2﻿
+6,BAA00101,Marxist-Leninist Philosophy,Nguyễn Tuấn Phương,3,25,MON,S3,MON,S4
+7,CSC10002,Programing Techniques,Đinh Bá Tiến,4,25,WED,S1,SAT,S4
+8,PHY00005,General Physics,Nguyễn Nhật Kim Ngân,4,25,MON,S1,MON,S2﻿
+9,MTH00005,Calculus 1,Lý Kim Hà,4,30,TUE,S2,FRI,S2

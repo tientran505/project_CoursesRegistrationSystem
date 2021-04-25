@@ -21,6 +21,7 @@ const string dirRegis = "Registration/";
 const string dirStaff = "Staff/";
 const string dirCourse_Student = "Registration_Student/";
 const string dirClass_Save = "Class_Save/";
+const string dirSchoolYear = "School Year/";
 
 
 struct Date {
@@ -36,11 +37,6 @@ struct Time {
 struct Session {
 	string dayOfWeek;
 	string session;
-};
-
-struct Student_Schedule {
-	Date date_Sched;
-	Time time_Sched;
 };
 
 struct Course {
@@ -63,14 +59,21 @@ struct _Student_ScoreBoard {
 	_Student_ScoreBoard* dataNext;
 };
 
+struct node_Semester {
+	Date start_Date; // start date of sem
+	Date end_Date; // end date of sem
+	int numOfSem; // 1,2,3
+	int schoolYearCur; //2018-2019? 2019 - 2020
+};
+
 struct Subjects {
 	Course course_Data;
 	int number_Of_Student;
-	Student_Schedule study_Schedule;
 };
 
 struct _Subjects {
 	Subjects subjects_Data;
+	node_Semester sem_Info;
 	_Subjects* data_Next;
 	_Subjects* data_Prev;
 };
@@ -79,6 +82,8 @@ struct Account {
 	string ID;
 	string password;
 };
+
+
 
 struct Student {
 	int Number_In_Class; //so thu tu trong lop
@@ -94,17 +99,13 @@ struct Student {
 	double score_Average;
 	Account student_Account;
 	int number_Of_Courses;
+	int schoolYear;
 };
 
 struct _Student {
 	Student data;
 	_Subjects* subregis;
 	_Student* pNext;
-};
-
-struct subject {
-	string title;
-	string IDsubject;
 };
 
 void currentDateTime();

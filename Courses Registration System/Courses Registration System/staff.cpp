@@ -2,12 +2,21 @@
 #include "student.h"
 #include "function.h"
 #include<conio.h>
+string getSchoolYear(string path) {
+	ifstream fileIn;
+	fileIn.open(path, ios_base::in);
+
+	string line;
+	getline(fileIn, line, '-');
+	fileIn.close();
+	return line;
+}
 
 void loadStudentList(string path, _Student*& head) {
 	head = nullptr;
 	wifstream fileIn;
 	fileIn.open(path, ios_base::in);
-
+	ifstream read;
 	if (!fileIn.is_open()) {
 		cout << "File is not existed!" << endl;
 		fileIn.close();
@@ -254,47 +263,38 @@ void listStudents(_Student*& head) {
 	int i = 0;
 	int temp;
 	int n = 0;
-	string year[5] = { "first-year", "second-year","third-year", "fourth-year", "fifth-year" };
-	string menu[5] = { "Exit input list"  ,"Input to the list of " , " students: " };
+	string menu[2] = { "Add First-year Student class", "Back" };
 	_Student* headClass = nullptr;
-
 	do {
 		while (true) {
 			system("cls");
 			for (int j = 0; j < 2; j++) {
-				if (j == n) {
+				if (n == j) {
 					textcolor(12);
 					GotoXY(39, 5 + j);
-					if (j == 1) {
-						cout << " > " << menu[j] << year[i] << menu[j + 1] << "<" << endl;
-					}
-					else { cout << " > " << menu[j] << " < " << endl; }
+					cout << " > " << menu[j] << " < " << endl;
 					textcolor(15);
 				}
 				else {
 					textcolor(15);
 					GotoXY(40, 5 + j);
-					if (j == 1) {
-						cout << menu[j] << year[i] << menu[j + 1] << endl;
-					}
-					else {
-						cout << " " << menu[j] << " " << endl;
-					}
+					cout << " " << menu[j] << " " << endl;
 				}
 			}
 			temp = _getch();
 			if (temp == 's' || temp == 'S' || temp == 80) {
 				n++;
-				if (n == 4) n = 0;
+				if (n == 2) n = 0;
 			}
 			if (temp == 'w' || temp == 'W' || temp == 72) {
 				n--;
-				if (n == -1) n = 3;
+				if (n == -1) n = 1;
 			}
 			if (temp == 13 || temp == 32) break;
 		}
 		system("cls");
-		if (n != 0) {
+		if (n != 1) {
+			cout << "Input name of Class to add into the system: ";
 			cin >> path;
 			ofstream fileOut;
 			fileOut.open(dir + dirClass_Save + "classes_In_System.txt", ios_base::app);
@@ -314,7 +314,7 @@ void listStudents(_Student*& head) {
 			convertAccountOfStudent(dir + dirClass_Save + "save_Account_" + path + ".txt", headClass);
 			convertCourseOfStudent(dir + dirCourse_Student + "Registered_Course_" + path + ".txt", headClass);
 		}
-	} while (n != 0);
+	} while (n != 1);
 }
 
 void loadStu_Save(_Student*& pHead) {
@@ -862,14 +862,26 @@ void create_Course_Registration() {
 
 	do {
 		cout << "Input Date Course registration session is open (DD/MM/YYYY): ";
-		cin >> dayStart.day >> dayStart.month >> dayStart.year;
+		cin >> dayStart.day;
+		cin.ignore(10, '/');
+		cin >> dayStart.month;
+		cin.ignore(10, '/');
+		cin >> dayStart.year;
 		cout << "Time (24 Clock - HH:MM): ";
-		cin >> hourStart >> minuteStart;
+		cin >> hourStart;
+		cin.ignore(10, ':');
+		cin >> minuteStart;
 
 		cout << "Input Date Course registration seesion is close (DD/MM/YYYY): ";
-		cin >> dayEnd.day >> dayEnd.month >> dayEnd.year;
+		cin >> dayEnd.day;
+		cin.ignore(10, '/');
+		cin >> dayEnd.month;
+		cin.ignore(10, '/');
+		cin >> dayEnd.year;
 		cout << "Time (24h Clock - HH:MM): ";
-		cin >> hourEnd >> minuteEnd;
+		cin >> hourEnd;
+		cin.ignore(10, ':');
+		cin >> minuteEnd;
 
 		string minuteTmp = to_string(minuteStart);
 		if (minuteStart < 10) minuteTmp = "0" + minuteTmp;
@@ -904,21 +916,87 @@ void create_Course_Registration() {
 	fileOut.close();
 }
 
+bool is_Created_Schoolyear_Before(string line) {
+	ifstream read;
+	read.open(dir + dirSchoolYear + "School_Year.txt", ios_base::in);
+
+	if (!read.is_open()) return true;
+
+	string check;
+
+	while (!read.eof()) {
+		getline(read, check, '-');
+		if (check == line) {
+			read.close();
+			return false;
+		}
+		getline(read, check);
+	}
+	read.close();
+	return true;
+}
+
+bool is_Created_Sem_Before(string line, string schoolyear) {
+	ifstream read;
+	read.open(dir + dirSchoolYear + schoolyear + ".txt", ios_base::out);
+	
+	string check;
+	while (!read.eof()) {
+		getline(read, check);
+		if (line == check) {
+			GotoXY(45, 13);
+			cout << "You registered for " << line << endl;
+			GotoXY(45, 14);
+			cout << "Press any key to continue..." << endl;
+			int choose = _getch();
+			read.close();
+			return false;
+		}
+		for (int i = 0; i < 2; i++) getline(read, check);
+	}
+
+	read.close();
+	return true;
+}
+
 void add_Schoolyear(Date& schoolyear) {
-	int running = true;
+	bool running = true;
 	do {
 		cout << "Input the schoolyear: ";
 		int year;
 		cin >> year;
-		cout << "You mean " << year << "-" << year + 1 << "?";
-		cout << "\nY. Yes \t N. No" << endl;
-		string choose;
-		cin >> choose;
-		if (choose == "Y" || choose == "y") {
-			schoolyear.year = year;
-			running = false;
+		if (!is_Created_Schoolyear_Before(to_string(year))) {
+			cout << "You have created school year " << to_string(year) << " before!" << endl;
+			cout << "Press any key to continue or Esc to exit" << endl;
+			int choose = _getch();
+			if (choose == 27) return;
+		}
+		else {
+			cout << "You mean " << year << "-" << year + 1 << "?";
+			cout << "\nY. Yes \t N. No" << endl;
+			string choose;
+			cin >> choose;
+			if (choose == "Y" || choose == "y") {
+				ofstream out;
+				ofstream outFile;
+				outFile.open(dir + dirSchoolYear + "School_Year.txt", ios_base::app);
+				out.open(dir + dirSchoolYear + to_string(year) + "-" + to_string(year + 1) + ".txt", ios_base::out);
+				if (!out.is_open()) {
+					cout << "Can't create School year!" << endl;
+				}
+				if (check_Line(dir + dirSchoolYear + "School_Year.txt") != 0) outFile << endl;
+				outFile << year << "-" << year + 1;
+				outFile.close();
+				out.close();
+				schoolyear.year = year;
+				running = false;
+			}
 		}
 	} while (running);
+}
+
+void create_Semester() {
+
 }
 
 void studentRegisterSub(_Student* head) {

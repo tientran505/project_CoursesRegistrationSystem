@@ -194,16 +194,205 @@ int MainMenu(int x, int y) {
 	}
 }
 
+void create_SemesterMenu(string schoolyear) {
+	int i = 0;
+	int tmp;
+	Date startDate, endDate;
+	GotoXY(40, 5);
+	string menu[4] = { "Semester 1" , "Semester 2", "Semester 3", "Back" };
+
+
+	bool running = true;
+	
+	while (running) {
+		system("cls");
+		GotoXY(40, 3);
+		cout << "Choose a semester to register for the " << schoolyear << " school year!" << endl;
+		for (int k = 0; k < 4; k++) {
+			if (k == i) {
+				textcolor(12);
+				GotoXY(39, 5 + k);
+				cout << " > " << menu[k] << " < " << endl;
+				textcolor(15);
+			}
+			else {
+				textcolor(15);
+				GotoXY(40, 5 + k);
+				cout << " " << menu[k] << " " << endl;
+			}
+		}
+		tmp = _getch();
+		if (tmp == 's' || tmp == 'S' || tmp == 80) {
+			i++;
+			if (i == 4) i = 0;
+		}
+		if (tmp == 'w' || tmp == 'W' || tmp == 72) {
+			i--;
+			if (i == -1) i = 2;
+		}
+		if (tmp == 13 || tmp == 32) running = false;
+	}
+	
+	if (i == 3) return;
+	system("cls");
+	if (!is_Created_Sem_Before(menu[i], schoolyear)) return;
+	GotoXY(39, 10);
+	cout << "Enter start date of " << menu[i] << " (DD/MM/YYYY): ";
+	cin >> startDate.day;
+	cin.ignore(10, '/');
+	cin >> startDate.month;
+	cin.ignore(10, '/');
+	cin >> startDate.year;
+	GotoXY(39, 12);
+	cout << "Enter end date of " << menu[i] << " (DD/MM/YYYY): ";
+	cin >> endDate.day;
+	cin.ignore(10, '/');
+	cin >> endDate.month;
+	cin.ignore(10, '/');
+	cin >> endDate.year;
+
+	ofstream fileOut;
+	fileOut.open(dir + dirSchoolYear + schoolyear + ".txt", ios_base::app);
+
+	if (check_Line(dir + dirSchoolYear + schoolyear + ".txt") != 0) fileOut << endl;
+
+	fileOut << menu[i] << endl;
+	fileOut << startDate.day << "/" << startDate.month << "/" << startDate.year << endl;
+	fileOut << endDate.day << "/" << endDate.month << "/" << endDate.year;
+
+	GotoXY(39, 14);
+	cout << "Create semester succesfully!" << endl;
+	GotoXY(39, 15);
+	cout << "Press any key to continue...";
+	int choose = _getch();
+	fileOut.close();
+}
+
+void create_SchoolyearMenu() {
+	int i = 0;
+	int tmp;
+	GotoXY(40, 5);
+	int line = check_Line(dir + dirSchoolYear + "School_Year.txt");
+	if (line == 0) {
+		system("cls");
+		GotoXY(40, 10);
+		cout << "You have not created any school year before!" << endl;
+		GotoXY(40, 11);
+		cout << "Enter to continue..." << endl;
+		int a = _getch();
+		return;
+	}
+	ifstream read;
+	bool running = true;
+	string* menu = new string[line + 1];
+	read.open(dir + dirSchoolYear + "School_Year.txt", ios_base::in);
+	for (int j = 0; j < line + 1; j++) {
+		if (j == line) menu[j] = "Back";
+		getline(read, menu[j]);
+	}
+
+	while (running) {
+		system("cls");
+		for (int k = 0; k < line + 1; k++) {
+			if (k == i) {
+				textcolor(12);
+				GotoXY(39, 5 + k);
+				if (k == line) cout << " > " << menu[k] << " < " << endl;
+				else cout << " > " << "Create Semesters for " << menu[k] << " < " << endl;
+				textcolor(15);
+			}
+			else {
+				textcolor(15);
+				GotoXY(40, 5 + k);
+				if (k == line) cout << " " << menu[k] << " " << endl;
+				else cout << " " << "Create Semesters for " << menu[k] << " " << endl;
+			}
+		}
+		tmp = _getch();
+		if (tmp == 's' || tmp == 'S' || tmp == 80) {
+			i++;
+			if (i == line + 1) i = 0;
+		}
+		if (tmp == 'w' || tmp == 'W' || tmp == 72) {
+			i--;
+			if (i == -1) i = line;
+		}
+		if (tmp == 13 || tmp == 32) {
+			running = false;
+			break;
+		}
+	}
+	if (i == line) {
+		delete[] menu;
+		return;
+	}
+	system("cls");
+	create_SemesterMenu(menu[i]);
+	delete[] menu;
+}
+
+void menu_Create_SY_Tmp() {
+	int i = 0;
+	string menu[3] = { "1. Create new School year", "2. Create new semester", "3. Back"};
+	bool running = true;
+	int tmp;
+	while (running) {
+		while (running) {
+			system("cls");
+			for (int k = 0; k < 3; k++) {
+				if (k == i) {
+					textcolor(12);
+					GotoXY(44, 10 + k);
+					cout << " > " << menu[k] << " < " << endl;
+					textcolor(15);
+				}
+				else {
+					textcolor(15);
+					GotoXY(45, 10 + k);
+					cout << " " << menu[k] << " " << endl;
+				}
+			}
+			tmp = _getch();
+			if (tmp == 's' || tmp == 'S' || tmp == 80) {
+				i++;
+				if (i == 3) i = 0;
+			}
+			if (tmp == 'w' || tmp == 'W' || tmp == 72) {
+				i--;
+				if (i == -1) i = 2;
+			}
+			if (tmp == 13 || tmp == 32) break;
+		}
+		switch (i) {
+		case 0: {
+			Date schoolyear;
+			add_Schoolyear(schoolyear);
+			break;
+		}
+		case 1: {
+			create_SchoolyearMenu();
+			break;
+		}
+		case 2: {
+			running = false;
+			break;
+		}
+		}
+	}
+	
+
+	
+}
 
 void staff_Menu(string username, _Student*& headStu) {
-	Date schoolyear;
 	int choose;
 	int i = 0;
+	bool running = true;
 	int temp;
 	system("cls");
 	ShowCur(0);
 	GotoXY(40, 5);
-	string menu[6] = { "1. View info","2. Create Course Registration Session", "3. Create School year","4. Course Registration Management System", "5. Add student lists to the system" , "6. Log out" };
+	string menu[6] = { "1. View info","2. Create Course Registration Session", "3. Create School year/Semester System","4. Course Registration Management System", "5. Add student lists to the system" , "6. Log out" };
 	do {
 		while (true) {
 			system("cls");
@@ -232,45 +421,40 @@ void staff_Menu(string username, _Student*& headStu) {
 			if (temp == 13 || temp == 32) break;
 		}
 		system("cls");
-		i++;
 		switch (i)
 		{
-		case 1: {
+		case 0: {
 			showInfo_Staff(username);
 			cout << endl;
 			cout << " enter to continue";
 			choose = _getch();
-			
 			break;
 		}
-		case 2: {
+		case 1: {
 			create_Course_Registration();
 			cout << endl;
 			cout << " enter to continue";
 			choose = _getch();
 			break;
 		}
-		case 3: {
-			add_Schoolyear(schoolyear);
-			cout << endl;
-			cout << " enter to continue";
-			choose = _getch();
+		case 2: {
+			menu_Create_SY_Tmp();
 			break;
 		}
-		case 4: {
+		case 3: {
 			menu_Course_Staff();
 			break;
 		}
-		case 5: {
+		case 4: {
 			listStudents(headStu);
-			/*cout << endl;
-			cout << " enter to continue";
-			choose = _getch();*/
 			break;
+		}
+		case 5: {
+			running = false;
 		}
 		}
 		
-	} while (i != 6);
+	} while (running);
 
 }
 
@@ -431,7 +615,7 @@ void student_Menu(_Student* Node) {
 			temp = _getch();
 			if (temp == 's' || temp == 'S' || temp == 80) {
 				i++;
-				if (i == 6) i = 0;
+				if (i == 6) i = 1;
 			}
 			if (temp == 'w' || temp == 'W' || temp == 72) {
 				i--;
