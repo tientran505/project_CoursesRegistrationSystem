@@ -341,10 +341,10 @@ void staff_Login(string& username) {
 	int temp;
 	string userTmp, passTmp;
 	while (running) {
-		GotoXY(25, 10);
+		GotoXY(37, 11);
 		cout << "Username: ";
 		cin >> username;
-		GotoXY(25, 12);
+		GotoXY(37, 13);
 		cout << "Password: ";
 		cin >> password;
 
@@ -360,7 +360,7 @@ void staff_Login(string& username) {
 		}
 		if (!running) {
 			system("cls");
-			GotoXY(35, 11);
+			GotoXY(45, 11);
 			cout << "Login Successfully!" << endl;
 			Sleep(200);
 			system("cls");
@@ -368,9 +368,9 @@ void staff_Login(string& username) {
 		else {
 			
 			system("cls");
-			GotoXY(35, 11);
+			GotoXY(40, 11);
 			cout << "Invalid login, please try again" << endl;
-			GotoXY(40, 13);
+			GotoXY(45, 13);
 			cout << " (enter to return)"<<endl;
 			temp = _getch();
 			system("cls");
