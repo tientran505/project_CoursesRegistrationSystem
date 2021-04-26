@@ -14,3 +14,4 @@ void createCourseList(string path);
 void update_Course_Info();
 void delete_Courses();
 void create_Course_Registration();
+bool is_Created_Sem_Before(string line, string schoolyear);

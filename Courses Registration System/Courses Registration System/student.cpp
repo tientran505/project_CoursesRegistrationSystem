@@ -436,10 +436,10 @@ void register_One_Course(_Student* Node) {
 			register_One_Course_TextFile(Node);
 
 			wofstream fileOut;
-			fileOut.open(dir + dirCourse_Student + NameCourses + ".txt", ios_base::app);
+			fileOut.open(dir + dirCourse_Student + NameCourses + ".csv", ios_base::app);
 			fileOut.imbue(std::locale(std::locale::empty(), new std::codecvt_utf8<wchar_t, 0x10ffff, std::generate_header>));
 
-			int num_Of_Line = check_Line(dir + dirCourse_Student + NameCourses + ".txt");
+			int num_Of_Line = check_Line(dir + dirCourse_Student + NameCourses + ".csv");
 			if (num_Of_Line != 0) fileOut << endl;
 
 			fileOut << num_Of_Line + 1 << ",";
@@ -447,6 +447,7 @@ void register_One_Course(_Student* Node) {
 			fileOut << Node->data.firstName << " " << Node->data.lastName << ",";
 			fileOut << Node->data.gender << ",";
 			fileOut << Node->data.Date_Of_Birth.day << "/" << Node->data.Date_Of_Birth.month << "/" << Node->data.Date_Of_Birth.year;
+			fileOut << "," << stringToWString(Node->data.class_Of_Student);
 
 			wcout << nameCourse << " completely registered" << endl;
 			read.close();
@@ -535,8 +536,8 @@ void remove_Courses_TextFile(_Student* Node, string courseID) {
 }
 
 void remove_From_List(_Student* Node, string courseName) {
-	string oldName = dir + dirCourse_Student + courseName + ".txt";
-	string newName = dir + dirCourse_Student + "change.txt";
+	string oldName = dir + dirCourse_Student + courseName + ".csv";
+	string newName = dir + dirCourse_Student + "change.csv";
 	
 	if (check_Line(oldName) == 1) {
 		remove(oldName.c_str());
@@ -575,7 +576,6 @@ void remove_From_List(_Student* Node, string courseName) {
 
 	remove(oldName.c_str());
 	rename(newName.c_str(), oldName.c_str());
-	
 }
 
 void remove_Courses(_Student*& Node) {
