@@ -959,10 +959,31 @@ void studentRegisterSub(_Student* head) {
 }
 
 
-void classRegisterSub() {
+void viewScoreClass(_Student* head) {
+	string cl;
 	string sub;
-	cout << "Input the subject title: ";
-	cin.ignore();
-	getline(cin, sub);
-
+	_Student* cur = head;
+	wchar_t a = ',';
+	wstring dob;
+	wifstream fileIn;
+	wofstream fileOut;
+	cout << "Please inter name of class: ";
+	cin >> cl;
+	cout << endl << "Please inter subject: ";
+	cin >> sub;
+	fileIn.open(cl + ".csv", ios_base::in);
+	if (!fileIn.is_open()) return;
+	fileOut.open(cl + "_" + sub + ".csv", ios_base::out);
+	if (!fileOut.is_open()) return;
+	fileOut << "No" << a << "ID" << a << "Full name" << a << "Total mark" << a << "Final mark" << a << "Midterm mark" << a << "Other mark" << a;
+	while (!fileIn.eof()) {
+		while (cur != nullptr) {
+			fileIn >> cur->data.Number_In_Class >> a >> cur->data.ID_Student >> a >> cur->data.firstName >> a >> cur->data.lastName >> a >> cur->data.gender >> a >> dob >> a >> cur->data.Social_ID >> a;
+			fileOut << cur->data.Number_In_Class << a << cur->data.ID_Student << a << cur->data.firstName << " " << cur->data.lastName << a;
+			//tam dung vi chua nghi ra cach truy cap final mark
+			cur = cur->pNext;
+		}
+	}
+	fileIn.close();
+	fileOut.close();
 }
