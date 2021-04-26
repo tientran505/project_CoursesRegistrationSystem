@@ -8,3 +8,4 @@ _Student* logInSystem_Student(_Student* head);
 void register_Course(_Student* Node);
 void view_Reigstration_Results(_Subjects* Node);
 void remove_Courses(_Student*& Node);
+//void showcourseresult(_Student* Node);
