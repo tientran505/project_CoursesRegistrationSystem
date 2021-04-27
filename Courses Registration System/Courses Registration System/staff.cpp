@@ -1058,7 +1058,9 @@ void viewScoreClass(_Student* head) {
 		while (cur != nullptr) {
 			fileIn >> cur->data.Number_In_Class >> a >> cur->data.ID_Student >> a >> cur->data.firstName >> a >> cur->data.lastName >> a >> cur->data.gender >> a >> dob >> a >> cur->data.Social_ID >> a;
 			fileOut << cur->data.Number_In_Class << a << cur->data.ID_Student << a << cur->data.firstName << " " << cur->data.lastName << a;
-			//tam dung vi chua nghi ra cach truy cap final mark
+			while (cur->data.stu_Score.data_ScoreBoard.course_Data.course_Name != sub ) {
+				/*cur->data.stu_Score = cur->data.stu_Score.dataNext;*/
+			}
 			cur = cur->pNext;
 		}
 	}
