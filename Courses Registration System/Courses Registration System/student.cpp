@@ -39,25 +39,26 @@ _Student* logInSystem_Student(_Student* head) {
 	while (true) {
 		int temp;
 		system("cls");
-		GotoXY(30, 12);
+		GotoXY(42, 11);
 		cout << "Username: ";
 		cin >> userNameTmp;
-		GotoXY(30, 14);
+		GotoXY(42, 13);
 		cout << "Password: ";
 		cin >> passWordTmp;
 		_Student* pCur = head;
 		while (pCur->pNext != nullptr) {
 			if (userNameTmp == pCur->data.student_Account.ID && passWordTmp == pCur->data.student_Account.password) {
 				system("cls");
-				GotoXY(35, 13);
+				GotoXY(40, 12);
+				Sleep(200);
 				cout<<"Login successfully" << endl;
 				return pCur;
 			}
 			pCur = pCur->pNext;
 		}
-		GotoXY(30,15);
+		GotoXY(35,15);
 		cout << "Invalid login, please try again" << endl;
-		GotoXY(35, 16);
+		GotoXY(40, 16);
 		cout << " (enter to return) "<<endl;
 
 		temp = _getch();

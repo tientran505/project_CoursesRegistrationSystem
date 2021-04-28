@@ -341,10 +341,10 @@ void staff_Login(string& username) {
 	int temp;
 	string userTmp, passTmp;
 	while (running) {
-		GotoXY(25, 10);
+		GotoXY(37, 11);
 		cout << "Username: ";
 		cin >> username;
-		GotoXY(25, 12);
+		GotoXY(37, 13);
 		cout << "Password: ";
 		cin >> password;
 
@@ -360,7 +360,7 @@ void staff_Login(string& username) {
 		}
 		if (!running) {
 			system("cls");
-			GotoXY(35, 11);
+			GotoXY(45, 11);
 			cout << "Login Successfully!" << endl;
 			Sleep(200);
 			system("cls");
@@ -368,9 +368,9 @@ void staff_Login(string& username) {
 		else {
 			
 			system("cls");
-			GotoXY(35, 11);
+			GotoXY(40, 11);
 			cout << "Invalid login, please try again" << endl;
-			GotoXY(40, 13);
+			GotoXY(45, 13);
 			cout << " (enter to return)"<<endl;
 			temp = _getch();
 			system("cls");
@@ -1082,10 +1082,33 @@ void studentRegisterSub(_Student* head) {
 }
 
 
-void classRegisterSub() {
+void viewScoreClass(_Student* head) {
+	string cl;
 	string sub;
-	cout << "Input the subject title: ";
-	cin.ignore();
-	getline(cin, sub);
-
+	_Student* cur = head;
+	wchar_t a = ',';
+	wstring dob;
+	wifstream fileIn;
+	wofstream fileOut;
+	cout << "Please inter name of class: ";
+	cin >> cl;
+	cout << endl << "Please inter subject: ";
+	cin >> sub;
+	fileIn.open(cl + ".csv", ios_base::in);
+	if (!fileIn.is_open()) return;
+	fileOut.open(cl + "_" + sub + ".csv", ios_base::out);
+	if (!fileOut.is_open()) return;
+	fileOut << "No" << a << "ID" << a << "Full name" << a << "Total mark" << a << "Final mark" << a << "Midterm mark" << a << "Other mark" << a;
+	while (!fileIn.eof()) {
+		while (cur != nullptr) {
+			fileIn >> cur->data.Number_In_Class >> a >> cur->data.ID_Student >> a >> cur->data.firstName >> a >> cur->data.lastName >> a >> cur->data.gender >> a >> dob >> a >> cur->data.Social_ID >> a;
+			fileOut << cur->data.Number_In_Class << a << cur->data.ID_Student << a << cur->data.firstName << " " << cur->data.lastName << a;
+			while (cur->data.stu_Score.data_ScoreBoard.course_Data.course_Name != sub ) {
+				/*cur->data.stu_Score = cur->data.stu_Score.dataNext;*/
+			}
+			cur = cur->pNext;
+		}
+	}
+	fileIn.close();
+	fileOut.close();
 }
