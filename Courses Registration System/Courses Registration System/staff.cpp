@@ -939,16 +939,11 @@ bool is_Created_Schoolyear_Before(string line) {
 bool is_Created_Sem_Before(string line, string schoolyear) {
 	ifstream read;
 	read.open(dir + dirSchoolYear + schoolyear + ".txt", ios_base::out);
-	
+
 	string check;
 	while (!read.eof()) {
 		getline(read, check);
 		if (line == check) {
-			GotoXY(45, 13);
-			cout << "You registered for " << line << endl;
-			GotoXY(45, 14);
-			cout << "Press any key to continue..." << endl;
-			int choose = _getch();
 			read.close();
 			return false;
 		}
@@ -957,6 +952,56 @@ bool is_Created_Sem_Before(string line, string schoolyear) {
 
 	read.close();
 	return true;
+}
+
+void arrange_Sem(string schoolyear, string sem) {
+	ifstream read;
+	ofstream fileNew;
+	
+	string oldName = dir + dirSchoolYear + schoolyear + ".txt";
+	string newName = dir + dirSchoolYear + "tmp.txt";
+
+	read.open(oldName, ios_base::in);
+	fileNew.open(newName, ios_base::out);
+
+	string check, line;
+	while (!read.eof()) {
+		getline(read, check);
+		if (check == sem) {
+			Date startDate, endDate;
+			GotoXY(39, 16);
+			cout << "Enter start date of " << sem << " (DD/MM/YYYY): ";
+			cin >> startDate.day;
+			cin.ignore(10, '/');
+			cin >> startDate.month;
+			cin.ignore(10, '/');
+			cin >> startDate.year;
+			GotoXY(39, 18);
+			cout << "Enter end date of " << sem << " (DD/MM/YYYY): ";
+			cin >> endDate.day;
+			cin.ignore(10, '/');
+			cin >> endDate.month;
+			cin.ignore(10, '/');
+			cin >> endDate.year;
+			if (check_Line(newName) != 0) fileNew << endl;
+			fileNew << sem << endl;
+			fileNew << startDate.day << "/" << startDate.month << "/" << startDate.year << endl;
+			fileNew << endDate.day << "/" << endDate.month << "/" << endDate.year;
+			for (int i = 0; i < 2; i++) getline(read, line);
+		}
+		else {
+			if (check_Line(newName) != 0) fileNew << endl;
+			fileNew << check;
+			for (int i = 0; i < 2; i++) {
+				getline(read, line);
+				fileNew << endl << line;
+			}
+		}
+	}
+	read.close();
+	fileNew.close();
+	remove(oldName.c_str());
+	rename(newName.c_str(), oldName.c_str());
 }
 
 void add_Schoolyear(Date& schoolyear) {

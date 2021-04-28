@@ -235,7 +235,48 @@ void create_SemesterMenu(string schoolyear) {
 	
 	if (i == 3) return;
 	system("cls");
-	if (!is_Created_Sem_Before(menu[i], schoolyear)) return;
+	if (!is_Created_Sem_Before(menu[i], schoolyear)) {
+		GotoXY(45, 14);
+		string menu_Tmp[2] = { "Re-register this semester", "Exit" };
+		int chooseTmp = 0;
+		bool runningTmp = true;
+		while (runningTmp) {
+			system("cls");
+			GotoXY(45, 13);
+			cout << "You registered for " << menu[i]<< endl;
+			for (int k = 0; k < 2; k++) {
+				if (k == chooseTmp) {
+					textcolor(12);
+					GotoXY(42, 15 + k);
+					cout << " > " << menu_Tmp[k] << " < " << endl;
+					textcolor(15);
+				}
+				else {
+					textcolor(15);
+					GotoXY(43, 15 + k);
+					cout << " " << menu_Tmp[k] << " " << endl;
+				}
+			}
+			tmp = _getch();
+			if (tmp == 'w' || tmp == 'W' || tmp == 72) {
+				chooseTmp--;
+				if (chooseTmp < 0) chooseTmp = 1;
+			}
+			if (tmp == 's' || tmp == 'S' || tmp == 80) {
+				chooseTmp++;
+				if (chooseTmp > 1) chooseTmp = 0;
+			}
+			if (tmp == 13 || tmp == 32) runningTmp = false;
+		}
+		if (chooseTmp == 0) {
+			arrange_Sem(schoolyear, menu[i]);
+			GotoXY(39, 23);
+			cout << "Re-register the sem succesfully!" << endl;
+			int choose = _getch();
+		}
+		if (chooseTmp == 1) return;
+		return;
+	}
 	GotoXY(39, 10);
 	cout << "Enter start date of " << menu[i] << " (DD/MM/YYYY): ";
 	cin >> startDate.day;

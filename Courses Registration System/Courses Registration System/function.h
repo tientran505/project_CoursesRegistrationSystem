@@ -39,6 +39,11 @@ struct Session {
 	string session;
 };
 
+struct scoreBoard {
+	int finalMark;
+	int totalMark;
+};
+
 struct Course {
 	string course_Name; //ten mon hoc
 	string course_ID; //ma mon hoc
@@ -46,17 +51,9 @@ struct Course {
 	wstring Name_of_Teacher;
 	Session first_Session;
 	Session second_Session;
-};
-
-struct Student_ScoreBoard {
-	Course course_Data;
-	double score;
-	string grade; // C- -> A+
-};
-
-struct _Student_ScoreBoard {
-	Student_ScoreBoard data_ScoreBoard;
-	_Student_ScoreBoard* dataNext;
+	int semNo;
+	int schoolYear;
+	scoreBoard score;
 };
 
 struct node_Semester {
@@ -83,8 +80,6 @@ struct Account {
 	string password;
 };
 
-
-
 struct Student {
 	int Number_In_Class; //so thu tu trong lop
 	int ID_Student;
@@ -94,7 +89,6 @@ struct Student {
 	wstring gender; //gioi tinh
 	int Social_ID;
 	Date Date_Of_Birth;
-	_Student_ScoreBoard stu_Score;
 	double GPA_Average;
 	double score_Average;
 	Account student_Account;
