@@ -1085,7 +1085,7 @@ void studentRegisterSub(_Student* head) {
 void viewScoreClass(_Student* head) {
 	string cl;
 	string sub;
-	_Student* cur = head;
+	_Student* cur;
 	wchar_t a = ',';
 	wstring dob;
 	wifstream fileIn;
@@ -1100,14 +1100,13 @@ void viewScoreClass(_Student* head) {
 	if (!fileOut.is_open()) return;
 	fileOut << "No" << a << "ID" << a << "Full name" << a << "Total mark" << a << "Final mark" << a << "Midterm mark" << a << "Other mark" << a;
 	while (!fileIn.eof()) {
-		while (cur != nullptr) {
-			fileIn >> cur->data.Number_In_Class >> a >> cur->data.ID_Student >> a >> cur->data.firstName >> a >> cur->data.lastName >> a >> cur->data.gender >> a >> dob >> a >> cur->data.Social_ID >> a;
-			fileOut << cur->data.Number_In_Class << a << cur->data.ID_Student << a << cur->data.firstName << " " << cur->data.lastName << a;
-			while (cur->data.stu_Score.data_ScoreBoard.course_Data.course_Name != sub ) {
-				/*cur->data.stu_Score = cur->data.stu_Score.dataNext;*/
-			}
-			cur = cur->pNext;
+		fileIn >> cur->data.Number_In_Class >> a >> cur->data.ID_Student >> a >> cur->data.firstName >> a >> cur->data.lastName >> a >> cur->data.gender >> a >> dob >> a >> cur->data.Social_ID >> a;
+		while (cur->subregis->subjects_Data.course_Data.course_Name != sub) cur->subregis = cur->subregis->data_Next;
+		if (cur->subregis) {
+			fileOut << cur->data.Number_In_Class << a << cur->data.ID_Student << a << cur->data.firstName << " " << cur->data.lastName << a << cur->subregis->subjects_Data.course_Data.score.totalMark << a;
+			fileOut << cur->subregis->subjects_Data.course_Data.score.midtermMark << a << cur->subregis->subjects_Data.course_Data.score.finalMark << a;
 		}
+		cur = cur->pNext;
 	}
 	fileIn.close();
 	fileOut.close();
