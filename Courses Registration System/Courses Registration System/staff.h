@@ -8,7 +8,7 @@ void listStudents(_Student*& head);
 void loadStu_Save(_Student*& pHead);
 void staff_Menu(string username, _Student*& headStu);
 void staff_Login(string& username);
-void showInfo_Staff(string username);
+void showInfo_Staff(string username,int x, int y);
 void add_Schoolyear(Date& schoolyear);
 void createCourseList(string path);
 void update_Course_Info();
