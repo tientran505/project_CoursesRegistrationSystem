@@ -1,0 +1,5 @@
+﻿1,BAA00005,Basic Economics,Phạm Xuân Kiên,2,15,FRI,S1,FRI,S2
+2,CSC00004,Introducing to IT,Trần Thái Sơn,4,15,THU,S3,THU,S4
+3,CSC10001,Programing 1,Trương Toàn Thịnh,4,15,SAT,S3,SAT,S4
+4,CSC10101,Soft Skills,Lương Vĩ Minh,4,20,THU,S1,THU,S2
+5,MTH00009,Discrete Mathematics,Nguyễn Viết Đông,4,16,MON,S1,MON,S2﻿

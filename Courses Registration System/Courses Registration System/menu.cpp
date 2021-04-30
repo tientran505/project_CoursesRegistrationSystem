@@ -149,8 +149,6 @@ void StudentChoose(int a, int y) {
 	GotoXY(20 + x, 4 + y);	cout << char(217);
 }
 
-
-
 int MainMenu(int x, int y) {
 	int temp;
 	int i = 0;
@@ -309,7 +307,85 @@ void create_SemesterMenu(string schoolyear) {
 	fileOut.close();
 }
 
-void create_SchoolyearMenu() {
+void course_Registration_Result_Menu(_Student* Node) {
+	ifstream readSem, readSchoolyear;
+
+	readSchoolyear.open(dir + dirSchoolYear + "School_Year.txt", ios_base::in);
+	
+	int numOfLine = check_Line(dir + dirSchoolYear + "School_Year.txt");
+	int sumLine = 0;
+	string line, schoolyear;
+
+	for (int i = 0; i < numOfLine; i++) {
+		getline(readSchoolyear, line);
+		sumLine += check_Line(dir + dirSchoolYear + line + ".txt") / 3;
+	}
+
+	readSchoolyear.seekg(0, readSchoolyear.beg);
+
+	string* menu = new string[sumLine + 1];
+
+	menu[sumLine] = "Back";
+	int i = sumLine - 1;
+	while (!readSem.eof()) {
+		getline(readSchoolyear, schoolyear);
+		readSem.open(dir + dirSchoolYear + line + ".txt", ios_base::in);
+		int lineTmp = check_Line(dir + dirSchoolYear + line + ".txt") / 3;
+		for (int k = 0; k < lineTmp; k++) {
+			getline(readSem, line);
+			menu[i] = line + " " + schoolyear;
+			for (int j = 0; j < 2; j++) getline(readSem, line);
+			i--;
+		}
+		readSem.close();
+	}
+
+	int step = 0, tmp;
+	bool running = true;
+	while (running) {
+		while (true) {
+			system("cls");
+			for (int k = 0; k < sumLine + 1; k++) {
+				if (k == step) {
+					textcolor(12);
+					GotoXY(44, 10 + k);
+					cout << " > " << menu[k] << " < " << endl;
+					textcolor(15);
+				}
+				else {
+					textcolor(15);
+					GotoXY(45, 10 + k);
+					cout << " " << menu[k] << " " << endl;
+				}
+			}
+			tmp = _getch();
+			if (tmp == 's' || tmp == 'S' || tmp == 80) {
+				step++;
+				if (step >= sumLine + 1) step = 0;
+			}
+			if (tmp == 'w' || tmp == 'W' || tmp == 72) {
+				step--;
+				if (step < 0) step = sumLine;
+			}
+			if (tmp == 13 || tmp == 32) break;
+		}
+		if (step == sumLine) {
+			delete[] menu;
+			running = false;
+			return;
+		}
+		else {
+			for (int k = 0; k < 9; k++) schoolyear[k] = menu[step][11 + k];
+			int sem = menu[step][9] - 48;
+			system("cls");
+			view_Reigstration_Results(Node->subregis, schoolyear, sem);
+			cout << "Press any key to exit..." << endl;
+			tmp = _getch();
+		}
+	}
+}
+
+void create_SchoolyearMenu() {	
 	int i = 0;
 	int tmp;
 	GotoXY(40, 5);
@@ -327,11 +403,10 @@ void create_SchoolyearMenu() {
 	bool running = true;
 	string* menu = new string[line + 1];
 	read.open(dir + dirSchoolYear + "School_Year.txt", ios_base::in);
-	for (int j = 0; j < line + 1; j++) {
-		if (j == line) menu[j] = "Back";
+	for (int j = line - 1; j >= 0; j--) {
 		getline(read, menu[j]);
 	}
-
+	menu[line] = "Back";
 	while (running) {
 		system("cls");
 		for (int k = 0; k < line + 1; k++) {
@@ -602,24 +677,21 @@ void student_Course_Menu(_Student* Node) {
 
 		system("cls");
 
-		i++;
 		switch (i) {
-		case 1: {
+		case 0: {
 			register_Course(Node);
 			cout << " enter to continue";
 			choose = _getch();
 			break;
 		}
-		case 2: {
+		case 1: {
 			remove_Courses(Node);
 			cout << " enter to continue";
 			choose = _getch();
 			break;
 		}
-		case 3: {
-			view_Reigstration_Results(Node->subregis);
-			cout << " enter to continue";
-			choose = _getch();
+		case 2: {
+			course_Registration_Result_Menu(Node);
 			break;
 		}
 		default: {
@@ -631,6 +703,12 @@ void student_Course_Menu(_Student* Node) {
 }
 
 void student_Menu(_Student* Node) {
+	if (Node == nullptr) {
+		GotoXY(34, 12);
+		cout << "Press any key to exit..." << endl;
+		int sth = _getch();
+		return;
+	}
 	int i = 1;
 	int temp;
 	system("cls");

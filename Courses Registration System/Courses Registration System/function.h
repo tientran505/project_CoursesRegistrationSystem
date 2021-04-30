@@ -52,15 +52,8 @@ struct Course {
 	Session first_Session;
 	Session second_Session;
 	int semNo;
-	int schoolYear;
+	string schoolYear;
 	scoreBoard score;
-};
-
-struct node_Semester {
-	Date start_Date; // start date of sem
-	Date end_Date; // end date of sem
-	int numOfSem; // 1,2,3
-	int schoolYearCur; //2018-2019? 2019 - 2020
 };
 
 struct Subjects {
@@ -70,7 +63,6 @@ struct Subjects {
 
 struct _Subjects {
 	Subjects subjects_Data;
-	node_Semester sem_Info;
 	_Subjects* data_Next;
 	_Subjects* data_Prev;
 };
@@ -117,5 +109,5 @@ int MainMenu(int x, int y);
 void FixConsoleWindow();
 int check_Line(string path);
 int list_Len(_Subjects* Node);
-void view_Reigstration_Results(_Subjects* Node);
+void view_Reigstration_Results(_Subjects* Node, string schoolyear, int sem);
 #endif

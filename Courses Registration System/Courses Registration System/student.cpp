@@ -32,8 +32,10 @@ _Student* logInSystem_Student(_Student* head) {
 	string userNameTmp, passWordTmp;
 
 	if (head == nullptr) {
-		GotoXY(30, 12);
-		cout << "There is nothing any student lists in system. Please contact to Academic Staff for more detail" << endl;
+		GotoXY(34, 10);
+		cout << "There is nothing any student lists in system" << endl;
+		GotoXY(34, 11);
+		cout << "Please contact to Academic Staff for more detail" << endl;
 		return nullptr;
 	}
 	while (true) {
@@ -183,8 +185,8 @@ int stringToInt(string str) {
 }
 
 bool can_Register_Course(Date dateCur, Date dateStart, Date dateEnd, Time timeCur, Time timeStart, Time timeEnd) { // check dateFirst whether if is in betwwen dateStart & dateEnd
-	if (dateCur.year >= dateStart.year && dateCur.year <= dateEnd.year) {
-		if (dateCur.month >= dateStart.month && dateCur.month <= dateEnd.month) {
+	if (dateCur.year >= dateStart.year && dateCur.year == dateEnd.year) {
+		if (dateCur.month >= dateStart.month && dateCur.month == dateEnd.month) {
 			if (dateCur.day > dateStart.day && dateCur.day < dateEnd.day) return true;
 			else if (dateCur.day == dateStart.day) {
 				if (timeCur.hour > timeStart.hour) return true;
@@ -198,9 +200,36 @@ bool can_Register_Course(Date dateCur, Date dateStart, Date dateEnd, Time timeCu
 			}
 			else return false;
 		}
+		else if (dateCur.month >= dateStart.month && dateCur.month < dateEnd.month) return true;
 		else return false;
 	}
+	else if (dateCur.year >= dateStart.year && dateCur.year < dateEnd.year) return true;
 	else return false;
+}
+
+string schoolYearCurrent(int& sem) {
+	string schoolyear;
+	ifstream readSY;
+	readSY.open(dir + dirSchoolYear + "School_Year.txt", ios_base::in);
+
+	if (!readSY.is_open()) return 0;
+
+	while (!readSY.eof()) {
+		getline(readSY, schoolyear);
+	}
+	readSY.close();
+
+	ifstream fRead;
+	fRead.open(dir + dirSchoolYear + schoolyear + ".txt", ios_base::in);
+
+	string line;
+	while (!fRead.eof()) {
+		getline(fRead, line, ' ');
+		fRead >> sem;
+		for (int i = 0; i < 3; i++) getline(fRead, line);
+	}
+	fRead.close();
+	return schoolyear;
 }
 
 bool is_Same_Course(_Subjects* Node, string nameCourse) {
@@ -212,18 +241,19 @@ bool is_Same_Course(_Subjects* Node, string nameCourse) {
 	return true;
 }
 
-_Subjects* is_Same_Session(_Subjects* Node, Session ss1, Session ss2) {
+_Subjects* is_Same_Session(_Subjects* Node, Session ss1, Session ss2, string schoolyearCur, int semCur) {
 	if (Node == nullptr) return nullptr;
+	while (Node->subjects_Data.course_Data.schoolYear != schoolyearCur || Node->subjects_Data.course_Data.semNo != semCur) Node = Node->data_Next;
 	while (Node != nullptr) {
 		Session ssTmp = Node->subjects_Data.course_Data.first_Session;
 		if (ssTmp.dayOfWeek == ss1.dayOfWeek || ssTmp.dayOfWeek == ss2.dayOfWeek) {
 			if (ssTmp.session == ss1.session || ssTmp.session == ss2.session) return Node;
 		}
-ssTmp = Node->subjects_Data.course_Data.second_Session;
-if (ssTmp.dayOfWeek == ss1.dayOfWeek || ssTmp.dayOfWeek == ss2.dayOfWeek) {
-	if (ssTmp.session == ss1.session || ssTmp.session == ss2.session) return Node;
-}
-Node = Node->data_Next;
+		ssTmp = Node->subjects_Data.course_Data.second_Session;
+		if (ssTmp.dayOfWeek == ss1.dayOfWeek || ssTmp.dayOfWeek == ss2.dayOfWeek) {
+		if (ssTmp.session == ss1.session || ssTmp.session == ss2.session) return Node;
+		}
+		Node = Node->data_Next;
 	}
 	return nullptr;
 }
@@ -234,6 +264,16 @@ int list_Len(_Subjects* Node) {
 	while (Node != nullptr) {
 		Node = Node->data_Next;
 		count++;
+	}
+	return count;
+}
+
+int list_Len_In_Sem(_Subjects* Node, string schoolYear, int sem) {
+	if (Node == nullptr) return 0;
+	int count = 0;
+	while (Node != nullptr) {
+		if (Node->subjects_Data.course_Data.semNo == sem && Node->subjects_Data.course_Data.schoolYear == schoolYear) count++;
+		Node = Node->data_Next;
 	}
 	return count;
 }
@@ -273,17 +313,16 @@ void register_Course(_Student* Node) {
 	timeCur.hour = ltm->tm_hour;
 	timeCur.minute = ltm->tm_min;
 
-	cout << "Date: " << dateCur.day << "/" << dateCur.month << "/" << dateCur.year << endl;
-	cout << "Time: " << timeCur.hour << ":" << timeCur.minute << endl;
-
 	if (!can_Register_Course(dateCur, dateStart, dateEnd, timeCur, timeStart, timeEnd)) {
 		cout << "Registration has expired!" << endl;
 		return;
 	}
 
 	bool running = true;
+	int semCur = NULL;
+	string schoolYear = schoolYearCurrent(semCur);
 	do {
-		if (list_Len(Node->subregis) >= 5) {
+		if (list_Len_In_Sem(Node->subregis, schoolYear, semCur) >= 5) {
 			cout << "Only 5 courses are allowed per semester!" << endl;
 			return;
 		}
@@ -293,7 +332,7 @@ void register_Course(_Student* Node) {
 		int option;
 		cin >> option;
 		if (option == 1) {
-			if (list_Len(Node->subregis) >= 5) {
+			if (list_Len_In_Sem(Node->subregis, schoolYear, semCur) >= 5) {
 				cout << "Only 5 courses are allowed per semester!" << endl;
 				running = false;
 			}
@@ -340,7 +379,9 @@ void register_One_Course_TextFile(_Student* Node) {
 			fileNew << stringToWString(cur->subjects_Data.course_Data.first_Session.dayOfWeek) << ",";
 			fileNew << stringToWString(cur->subjects_Data.course_Data.first_Session.session) << ",";
 			fileNew << stringToWString(cur->subjects_Data.course_Data.second_Session.dayOfWeek) << ",";
-			fileNew << stringToWString(cur->subjects_Data.course_Data.second_Session.session);
+			fileNew << stringToWString(cur->subjects_Data.course_Data.second_Session.session) << ",";
+			fileNew << stringToWString(cur->subjects_Data.course_Data.schoolYear) << ",";
+			fileNew << cur->subjects_Data.course_Data.semNo;
 		}
 		else {
 			fileOld >> numOfCourse;
@@ -375,6 +416,8 @@ void register_One_Course(_Student* Node) {
 	cout << "Choose number of course the register: ";
 	int choose;
 	cin >> choose;
+	int semCur = NULL;
+	string schoolYearCur = schoolYearCurrent(semCur);
 	while (!read.eof()) {
 		int no;
 		read >> no >> a;
@@ -401,7 +444,7 @@ void register_One_Course(_Student* Node) {
 			}
 
 			_Subjects* course_Confilct = new _Subjects;
-			course_Confilct = is_Same_Session(Node->subregis, session1, session2);
+			course_Confilct = is_Same_Session(Node->subregis, session1, session2, schoolYearCur, semCur);
 		
 			if (course_Confilct != nullptr) {
 				cout << NameCourses << " is conflicted with " << course_Confilct->subjects_Data.course_Data.course_Name << "! Pls register anthore corse" << endl;
@@ -424,6 +467,8 @@ void register_One_Course(_Student* Node) {
 				cur = cur->data_Next;
 			}
 
+			cur->subjects_Data.course_Data.schoolYear = schoolYearCur;
+			cur->subjects_Data.course_Data.semNo = semCur;
 			cur->subjects_Data.course_Data.course_ID = WStringToString(line);
 			cur->subjects_Data.course_Data.course_Name = NameCourses;
 			cur->subjects_Data.course_Data.Name_of_Teacher = nameTeacher;
@@ -459,24 +504,26 @@ void register_One_Course(_Student* Node) {
 	}
 }
 
-void view_Reigstration_Results(_Subjects* Node) {
+void view_Reigstration_Results(_Subjects* Node, string schoolyear, int sem) {
 	if (Node == nullptr) {
 		cout << "You have not registered any courses" << endl;
 		return;
 	}
 	int count = 1;
 	while (Node != nullptr) {
-		cout << "-----------------------------------------------" << endl;
-		cout << count++ << ". " << Node->subjects_Data.course_Data.course_Name << endl;
-		cout << "ID Course: " << Node->subjects_Data.course_Data.course_ID << endl;
-		_setmode(_fileno(stdout), _O_U8TEXT);
-		wcout << L"Lecturer: " << Node->subjects_Data.course_Data.Name_of_Teacher << endl;
-		_setmode(_fileno(stdout), _O_TEXT);
-		cout << "Number of credits: " << Node->subjects_Data.course_Data.credit << endl;
-		cout << "Schedule: " << endl;
-		cout << "- Session 1: " << Node->subjects_Data.course_Data.first_Session.dayOfWeek << " - " << Node->subjects_Data.course_Data.first_Session.session << endl;
-		cout << "- Session 2: " << Node->subjects_Data.course_Data.second_Session.dayOfWeek << " - " << Node->subjects_Data.course_Data.second_Session.session << endl;
-		cout << "-----------------------------------------------" << endl;
+		if (Node->subjects_Data.course_Data.schoolYear == schoolyear && Node->subjects_Data.course_Data.semNo == sem) {
+			cout << "-----------------------------------------------" << endl;
+			cout << count++ << ". " << Node->subjects_Data.course_Data.course_Name << endl;
+			cout << "ID Course: " << Node->subjects_Data.course_Data.course_ID << endl;
+			_setmode(_fileno(stdout), _O_U8TEXT);
+			wcout << L"Lecturer: " << Node->subjects_Data.course_Data.Name_of_Teacher << endl;
+			_setmode(_fileno(stdout), _O_TEXT);
+			cout << "Number of credits: " << Node->subjects_Data.course_Data.credit << endl;
+			cout << "Schedule: " << endl;
+			cout << "- Session 1: " << Node->subjects_Data.course_Data.first_Session.dayOfWeek << " - " << Node->subjects_Data.course_Data.first_Session.session << endl;
+			cout << "- Session 2: " << Node->subjects_Data.course_Data.second_Session.dayOfWeek << " - " << Node->subjects_Data.course_Data.second_Session.session << endl;
+			cout << "-----------------------------------------------" << endl;
+		}
 		Node = Node->data_Next;
 	}
 }
@@ -585,11 +632,16 @@ void remove_Courses(_Student*& Node) {
 	ifstream fileOld;
 	ofstream fileNew;
 	do {
-		if (Node == nullptr) {
+		if (Node->subregis == nullptr) {
 			cout << "Nothing to delete" << endl;
 			return;
 		}
-		view_Reigstration_Results(Node->subregis);
+
+		int semCur = NULL;
+		string schoolyearCur = schoolYearCurrent(semCur);
+
+		view_Reigstration_Results(Node->subregis, schoolyearCur, semCur);
+
 		cout << "Enter the number of course to remove (0 to exit): ";
 		int choose;
 		cin >> choose;
@@ -597,9 +649,10 @@ void remove_Courses(_Student*& Node) {
 			running = false;
 		}
 
-		else if (choose > list_Len(Node->subregis)) cout << "Your chosen course is exceed the number of courses! Please try again!" << endl;
+		else if (choose > list_Len_In_Sem(Node->subregis, schoolyearCur, semCur)) cout << "Your chosen course is exceed the number of courses! Please try again!" << endl;
 		else {
 			_Subjects* cur = Node->subregis;
+			while (cur->subjects_Data.course_Data.schoolYear != schoolyearCur || cur->subjects_Data.course_Data.semNo != semCur) cur = cur->data_Next;
 			for (int i = 1; i < choose; i++) cur = cur->data_Next;
 			string courseName = cur->subjects_Data.course_Data.course_Name;
 			remove_From_List(Node, courseName);
