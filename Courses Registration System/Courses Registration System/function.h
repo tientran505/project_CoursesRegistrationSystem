@@ -42,6 +42,8 @@ struct Session {
 struct scoreBoard {
 	int finalMark;
 	int totalMark;
+	int midtermMark;
+	int otherMark;
 };
 
 struct Course {

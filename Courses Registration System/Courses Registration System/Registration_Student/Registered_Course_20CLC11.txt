@@ -20,14 +20,13 @@
 20127337,0
 20127343,0
 20127349,0
-20127355,8
+20127355,7
 BAA00005,Basic Economics,Phạm Xuân Kiên,2,FRI,S1,FRI,S2,2021-2022,1
 CSC00004,Introducing to IT,Trần Thái Sơn,4,THU,S3,THU,S4,2021-2022,1
 CSC10001,Programing 1,Trương Toàn Thịnh,4,SAT,S3,SAT,S4,2021-2022,1
 MTH00009,Discrete Mathematics,Nguyễn Viết Đông,4,MON,S1,MON,S2,2021-2022,1
 BAA00101,Marxist-Leninist Philosophy,Nguyễn Tuấn Phương,3,MON,S3,MON,S4,2021-2022,2
 PHY00005,General Physics,Nguyễn Nhật Kim Ngân,4,MON,S1,MON,S2,2021-2022,2
-MTH00005,Calculus 1,Lý Kim Hà,4,TUE,S2,FRI,S2,2021-2022,2
 CSC10002,Programing Techniques,Đinh Bá Tiến,4,WED,S1,SAT,S4,2021-2022,2
 20127369,0
 20127370,0

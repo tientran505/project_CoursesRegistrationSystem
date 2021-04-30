@@ -1116,3 +1116,33 @@ void studentRegisterSub(_Student* head) {
 //	fileIn.close();
 //	fileOut.close();
 //}
+
+//void viewScoreClass(_Student* head) {
+//	string cl;
+//	string sub;
+//	_Student* cur;
+//	wchar_t a = ',';
+//	wstring dob;
+//	wifstream fileIn;
+//	wofstream fileOut;
+//	cout << "Please inter name of class: ";
+//	cin >> cl;
+//	cout << endl << "Please inter subject: ";
+//	cin >> sub;
+//	fileIn.open(cl + ".csv", ios_base::in);
+//	if (!fileIn.is_open()) return;
+//	fileOut.open(cl + "_" + sub + ".csv", ios_base::out);
+//	if (!fileOut.is_open()) return;
+//	fileOut << "No" << a << "ID" << a << "Full name" << a << "Total mark" << a << "Final mark" << a << "Midterm mark" << a << "Other mark" << a;
+//	while (!fileIn.eof()) {
+//		fileIn >> cur->data.Number_In_Class >> a >> cur->data.ID_Student >> a >> cur->data.firstName >> a >> cur->data.lastName >> a >> cur->data.gender >> a >> dob >> a >> cur->data.Social_ID >> a;
+//		while (cur->subregis->subjects_Data.course_Data.course_Name != sub) cur->subregis = cur->subregis->data_Next;
+//		if (cur->subregis) {
+//			fileOut << cur->data.Number_In_Class << a << cur->data.ID_Student << a << cur->data.firstName << " " << cur->data.lastName << a << cur->subregis->subjects_Data.course_Data.score.totalMark << a;
+//			fileOut << cur->subregis->subjects_Data.course_Data.score.midtermMark << a << cur->subregis->subjects_Data.course_Data.score.finalMark << a;
+//		}
+//		cur = cur->pNext;
+//	}
+//	fileIn.close();
+//	fileOut.close();
+//}
