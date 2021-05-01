@@ -186,7 +186,7 @@ int stringToInt(string str) {
 
 bool can_Register_Course(Date dateCur, Date dateStart, Date dateEnd, Time timeCur, Time timeStart, Time timeEnd) { // check dateFirst whether if is in betwwen dateStart & dateEnd
 	if (dateCur.year >= dateStart.year && dateCur.year == dateEnd.year) {
-		if (dateCur.month >= dateStart.month && dateCur.month == dateEnd.month) {
+		if (dateCur.month == dateStart.month && dateCur.month == dateEnd.month) {
 			if (dateCur.day > dateStart.day && dateCur.day < dateEnd.day) return true;
 			else if (dateCur.day == dateStart.day) {
 				if (timeCur.hour > timeStart.hour) return true;
@@ -199,6 +199,15 @@ bool can_Register_Course(Date dateCur, Date dateStart, Date dateEnd, Time timeCu
 				else return false;
 			}
 			else return false;
+		
+		}
+		else if (dateCur.month > dateStart.month && dateCur.month == dateEnd.month) {
+			if (dateCur.day < dateEnd.day) return true;
+			else if (dateCur.day == dateEnd.day) {
+				if (timeCur.hour < timeEnd.hour) return true;
+				else if (timeCur.hour == timeEnd.hour) return (timeCur.minute < timeEnd.minute);
+				else return false;
+			}
 		}
 		else if (dateCur.month >= dateStart.month && dateCur.month < dateEnd.month) return true;
 		else return false;
@@ -232,8 +241,12 @@ string schoolYearCurrent(int& sem) {
 	return schoolyear;
 }
 
-bool is_Same_Course(_Subjects* Node, string nameCourse) {
+bool is_Same_Course(_Subjects* Node, string nameCourse, string schoolyearCur, int semCur) {
 	if (Node == nullptr) return true;
+	while (Node->subjects_Data.course_Data.schoolYear != schoolyearCur || Node->subjects_Data.course_Data.semNo != semCur) {
+		Node = Node->data_Next;
+		if (Node == nullptr) return true;
+	}
 	while (Node != nullptr) {
 		if (Node->subjects_Data.course_Data.course_Name == nameCourse) return false;
 		Node = Node->data_Next;
@@ -242,8 +255,12 @@ bool is_Same_Course(_Subjects* Node, string nameCourse) {
 }
 
 _Subjects* is_Same_Session(_Subjects* Node, Session ss1, Session ss2, string schoolyearCur, int semCur) {
-	if (Node == nullptr) return nullptr;
-	while (Node->subjects_Data.course_Data.schoolYear != schoolyearCur || Node->subjects_Data.course_Data.semNo != semCur) Node = Node->data_Next;
+	if (Node == nullptr) return nullptr; 	
+	while (Node->subjects_Data.course_Data.schoolYear != schoolyearCur || Node->subjects_Data.course_Data.semNo != semCur) {
+		Node = Node->data_Next;
+		if (Node == nullptr) return nullptr;
+	}
+
 	while (Node != nullptr) {
 		Session ssTmp = Node->subjects_Data.course_Data.first_Session;
 		if (ssTmp.dayOfWeek == ss1.dayOfWeek || ssTmp.dayOfWeek == ss2.dayOfWeek) {
@@ -379,7 +396,7 @@ void register_One_Course_TextFile(_Student* Node) {
 			fileNew << stringToWString(cur->subjects_Data.course_Data.first_Session.dayOfWeek) << ",";
 			fileNew << stringToWString(cur->subjects_Data.course_Data.first_Session.session) << ",";
 			fileNew << stringToWString(cur->subjects_Data.course_Data.second_Session.dayOfWeek) << ",";
-			fileNew << stringToWString(cur->subjects_Data.course_Data.second_Session.session) << ",";
+			fileNew << stringToWString(cur->subjects_Data.course_Data.second_Session.session) << "|";
 			fileNew << stringToWString(cur->subjects_Data.course_Data.schoolYear) << ",";
 			fileNew << cur->subjects_Data.course_Data.semNo;
 		}
@@ -438,12 +455,13 @@ void register_One_Course(_Student* Node) {
 			session2.dayOfWeek = WStringToString(d2);
 			session2.session = WStringToString(ss2);
 
-			if (!is_Same_Course(Node->subregis, NameCourses)) {
+			if (!is_Same_Course(Node->subregis, NameCourses, schoolYearCur, semCur)) {
 				cout << "You have already registered " << NameCourses << ". Pls register another course!" << endl;
 				return;
 			}
 
 			_Subjects* course_Confilct = new _Subjects;
+
 			course_Confilct = is_Same_Session(Node->subregis, session1, session2, schoolYearCur, semCur);
 		
 			if (course_Confilct != nullptr) {
@@ -494,7 +512,7 @@ void register_One_Course(_Student* Node) {
 			fileOut << Node->data.gender << ",";
 			fileOut << Node->data.Date_Of_Birth.day << "/" << Node->data.Date_Of_Birth.month << "/" << Node->data.Date_Of_Birth.year;
 			fileOut << "," << stringToWString(Node->data.class_Of_Student);
-
+			
 			wcout << nameCourse << " completely registered" << endl;
 			read.close();
 			fileOut.close();
@@ -528,7 +546,7 @@ void view_Reigstration_Results(_Subjects* Node, string schoolyear, int sem) {
 	}
 }
 
-void remove_Courses_TextFile(_Student* Node, string courseID) {
+void remove_Courses_TextFile(_Student* Node, string courseID, string schoolyearCur, int semCur) {
 	wifstream fileOld;
 	wofstream fileNew;
 
@@ -543,8 +561,11 @@ void remove_Courses_TextFile(_Student* Node, string courseID) {
 
 	int k = 0;
 	wstring line;
+	wstring lineTmp, schoolyear;
+	int sem;
 	int IDStu, numOfCourse;
 	wchar_t a = ',';
+	wchar_t b = '|';
 	while (!fileOld.eof()) {
 		if (k != 0) fileNew << endl;
 		fileOld >> IDStu >> a;
@@ -555,11 +576,13 @@ void remove_Courses_TextFile(_Student* Node, string courseID) {
 			getline(fileOld, line);
 			for (int i = 1; i <= numOfCourse; i++) {
 				getline(fileOld, line, a);
-				if (line == stringToWString(courseID)) getline(fileOld, line);
+				getline(fileOld, lineTmp, b);
+				getline(fileOld, schoolyear, a);
+				fileOld >> sem;
+				if (line == stringToWString(courseID) && schoolyear == stringToWString(schoolyearCur) && sem == semCur) getline(fileOld, line);
 				else {
-					fileNew << endl << line << ",";
+					fileNew << endl << line << "," << lineTmp << "|" << schoolyear << "," << sem;
 					getline(fileOld, line);
-					fileNew << line;
 				}
 			}
 		}
@@ -627,6 +650,45 @@ void remove_From_List(_Student* Node, string courseName) {
 }
 
 void remove_Courses(_Student*& Node) {
+	time_t now = time(0);
+	tm* ltm = localtime(&now);
+
+	ifstream read;
+	read.open(dir + dirRegis + "Registration.txt", ios_base::in);
+
+	if (!read.is_open()) {
+		read.close();
+		return;
+	}
+
+	Date dateStart, dateEnd;
+	Time timeStart, timeEnd;
+
+	char a = '/', b = ':', c = ',';
+
+	read >> dateStart.day >> a >> dateStart.month >> a >> dateStart.year >> c;
+	read >> timeStart.hour >> b >> timeStart.minute;
+
+	read >> dateEnd.day >> a >> dateEnd.month >> a >> dateEnd.year >> c;
+	read >> timeEnd.hour >> b >> timeEnd.minute;
+
+	read.close();
+
+	Date dateCur;
+	dateCur.year = 1900 + ltm->tm_year;
+	dateCur.month = ltm->tm_mon + 1;
+	dateCur.day = ltm->tm_mday;
+
+	Time timeCur;
+	timeCur.hour = ltm->tm_hour;
+	timeCur.minute = ltm->tm_min;
+
+	if (!can_Register_Course(dateCur, dateStart, dateEnd, timeCur, timeStart, timeEnd)) {
+		cout << "Registration has expired!" << endl;
+		return;
+	}
+
+
 	bool running = true;
 	int choose;
 	ifstream fileOld;
@@ -656,7 +718,7 @@ void remove_Courses(_Student*& Node) {
 			for (int i = 1; i < choose; i++) cur = cur->data_Next;
 			string courseName = cur->subjects_Data.course_Data.course_Name;
 			remove_From_List(Node, courseName);
-			remove_Courses_TextFile(Node, cur->subjects_Data.course_Data.course_ID);
+			remove_Courses_TextFile(Node, cur->subjects_Data.course_Data.course_ID, schoolyearCur, semCur);
 			if (cur->data_Next != nullptr) cur->data_Next->data_Prev = cur->data_Prev;
 			if (cur->data_Prev != nullptr) cur->data_Prev->data_Next = cur->data_Next;
 			if (cur == Node->subregis) Node->subregis = Node->subregis->data_Next;
@@ -667,4 +729,8 @@ void remove_Courses(_Student*& Node) {
 			if (choose == 2) running = false;
 		}
 	} while (running);
+}
+
+void viewScoreBoard(_Student* Node) {
+
 }

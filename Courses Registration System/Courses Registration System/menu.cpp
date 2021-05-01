@@ -327,10 +327,10 @@ void course_Registration_Result_Menu(_Student* Node) {
 
 	menu[sumLine] = "Back";
 	int i = sumLine - 1;
-	while (!readSem.eof()) {
+	for (int k = 0; k < numOfLine; k++) {
 		getline(readSchoolyear, schoolyear);
-		readSem.open(dir + dirSchoolYear + line + ".txt", ios_base::in);
-		int lineTmp = check_Line(dir + dirSchoolYear + line + ".txt") / 3;
+		readSem.open(dir + dirSchoolYear + schoolyear + ".txt", ios_base::in);
+		int lineTmp = check_Line(dir + dirSchoolYear + schoolyear + ".txt") / 3;
 		for (int k = 0; k < lineTmp; k++) {
 			getline(readSem, line);
 			menu[i] = line + " " + schoolyear;

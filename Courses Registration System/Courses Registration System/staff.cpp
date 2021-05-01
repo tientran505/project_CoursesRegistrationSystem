@@ -72,7 +72,7 @@ void loadStudentList_changedPassword(string path,string path_Course ,_Student*& 
 	fileIn.imbue(std::locale(std::locale::empty(), new std::codecvt_utf8<wchar_t, 0x10ffff, std::generate_header>));
 	readCourse.imbue(std::locale(std::locale::empty(), new std::codecvt_utf8<wchar_t, 0x10ffff, std::generate_header>));
 
-	wchar_t a = ',', b = '/';
+	wchar_t a = ',', b = '/', c = '|';
 	_Student* pCur = head;
 	path.erase(path.end() - 4, path.end());
 	path.erase(path.begin(), path.begin() + dir.length() + dirClass.length());
@@ -134,7 +134,7 @@ void loadStudentList_changedPassword(string path,string path_Course ,_Student*& 
 			subCur->subjects_Data.course_Data.first_Session.session = WStringToString(line);
 			getline(readCourse, line, a);
 			subCur->subjects_Data.course_Data.second_Session.dayOfWeek = WStringToString(line);
-			getline(readCourse, line, a);
+			getline(readCourse, line, c);
 			subCur->subjects_Data.course_Data.second_Session.session = WStringToString(line);
 			getline(readCourse, line, a);
 			subCur->subjects_Data.course_Data.schoolYear = WStringToString(line);
@@ -1044,46 +1044,42 @@ void add_Schoolyear(Date& schoolyear) {
 	} while (running);
 }
 
-void create_Semester() {
-
-}
-
-void studentRegisterSub(_Student* head) {
-	string sub;
-	string cl;
-	_Student* cur = head;
-	cout << "Input the subject title: ";
-	cin.ignore(1000, '\n');
-	getline(cin, sub);
-	cout << endl << "Input the class: ";
-	cin.ignore(1000, '\n');
-	getline(cin, cl);
-	wifstream fileIn;
-	wofstream fileOut;
-	int count = 0;
-	wchar_t a = ',';
-	wstring dob;
-	fileIn.open(cl + ".csv", ios_base::in);
-	if (!fileIn.is_open()) return;
-	fileOut.open(cl + "_" + sub + ".csv", ios_base::out);
-	if (!fileOut.is_open()) return;
-	fileOut << "No" << a << "ID" << a << "First Name" << a << "Last Name" << a << "Gender" << a << "Social ID" << endl;
-	while (!fileIn.eof()) {
-		while (cur != nullptr) {
-			fileIn >> cur->data.Number_In_Class >> a >> cur->data.ID_Student >> a >> cur->data.firstName >> a >> cur->data.lastName >> a >> cur->data.gender >> a >> dob >> a >> cur->data.Social_ID >> a;
-			while (cur->subregis != nullptr) {
-				if (cur->subregis->subjects_Data.course_Data.course_Name == sub) {
-					count++;
-					fileOut<<count<<a<<cur->data.ID_Student << a << cur->data.firstName << a << cur->data.lastName << a << cur->data.gender << a << dob << a << cur->data.Social_ID << a <<endl;
-				}
-				cur->subregis = cur->subregis->data_Next;
-			}
-			cur = cur->pNext;
-		}
-	}
-	fileIn.close();
-	fileOut.close();
-}
+//void studentRegisterSub(_Student* head) {
+//	string sub;
+//	string cl;
+//	_Student* cur = head;
+//	cout << "Input the subject title: ";
+//	cin.ignore(1000, '\n');
+//	getline(cin, sub);
+//	cout << endl << "Input the class: ";
+//	cin.ignore(1000, '\n');
+//	getline(cin, cl);
+//	wifstream fileIn;
+//	wofstream fileOut;
+//	int count = 0;
+//	wchar_t a = ',';
+//	wstring dob;
+//	fileIn.open(cl + ".csv", ios_base::in);
+//	if (!fileIn.is_open()) return;
+//	fileOut.open(cl + "_" + sub + ".csv", ios_base::out);
+//	if (!fileOut.is_open()) return;
+//	fileOut << "No" << a << "ID" << a << "First Name" << a << "Last Name" << a << "Gender" << a << "Social ID" << endl;
+//	while (!fileIn.eof()) {
+//		while (cur != nullptr) {
+//			fileIn >> cur->data.Number_In_Class >> a >> cur->data.ID_Student >> a >> cur->data.firstName >> a >> cur->data.lastName >> a >> cur->data.gender >> a >> dob >> a >> cur->data.Social_ID >> a;
+//			while (cur->subregis != nullptr) {
+//				if (cur->subregis->subjects_Data.course_Data.course_Name == sub) {
+//					count++;
+//					fileOut<<count<<a<<cur->data.ID_Student << a << cur->data.firstName << a << cur->data.lastName << a << cur->data.gender << a << dob << a << cur->data.Social_ID << a <<endl;
+//				}
+//				cur->subregis = cur->subregis->data_Next;
+//			}
+//			cur = cur->pNext;
+//		}
+//	}
+//	fileIn.close();
+//	fileOut.close();
+//}
 
 
 //void viewScoreClass(_Student* head) {
