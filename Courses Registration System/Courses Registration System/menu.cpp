@@ -540,8 +540,9 @@ void staff_Menu(string username, _Student*& headStu) {
 		switch (i)
 		{
 		case 0: {
-			showInfo_Staff(username);
+			showInfo_Staff(username, 35,10);
 			cout << endl;
+			GotoXY(37, 16);
 			cout << " enter to continue";
 			choose = _getch();
 			break;

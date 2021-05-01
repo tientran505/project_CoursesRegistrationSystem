@@ -830,7 +830,7 @@ void delete_Courses() {
 	rename(dirFileNew.c_str(), dirFileOld.c_str());
 }
 
-void showInfo_Staff(string username) {
+void showInfo_Staff(string username,int x,int y) {
 	ifstream fileIn;
 	fileIn.open(dir + dirStaff + "Staff_Info.txt", ios_base::in);
 	while (!fileIn.eof()) {
@@ -838,10 +838,15 @@ void showInfo_Staff(string username) {
 		getline(fileIn, tmp, ',');
 		getline(fileIn, name);
 		if (tmp == username) {
+			GotoXY(x, y);
 			cout << "Infomartion of staff" << endl;
+			GotoXY(x, y+1);
 			cout << "Name: " << name << endl;
+			GotoXY(x, y+2);
 			cout << "Department: Academic Staff" << endl;
+			GotoXY(x, y+3);
 			fileIn.close();
+			
 			return;
 		}
 	}
