@@ -508,11 +508,11 @@ void staff_Menu(string username, _Student*& headStu) {
 	system("cls");
 	ShowCur(0);
 	GotoXY(40, 5);
-	string menu[6] = { "1. View info","2. Create Course Registration Session", "3. Create School year/Semester System","4. Course Registration Management System", "5. Add student lists to the system" , "6. Log out" };
+	string menu[7] = { "1. View info","2. Create Course Registration Session", "3. Create School year/Semester System","4. Course Registration Management System", "5. Add student lists to the system" , "6. Import the scoreboard", "7. Log out" };
 	do {
 		while (true) {
 			system("cls");
-			for (int j = 0; j < 6; j++) {
+			for (int j = 0; j < 7; j++) {
 				if (j == i) {
 					textcolor(12);
 					GotoXY(39, 5 + j);
@@ -528,11 +528,11 @@ void staff_Menu(string username, _Student*& headStu) {
 			temp = _getch();
 			if (temp == 's' || temp == 'S' || temp == 80) {
 				i++;
-				if (i == 6) i = 0;
+				if (i == 7) i = 0;
 			}
 			if (temp == 'w' || temp == 'W' || temp == 72) {
 				i--;
-				if (i == -1) i = 5;
+				if (i == -1) i = 6;
 			}
 			if (temp == 13 || temp == 32) break;
 		}
@@ -567,6 +567,10 @@ void staff_Menu(string username, _Student*& headStu) {
 			break;
 		}
 		case 5: {
+			importResult(headStu);
+			break;
+		}
+		case 6: {
 			running = false;
 		}
 		}
@@ -767,8 +771,8 @@ void student_Menu(_Student* Node) {
 		}
 
 		case 4: {
-			cout << "This feature is still in progress. Please try again later" << endl;
-			cout << " enter to continue";
+			menu_ScoreBoard_Student(Node);
+			cout << endl << " enter to continue";
 			temp = _getch();
 			break;
 		}

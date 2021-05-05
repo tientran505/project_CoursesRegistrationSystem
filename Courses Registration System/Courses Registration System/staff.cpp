@@ -149,6 +149,45 @@ void loadStudentList_changedPassword(string path,string path_Course ,_Student*& 
 	read.close();
 }
 
+void loadScoreboardStudentList(string path, _Student* head) {
+	ifstream read;
+	read.open(path, ios::in);
+	if (!read.is_open()) return;
+
+	while (!read.eof()) {
+		string nameCourse;
+		getline(read, nameCourse);
+		wifstream fin;
+		fin.open(dir + dirCourse_Student + nameCourse + ".csv", ios::in);
+
+		fin.imbue(std::locale(std::locale::empty(), new std::codecvt_utf8<wchar_t, 0x10ffff, std::generate_header>));
+
+		int no, stuIDTmp;
+		wstring line;
+		wchar_t a = ',';
+		while (!fin.eof()) {
+			fin >> no >> a;
+			fin >> stuIDTmp >> a;
+			_Student* pCur = head;
+			while (pCur->data.ID_Student != stuIDTmp) {
+				pCur = pCur->pNext;
+			}
+			_Subjects* subCur = pCur->subregis;
+			while (subCur->subjects_Data.course_Data.course_Name != nameCourse) subCur = subCur->data_Next;
+			for (int i = 0; i < 3; i++) getline(fin, line, a);
+			fin >> subCur->subjects_Data.course_Data.score.finalMark >> a;
+			fin >> subCur->subjects_Data.course_Data.score.totalMark >> a;
+			fin >> subCur->subjects_Data.course_Data.score.midtermMark >> a;
+			fin >> subCur->subjects_Data.course_Data.score.otherMark;
+			subCur->subjects_Data.course_Data.score.isScore = true;
+			getline(fin, line);
+		}
+		fin.close();
+	}
+
+	read.close();
+}
+
 void displayStudentList(string path, _Student* head) {
 	wofstream fileOut;
 	fileOut.open(path, ios_base::out);
@@ -333,7 +372,7 @@ void loadStu_Save(_Student*& pHead) {
 		cout << "Added " << path << " in the system" << endl;
 		loadStudentList_changedPassword(dir + dirClass + path + ".csv", dir + dirCourse_Student + "Registered_Course_" + path + ".txt",headClass);
 		listPush(pHead, headClass);
-		
+		loadScoreboardStudentList(dir + dirCourse_Student + "listOfCourses.txt", pHead);
 	}
 	read.close();
 }
@@ -365,6 +404,7 @@ void staff_Login(string& username) {
 		if (!running) {
 			system("cls");
 			GotoXY(45, 11);
+			cin.ignore(1000, '\n');
 			cout << "Login Successfully!" << endl;
 			Sleep(200);
 			system("cls");
@@ -580,9 +620,14 @@ void update_Course_Info() {
 
 	viewCourseList(dirOld);
 	wchar_t a = ',';
-	cout << "Choose course to update: " << endl;
+	cout << "Choose course to update (0 to exit): " << endl;
 	int choose;
 	cin >> choose;
+	if (choose == 0) {
+		fileOld.close();
+		fileNew.close();
+		return;
+	}
 	while (!fileOld.eof()) {
 		int tmp;
 		
@@ -765,8 +810,6 @@ void update_Course_Info() {
 	fileNew.close();
 	remove(dirOld.c_str());
 	rename(dirNew.c_str(), dirOld.c_str());
-//	remove("E:/HCMUS/Sem 2/Programming Techniques/Project - A Courses Registration System/project_CoursesRegistrationSystem/Courses Registration System/Courses Registration System/Course/CoursesRegistration.txt");
-//	rename("E:/HCMUS/Sem 2/Programming Techniques/Project - A Courses Registration System/project_CoursesRegistrationSystem/Courses Registration System/Courses Registration System/Course/change.txt", "E:/HCMUS/Sem 2/Programming Techniques/Project - A Courses Registration System/project_CoursesRegistrationSystem/Courses Registration System/Courses Registration System/Course/CoursesRegistration.txt");
 }
 
 void delete_Courses() {
@@ -963,6 +1006,16 @@ bool is_Created_Sem_Before(string line, string schoolyear) {
 	return true;
 }
 
+int list_Len_Available_Score(_Subjects* Node, string schoolyear, int semCur) {
+	if (Node == nullptr) return 0;
+	int count = 0;
+	while (Node != nullptr) {
+		if (Node->subjects_Data.course_Data.schoolYear == schoolyear && Node->subjects_Data.course_Data.semNo == semCur && Node->subjects_Data.course_Data.score.isScore) ++count;
+		Node = Node->data_Next;
+	}
+	return count;
+}
+
 void arrange_Sem(string schoolyear, string sem) {
 	ifstream read;
 	ofstream fileNew;
@@ -1147,3 +1200,60 @@ void add_Schoolyear(Date& schoolyear) {
 //	fileIn.close();
 //	fileOut.close();
 //}
+
+void importResult(_Student* head) {
+	if (head == nullptr) {
+		cout << "There is not student in system" << endl;
+		cout << "Press any key to continue..." << endl;
+		int sth = _getch();
+		return;
+	}
+	string nameCourse;
+	cout << "Input name of course to import score: ";
+	getline(cin, nameCourse, '\n');
+	wifstream readFile;
+	readFile.open(dir + dirCourse_Student + nameCourse + ".csv", ios_base::in);
+
+	readFile.imbue(std::locale(std::locale::empty(), new std::codecvt_utf8<wchar_t, 0x10ffff, std::generate_header>));
+
+	if (!readFile.is_open()) {
+		cout << nameCourse << " is not found!" << endl;
+		cout << "Press any key to continue...." << endl;
+		int sth = _getch();
+		return;
+	}
+
+	else {
+		ofstream save;
+		save.open(dir + dirCourse_Student + "listOfCourses.txt", ios::app);
+		if (check_Line(dir + dirCourse_Student + "listOfCourses.txt") != 0) save << endl;
+		save << nameCourse;
+		save.close();
+	}
+
+	int no, stuIDTmp;
+	wstring line;
+	wchar_t a = ',';
+	while (!readFile.eof()) {
+		readFile >> no >> a;
+		readFile >> stuIDTmp >> a;
+		_Student* pCur = head;
+		while (pCur->data.ID_Student != stuIDTmp) {
+			pCur = pCur->pNext;
+		}
+		_Subjects* subCur = pCur->subregis;
+		while (subCur->subjects_Data.course_Data.course_Name != nameCourse) subCur = subCur->data_Next;
+		for (int i = 0; i < 3; i++) getline(readFile, line, a);
+		readFile >> subCur->subjects_Data.course_Data.score.finalMark >> a;
+		readFile >> subCur->subjects_Data.course_Data.score.totalMark >> a;
+		readFile >> subCur->subjects_Data.course_Data.score.midtermMark >> a;
+		readFile >> subCur->subjects_Data.course_Data.score.otherMark;
+		subCur->subjects_Data.course_Data.score.isScore = true;	
+		getline(readFile, line);
+	}
+
+	cout << "Import score of " << nameCourse << " succesfully" << endl;
+	cout << "Press any key to continue...." << endl;
+	int sth = _getch();
+	readFile.close();
+}

@@ -40,10 +40,11 @@ struct Session {
 };
 
 struct scoreBoard {
-	int finalMark;
-	int totalMark;
-	int midtermMark;
-	int otherMark;
+	bool isScore = false;
+	float finalMark;
+	float totalMark;
+	float midtermMark;
+	float otherMark;
 };
 
 struct Course {
@@ -112,4 +113,5 @@ void FixConsoleWindow();
 int check_Line(string path);
 int list_Len(_Subjects* Node);
 void view_Reigstration_Results(_Subjects* Node, string schoolyear, int sem);
+int list_Len_Available_Score(_Subjects* Node, string schoolyear, int semCur);
 #endif

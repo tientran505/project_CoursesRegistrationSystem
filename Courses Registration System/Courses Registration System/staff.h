@@ -16,3 +16,4 @@ void delete_Courses();
 void create_Course_Registration();
 bool is_Created_Sem_Before(string line, string schoolyear);
 void arrange_Sem(string schoolyear, string sem);
+void importResult(_Student* head);

@@ -32,7 +32,11 @@ _Student* logInSystem_Student(_Student* head) {
 	string userNameTmp, passWordTmp;
 
 	if (head == nullptr) {
-		GotoXY(34, 10);
+		
+		
+		
+		
+		(34, 10);
 		cout << "There is nothing any student lists in system" << endl;
 		GotoXY(34, 11);
 		cout << "Please contact to Academic Staff for more detail" << endl;
@@ -511,7 +515,6 @@ void register_One_Course(_Student* Node) {
 			fileOut << Node->data.firstName << " " << Node->data.lastName << ",";
 			fileOut << Node->data.gender << ",";
 			fileOut << Node->data.Date_Of_Birth.day << "/" << Node->data.Date_Of_Birth.month << "/" << Node->data.Date_Of_Birth.year;
-			fileOut << "," << stringToWString(Node->data.class_Of_Student);
 			
 			wcout << nameCourse << " completely registered" << endl;
 			read.close();
@@ -731,6 +734,152 @@ void remove_Courses(_Student*& Node) {
 	} while (running);
 }
 
-void viewScoreBoard(_Student* Node) {
+void menu_ScoreBoard_Student(_Student* Node) {
+	ifstream readSem, readSchoolyear;
 
+	readSchoolyear.open(dir + dirSchoolYear + "School_Year.txt", ios_base::in);
+
+	int numOfLine = check_Line(dir + dirSchoolYear + "School_Year.txt");
+	int sumLine = 0;
+	string line, schoolyear;
+
+	for (int i = 0; i < numOfLine; i++) {
+		getline(readSchoolyear, line);
+		sumLine += check_Line(dir + dirSchoolYear + line + ".txt") / 3;
+	}
+
+	readSchoolyear.seekg(0, readSchoolyear.beg);
+
+	string* menu = new string[sumLine + 1];
+
+	menu[sumLine] = "Back";
+	int i = sumLine - 1;
+	for (int k = 0; k < numOfLine; k++) {
+		getline(readSchoolyear, schoolyear);
+		readSem.open(dir + dirSchoolYear + schoolyear + ".txt", ios_base::in);
+		int lineTmp = check_Line(dir + dirSchoolYear + schoolyear + ".txt") / 3;
+		for (int k = 0; k < lineTmp; k++) {
+			getline(readSem, line);
+			menu[i] = line + " " + schoolyear;
+			for (int j = 0; j < 2; j++) getline(readSem, line);
+			i--;
+		}
+		readSem.close();
+	}
+
+	int step = 0, tmp;
+	bool running = true;
+	while (running) {
+		while (true) {
+			system("cls");
+			for (int k = 0; k < sumLine + 1; k++) {
+				if (k == step) {
+					textcolor(12);
+					GotoXY(44, 10 + k);
+					cout << " > " << menu[k] << " < " << endl;
+					textcolor(15);
+				}
+				else {
+					textcolor(15);
+					GotoXY(45, 10 + k);
+					cout << " " << menu[k] << " " << endl;
+				}
+			}
+			tmp = _getch();
+			if (tmp == 's' || tmp == 'S' || tmp == 80) {
+				step++;
+				if (step >= sumLine + 1) step = 0;
+			}
+			if (tmp == 'w' || tmp == 'W' || tmp == 72) {
+				step--;
+				if (step < 0) step = sumLine;
+			}
+			if (tmp == 13 || tmp == 32) break;
+		}
+		if (step == sumLine) {
+			delete[] menu;
+			running = false;
+			return;
+		}
+		else {
+			for (int k = 0; k < 9; k++) schoolyear[k] = menu[step][11 + k];
+			int sem = menu[step][9] - 48;
+			system("cls");
+			displayScoreboard_Student(Node->subregis, schoolyear, sem);
+			cout << endl << "Press any key to exit..." << endl;
+			int sth = _getch();
+		}
+	}
+}
+
+void displayScoreboard_Student(_Subjects* Node, string schoolyear, int semCur) {
+	system("cls");
+	GotoXY(12, 4);
+	cout << char(218); for (int i = 0; i < 94; i++) {
+		GotoXY(13 + i, 4);
+		if (i == 13 || i == 25 || i == 56 || i == 64 || i == 70 || i == 78 || i == 86) cout << char(194);
+		else cout << char(196);
+	}
+	cout << char(191) << endl;
+	GotoXY(12, 5); cout << char(179);
+
+	GotoXY(16, 5); cout << "Semester";
+	GotoXY(26, 5); cout << char(179) << " Course ID";
+	GotoXY(38, 5); cout << char(179); GotoXY(47, 5); cout << "Name of Course";
+	GotoXY(69, 5); cout << char(179) << "Credits";
+	GotoXY(77, 5); cout << char(179) << " Mid";
+	GotoXY(83, 5); cout << char(179) << " Other";
+	GotoXY(91, 5); cout << char(179) << " Final";
+	GotoXY(99, 5); cout << char(179) << " Total";
+	GotoXY(107, 5); cout << char(179);
+
+	GotoXY(12, 6); cout << char(195);
+	for (int i = 0; i < 94; i++) {
+		if (i == 13 || i == 25 || i == 56 || i == 64 || i == 70 || i == 78 || i == 86) cout << char(197);
+		else cout << char(196);
+	}
+	cout << char(180) << endl;
+	
+	int numSub = list_Len_Available_Score(Node, schoolyear, semCur);
+
+	_Subjects* cur = Node;
+	while (cur->subjects_Data.course_Data.schoolYear != schoolyear || cur->subjects_Data.course_Data.semNo != semCur) cur = cur->data_Next;
+
+	for (int i = 0; i <= 2 * numSub - 1; i++) {
+		if (i % 2 == 0) {
+			while (!(cur->subjects_Data.course_Data.score.isScore)) cur = cur->data_Next;
+ 			GotoXY(12, 7 + i); cout << char(179) << "HK" + to_string(semCur) + " " + schoolyear;
+			GotoXY(26, 7 + i); cout << char(179);
+			GotoXY(28, 7 + i); cout << cur->subjects_Data.course_Data.course_ID;
+			GotoXY(38, 7 + i); cout << char(179);
+			GotoXY(39, 7 + i); cout << cur->subjects_Data.course_Data.course_Name;
+			GotoXY(69, 7 + i); cout << char(179);
+			GotoXY(73, 7 + i); cout << cur->subjects_Data.course_Data.credit;
+			GotoXY(77, 7 + i); cout << char(179);
+			GotoXY(78, 7 + i); cout << cur->subjects_Data.course_Data.score.midtermMark;
+			GotoXY(83, 7 + i); cout << char(179);
+			GotoXY(84, 7 + i); cout << cur->subjects_Data.course_Data.score.otherMark;
+			GotoXY(91, 7 + i); cout << char(179);
+			GotoXY(92, 7 + i); cout << cur->subjects_Data.course_Data.score.finalMark;
+			GotoXY(99, 7 + i); cout << char(179);
+			GotoXY(100, 7 + i); cout << cur->subjects_Data.course_Data.score.totalMark;
+			GotoXY(107, 7 + i); cout << char(179);
+			cur = cur->data_Next;
+		}
+		else {
+			GotoXY(12, 7 + i);
+			if (i == 2 * numSub - 1) cout << char(192);
+			else cout << char(195);
+			for (int k = 0; k < 94; k++) {
+				GotoXY(13 + k, 7 + i);
+				if (k == 13 || k == 25 || k == 56 || k == 64 || k == 70 || k == 78 || k == 86) {
+					if (i == 2 * numSub - 1) cout << char(193);
+					else cout << char(197);
+				}
+				else cout << char(196);
+			}
+			if (i == 2 * numSub - 1) cout << char(217);
+			else cout << char(180);
+		}
+	}
 }
