@@ -515,13 +515,13 @@ void staff_Menu(string username, _Student*& headStu) {
 			for (int j = 0; j < 6; j++) {
 				if (j == i) {
 					textcolor(12);
-					GotoXY(39, 5 + j);
+					GotoXY(37, 9 + j);
 					cout << " > " << menu[j] << " < " << endl;
 					textcolor(15);
 				}
 				else {
 					textcolor(15);
-					GotoXY(40, 5 + j);
+					GotoXY(38, 9 + j);
 					cout << " " << menu[j] << " " << endl;
 				}
 			}
@@ -540,7 +540,7 @@ void staff_Menu(string username, _Student*& headStu) {
 		switch (i)
 		{
 		case 0: {
-			showInfo_Staff(username, 35,10);
+			showInfo_Staff(username, 38,9);
 			cout << endl;
 			GotoXY(37, 16);
 			cout << " enter to continue";
@@ -550,6 +550,7 @@ void staff_Menu(string username, _Student*& headStu) {
 		case 1: {
 			create_Course_Registration();
 			cout << endl;
+			GotoXY(35, 23);
 			cout << " enter to continue";
 			choose = _getch();
 			break;
@@ -589,13 +590,13 @@ void menu_Course_Staff() {
 			for (int j = 0; j < 5; j++) {
 				if (j == i) {
 					textcolor(12);
-					GotoXY(39, 5 + j);
+					GotoXY(40, 10 + j);
 					cout << " > " << menu[j] << " < " << endl;
 					textcolor(15);
 				}
 				else {
 					textcolor(15);
-					GotoXY(40, 5 + j);
+					GotoXY(41, 10+ j);
 					cout << " " << menu[j] << " " << endl;
 				}
 			}
@@ -749,13 +750,14 @@ void student_Menu(_Student* Node) {
 		{
 		case 1: {
 			showInfo_Student(Node);
+			GotoXY(40, 12);
 			cout << " enter to continue";
 			temp = _getch();
 			break;
 		}
 
 		case 2: {
-			editPassword(Node);
+			editPassword(Node); GotoXY(40, 12);
 			cout << " enter to continue";
 			temp = _getch();
 			break;

@@ -18,13 +18,19 @@ string WStringToString(wstring s)
 void register_One_Course(_Student* Node);
 
 void showInfo_Student(_Student* Node) {
+	GotoXY(39, 6);
 	cout << "Information of student" << endl;
 	_setmode(_fileno(stdout), _O_U8TEXT);
+	GotoXY(39, 7);
 	wcout << "Name: " << Node->data.firstName << " " << Node->data.lastName << endl;
 	_setmode(_fileno(stdout), _O_TEXT);
+	GotoXY(39, 8);
 	cout << "Student ID: " << Node->data.ID_Student << endl;
+	GotoXY(39, 9);
 	cout << "Gender: " << WStringToString(Node->data.gender) << endl;
+	GotoXY(39, 10);
 	cout << "Date of Birth: " << Node->data.Date_Of_Birth.day << "/" << Node->data.Date_Of_Birth.month << "/" << Node->data.Date_Of_Birth.year << endl;
+	GotoXY(39, 11);
 	cout << "Class: " << Node->data.class_Of_Student << endl;
 }
 
@@ -117,24 +123,33 @@ void changePass(_Student* Node) {
 
 void editPassword(_Student* Node) {
 	string curPassword, newPassword, retype;
+	GotoXY(45, 5);
 	cout << "Change password" << endl;
+	GotoXY(20, 6);
 	cout << "It's a good idea to use a strong password that you don't use elsewhere" << endl;
 	while (true) {
+		GotoXY(40, 7);
 		cout << "Current password: ";
 		cin >> curPassword;
 		if (curPassword == Node->data.student_Account.password) {
+			GotoXY(40, 8);
 			cout << "New password: ";
 			cin >> newPassword;
+			GotoXY(40, 9);
 			cout << "Retype new password: ";
 			cin >> retype;
 			while (retype != newPassword) {
+				GotoXY(30, 10);
 				cout << "Passwords do not match. Try again" << endl;
+				GotoXY(40, 11);
 				cout << "New password: ";
 				cin >> newPassword;
+				GotoXY(40, 12);
 				cout << "Retype new password: ";
 				cin >> retype;
 			}
 			Node->data.student_Account.password = newPassword;
+			GotoXY(35, 10);
 			cout << "Change password successfully" << endl;
 			ifstream readFile;
 			ofstream fileOut;
@@ -171,7 +186,11 @@ void editPassword(_Student* Node) {
 			delete[] oldName;
 			return;
 		}
-		else cout << "Enter a valid password and try again." << endl;
+		
+		else {
+			GotoXY(30, 12);
+			cout << "Enter a valid password and try again." << endl;
+		}
 	}
 }
 
