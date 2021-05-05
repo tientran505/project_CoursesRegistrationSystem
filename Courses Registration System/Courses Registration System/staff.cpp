@@ -314,13 +314,13 @@ void listStudents(_Student*& head) {
 			for (int j = 0; j < 2; j++) {
 				if (n == j) {
 					textcolor(12);
-					GotoXY(39, 5 + j);
+					GotoXY(39, 12 + j);
 					cout << " > " << menu[j] << " < " << endl;
 					textcolor(15);
 				}
 				else {
 					textcolor(15);
-					GotoXY(40, 5 + j);
+					GotoXY(40, 12 + j);
 					cout << " " << menu[j] << " " << endl;
 				}
 			}
@@ -405,6 +405,7 @@ void staff_Login(string& username) {
 			system("cls");
 			GotoXY(45, 11);
 			cin.ignore(1000, '\n');
+			GotoXY(43, 11);
 			cout << "Login Successfully!" << endl;
 			Sleep(200);
 			system("cls");
@@ -904,6 +905,7 @@ void create_Course_Registration() {
 	fileOut.open(dir + dirRegis + "Registration.txt", ios_base::out);
 
 	if (!fileOut.is_open()) {
+		GotoXY(25, 12);
 		cout << "Can't create Courese Registration. Pls try again!" << endl;
 		fileOut.close();
 		return;
@@ -913,23 +915,26 @@ void create_Course_Registration() {
 	int hourStart, hourEnd, minuteStart, minuteEnd;
 
 	do {
+		GotoXY(20,12);
 		cout << "Input Date Course registration session is open (DD/MM/YYYY): ";
 		cin >> dayStart.day;
 		cin.ignore(10, '/');
 		cin >> dayStart.month;
 		cin.ignore(10, '/');
 		cin >> dayStart.year;
+		GotoXY(20, 13);
 		cout << "Time (24 Clock - HH:MM): ";
 		cin >> hourStart;
 		cin.ignore(10, ':');
 		cin >> minuteStart;
-
+		GotoXY(20, 14);
 		cout << "Input Date Course registration seesion is close (DD/MM/YYYY): ";
 		cin >> dayEnd.day;
 		cin.ignore(10, '/');
 		cin >> dayEnd.month;
 		cin.ignore(10, '/');
 		cin >> dayEnd.year;
+		GotoXY(20, 15);
 		cout << "Time (24h Clock - HH:MM): ";
 		cin >> hourEnd;
 		cin.ignore(10, ':');
@@ -949,10 +954,12 @@ void create_Course_Registration() {
 		cout << "Time: " << hourEnd << ":" << minuteTmp_End << endl;
 
 		string choose;
+		GotoXY(40, 21);
 		cout << "Confirm? ";
 		cin >> choose;
 
 		if (choose == "Y" || choose == "y") {
+			GotoXY(27, 22);
 			cout << "Course Registration completely created!" << endl;
 
 			fileOut << dayStart.day << "/" << dayStart.month << "/" << dayStart.year << ",";
@@ -1069,19 +1076,26 @@ void arrange_Sem(string schoolyear, string sem) {
 void add_Schoolyear(Date& schoolyear) {
 	bool running = true;
 	do {
+		system("cls");
+		GotoXY(40, 11);
 		cout << "Input the schoolyear: ";
 		int year;
 		cin >> year;
 		if (!is_Created_Schoolyear_Before(to_string(year))) {
+			GotoXY(40, 12);
 			cout << "You have created school year " << to_string(year) << " before!" << endl;
+			GotoXY(40, 13);
 			cout << "Press any key to continue or Esc to exit" << endl;
 			int choose = _getch();
 			if (choose == 27) return;
 		}
 		else {
+			GotoXY(42, 12);
 			cout << "You mean " << year << "-" << year + 1 << "?";
-			cout << "\nY. Yes \t N. No" << endl;
+			GotoXY(42, 13);
+			cout << "Y. Yes \t N. No" << endl;
 			string choose;
+			GotoXY(44, 14);
 			cin >> choose;
 			if (choose == "Y" || choose == "y") {
 				ofstream out;
@@ -1089,6 +1103,7 @@ void add_Schoolyear(Date& schoolyear) {
 				outFile.open(dir + dirSchoolYear + "School_Year.txt", ios_base::app);
 				out.open(dir + dirSchoolYear + to_string(year) + "-" + to_string(year + 1) + ".txt", ios_base::out);
 				if (!out.is_open()) {
+					GotoXY(40, 12);
 					cout << "Can't create School year!" << endl;
 				}
 				if (check_Line(dir + dirSchoolYear + "School_Year.txt") != 0) outFile << endl;
