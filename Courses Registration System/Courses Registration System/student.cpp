@@ -128,6 +128,10 @@ void editPassword(_Student* Node) {
 	GotoXY(20, 6);
 	cout << "It's a good idea to use a strong password that you don't use elsewhere" << endl;
 	while (true) {
+		GotoXY(45, 5);
+		cout << "Change password" << endl;
+		GotoXY(20, 6);
+		cout << "It's a good idea to use a strong password that you don't use elsewhere" << endl;
 		GotoXY(40, 7);
 		cout << "Current password: ";
 		cin >> curPassword;
@@ -188,8 +192,10 @@ void editPassword(_Student* Node) {
 		}
 		
 		else {
-			GotoXY(30, 12);
+			GotoXY(35, 12);
 			cout << "Enter a valid password and try again." << endl;
+			_getch();
+			system("cls");
 		}
 	}
 }
