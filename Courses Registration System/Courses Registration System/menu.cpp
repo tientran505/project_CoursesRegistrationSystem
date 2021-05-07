@@ -291,9 +291,9 @@ void create_SemesterMenu(string schoolyear) {
 	cin >> endDate.year;
 
 	ofstream fileOut;
-	fileOut.open(dir + dirSchoolYear + schoolyear + ".txt", ios_base::app);
+	fileOut.open(dirSchoolYear + schoolyear + ".txt", ios_base::app);
 
-	if (check_Line(dir + dirSchoolYear + schoolyear + ".txt") != 0) fileOut << endl;
+	if (check_Line(dirSchoolYear + schoolyear + ".txt") != 0) fileOut << endl;
 
 	fileOut << menu[i] << endl;
 	fileOut << startDate.day << "/" << startDate.month << "/" << startDate.year << endl;
@@ -310,15 +310,15 @@ void create_SemesterMenu(string schoolyear) {
 void course_Registration_Result_Menu(_Student* Node) {
 	ifstream readSem, readSchoolyear;
 
-	readSchoolyear.open(dir + dirSchoolYear + "School_Year.txt", ios_base::in);
+	readSchoolyear.open(dirSchoolYear + "School_Year.txt", ios_base::in);
 	
-	int numOfLine = check_Line(dir + dirSchoolYear + "School_Year.txt");
+	int numOfLine = check_Line(dirSchoolYear + "School_Year.txt");
 	int sumLine = 0;
 	string line, schoolyear;
 
 	for (int i = 0; i < numOfLine; i++) {
 		getline(readSchoolyear, line);
-		sumLine += check_Line(dir + dirSchoolYear + line + ".txt") / 3;
+		sumLine += check_Line(dirSchoolYear + line + ".txt") / 3;
 	}
 
 	readSchoolyear.seekg(0, readSchoolyear.beg);
@@ -329,8 +329,8 @@ void course_Registration_Result_Menu(_Student* Node) {
 	int i = sumLine - 1;
 	for (int k = 0; k < numOfLine; k++) {
 		getline(readSchoolyear, schoolyear);
-		readSem.open(dir + dirSchoolYear + schoolyear + ".txt", ios_base::in);
-		int lineTmp = check_Line(dir + dirSchoolYear + schoolyear + ".txt") / 3;
+		readSem.open(dirSchoolYear + schoolyear + ".txt", ios_base::in);
+		int lineTmp = check_Line(dirSchoolYear + schoolyear + ".txt") / 3;
 		for (int k = 0; k < lineTmp; k++) {
 			getline(readSem, line);
 			menu[i] = line + " " + schoolyear;
@@ -389,7 +389,7 @@ void create_SchoolyearMenu() {
 	int i = 0;
 	int tmp;
 	GotoXY(40, 5);
-	int line = check_Line(dir + dirSchoolYear + "School_Year.txt");
+	int line = check_Line(dirSchoolYear + "School_Year.txt");
 	if (line == 0) {
 		system("cls");
 		GotoXY(40, 10);
@@ -402,7 +402,7 @@ void create_SchoolyearMenu() {
 	ifstream read;
 	bool running = true;
 	string* menu = new string[line + 1];
-	read.open(dir + dirSchoolYear + "School_Year.txt", ios_base::in);
+	read.open(dirSchoolYear + "School_Year.txt", ios_base::in);
 	for (int j = line - 1; j >= 0; j--) {
 		getline(read, menu[j]);
 	}
@@ -620,13 +620,13 @@ void menu_Course_Staff() {
 		switch (i)
 		{
 		case 1: {
-			createCourseList(dir + dirCourse + "CoursesRegistration.txt");
+			createCourseList(dirCourse + "CoursesRegistration.txt");
 			cout << " enter to continue";
 			choose = _getch();
 			break;
 		}
 		case 2: {
-			viewCourseList(dir + dirCourse + "CoursesRegistration.txt");
+			viewCourseList(dirCourse + "CoursesRegistration.txt");
 			cout << " enter to continue";
 			choose = _getch();
 			break;

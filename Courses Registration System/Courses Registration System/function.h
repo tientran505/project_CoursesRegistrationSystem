@@ -14,14 +14,14 @@
 #include <conio.h>
 using namespace std;
 
-const string dir = "E:/HCMUS/Sem 2/Programming Techniques/Project - A Courses Registration System/project_CoursesRegistrationSystem/Courses Registration System/Courses Registration System/";
-const string dirClass = "Class/";
-const string dirCourse = "Course/";
-const string dirRegis = "Registration/";
-const string dirStaff = "Staff/";
-const string dirCourse_Student = "Registration_Student/";
-const string dirClass_Save = "Class_Save/";
-const string dirSchoolYear = "School Year/";
+//const string dir = "E:/HCMUS/Sem 2/Programming Techniques/Project - A Courses Registration System/project_CoursesRegistrationSystem/Courses Registration System/Courses Registration System/";
+const string dirClass = "Class\\";
+const string dirCourse = "Course\\";
+const string dirRegis = "Registration\\";
+const string dirStaff = "Staff\\";
+const string dirCourse_Student = "Registration_Student\\";
+const string dirClass_Save = "Class_Save\\";
+const string dirSchoolYear = "School Year\\";
 
 
 struct Date {

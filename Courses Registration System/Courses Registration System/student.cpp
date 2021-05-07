@@ -161,8 +161,8 @@ void editPassword(_Student* Node) {
 			cout << "Change password successfully" << endl;
 			ifstream readFile;
 			ofstream fileOut;
-			readFile.open(dir + dirClass_Save + "save_Account_" + Node->data.class_Of_Student + ".txt", ios_base::in);
-			fileOut.open(dir + dirClass_Save + "change.txt", ios_base::out);
+			readFile.open(dirClass_Save + "save_Account_" + Node->data.class_Of_Student + ".txt", ios_base::in);
+			fileOut.open(dirClass_Save + "change.txt", ios_base::out);
 			int i = 0;
 			while (!readFile.eof()) {
 				string idTmp;
@@ -182,11 +182,11 @@ void editPassword(_Student* Node) {
 			readFile.close();
 			fileOut.close();
 			
-			string tmp = dir + dirClass_Save + "save_Account_" + Node->data.class_Of_Student + ".txt";
+			string tmp = dirClass_Save + "save_Account_" + Node->data.class_Of_Student + ".txt";
 			char* newName = new char[tmp.length() + 1];
 			strcpy_s(newName, tmp.length() + 1, tmp.c_str());
 			remove(newName);
-			string oldNameTmp = dir + dirClass_Save + "change.txt";
+			string oldNameTmp = dirClass_Save + "change.txt";
 			char* oldName = new char[oldNameTmp.length() + 1];
 			strcpy_s(oldName, oldNameTmp.length() + 1, oldNameTmp.c_str());
 			rename(oldName, newName);
@@ -248,7 +248,7 @@ bool can_Register_Course(Date dateCur, Date dateStart, Date dateEnd, Time timeCu
 string schoolYearCurrent(int& sem) {
 	string schoolyear;
 	ifstream readSY;
-	readSY.open(dir + dirSchoolYear + "School_Year.txt", ios_base::in);
+	readSY.open(dirSchoolYear + "School_Year.txt", ios_base::in);
 
 	if (!readSY.is_open()) return 0;
 
@@ -258,7 +258,7 @@ string schoolYearCurrent(int& sem) {
 	readSY.close();
 
 	ifstream fRead;
-	fRead.open(dir + dirSchoolYear + schoolyear + ".txt", ios_base::in);
+	fRead.open(dirSchoolYear + schoolyear + ".txt", ios_base::in);
 
 	string line;
 	while (!fRead.eof()) {
@@ -329,7 +329,7 @@ void register_Course(_Student* Node) {
 	tm* ltm = localtime(&now);
 
 	ifstream read;
-	read.open(dir + dirRegis + "Registration.txt", ios_base::in);
+	read.open(dirRegis + "Registration.txt", ios_base::in);
 
 	if (!read.is_open()) {
 		cout << "Staff had not create the course registration session. Please contact staff department for more detail!" << endl;
@@ -372,7 +372,7 @@ void register_Course(_Student* Node) {
 			cout << "Only 5 courses are allowed per semester!" << endl;
 			return;
 		}
-		viewCourseList(dir + dirCourse + "CoursesRegistration.txt");
+		viewCourseList(dirCourse + "CoursesRegistration.txt");
 		register_One_Course(Node);
 		cout << "1. Continue to register the course\t2.Exit" << endl;
 		int option;
@@ -391,8 +391,8 @@ void register_One_Course_TextFile(_Student* Node) {
 	wifstream fileOld;
 	wofstream fileNew;
 
-	string oldName = dir + dirCourse_Student + "Registered_Course_" + Node->data.class_Of_Student + ".txt";
-	string newName = dir + dirCourse_Student + "Tmp" + Node->data.class_Of_Student + ".txt";
+	string oldName = dirCourse_Student + "Registered_Course_" + Node->data.class_Of_Student + ".txt";
+	string newName = dirCourse_Student + "Tmp" + Node->data.class_Of_Student + ".txt";
 	fileOld.open(oldName, ios_base::in);
 	fileNew.open(newName, ios_base::out);
 
@@ -450,7 +450,7 @@ void register_One_Course_TextFile(_Student* Node) {
 
 void register_One_Course(_Student* Node) {
 	wifstream read;
-	read.open(dir + dirCourse + "CoursesRegistration.txt", ios_base::in);
+	read.open(dirCourse + "CoursesRegistration.txt", ios_base::in);
 	read.imbue(std::locale(std::locale::empty(), new std::codecvt_utf8<wchar_t, 0x10ffff, std::generate_header>));
 
 	wchar_t a = ',';
@@ -529,10 +529,10 @@ void register_One_Course(_Student* Node) {
 			register_One_Course_TextFile(Node);
 
 			wofstream fileOut;
-			fileOut.open(dir + dirCourse_Student + NameCourses + ".csv", ios_base::app);
+			fileOut.open(dirCourse_Student + NameCourses + ".csv", ios_base::app);
 			fileOut.imbue(std::locale(std::locale::empty(), new std::codecvt_utf8<wchar_t, 0x10ffff, std::generate_header>));
 
-			int num_Of_Line = check_Line(dir + dirCourse_Student + NameCourses + ".csv");
+			int num_Of_Line = check_Line(dirCourse_Student + NameCourses + ".csv");
 			if (num_Of_Line != 0) fileOut << endl;
 
 			fileOut << num_Of_Line + 1 << ",";
@@ -578,8 +578,8 @@ void remove_Courses_TextFile(_Student* Node, string courseID, string schoolyearC
 	wifstream fileOld;
 	wofstream fileNew;
 
-	string oldName = dir + dirCourse_Student + "Registered_Course_" + Node->data.class_Of_Student + ".txt";
-	string newName = dir + dirCourse_Student + "Tmp" + Node->data.class_Of_Student + ".txt";
+	string oldName =  dirCourse_Student + "Registered_Course_" + Node->data.class_Of_Student + ".txt";
+	string newName =  dirCourse_Student + "Tmp" + Node->data.class_Of_Student + ".txt";
 
 	fileOld.open(oldName, ios_base::in);
 	fileNew.open(newName, ios_base::out);
@@ -635,8 +635,8 @@ void remove_Courses_TextFile(_Student* Node, string courseID, string schoolyearC
 }
 
 void remove_From_List(_Student* Node, string courseName) {
-	string oldName = dir + dirCourse_Student + courseName + ".csv";
-	string newName = dir + dirCourse_Student + "change.csv";
+	string oldName =  dirCourse_Student + courseName + ".csv";
+	string newName =  dirCourse_Student + "change.csv";
 	
 	if (check_Line(oldName) == 1) {
 		remove(oldName.c_str());
@@ -682,7 +682,7 @@ void remove_Courses(_Student*& Node) {
 	tm* ltm = localtime(&now);
 
 	ifstream read;
-	read.open(dir + dirRegis + "Registration.txt", ios_base::in);
+	read.open( dirRegis + "Registration.txt", ios_base::in);
 
 	if (!read.is_open()) {
 		read.close();
@@ -762,15 +762,15 @@ void remove_Courses(_Student*& Node) {
 void menu_ScoreBoard_Student(_Student* Node) {
 	ifstream readSem, readSchoolyear;
 
-	readSchoolyear.open(dir + dirSchoolYear + "School_Year.txt", ios_base::in);
+	readSchoolyear.open(dirSchoolYear + "School_Year.txt", ios_base::in);
 
-	int numOfLine = check_Line(dir + dirSchoolYear + "School_Year.txt");
+	int numOfLine = check_Line(dirSchoolYear + "School_Year.txt");
 	int sumLine = 0;
 	string line, schoolyear;
 
 	for (int i = 0; i < numOfLine; i++) {
 		getline(readSchoolyear, line);
-		sumLine += check_Line(dir + dirSchoolYear + line + ".txt") / 3;
+		sumLine += check_Line(dirSchoolYear + line + ".txt") / 3;
 	}
 
 	readSchoolyear.seekg(0, readSchoolyear.beg);
@@ -781,8 +781,8 @@ void menu_ScoreBoard_Student(_Student* Node) {
 	int i = sumLine - 1;
 	for (int k = 0; k < numOfLine; k++) {
 		getline(readSchoolyear, schoolyear);
-		readSem.open(dir + dirSchoolYear + schoolyear + ".txt", ios_base::in);
-		int lineTmp = check_Line(dir + dirSchoolYear + schoolyear + ".txt") / 3;
+		readSem.open(dirSchoolYear + schoolyear + ".txt", ios_base::in);
+		int lineTmp = check_Line(dirSchoolYear + schoolyear + ".txt") / 3;
 		for (int k = 0; k < lineTmp; k++) {
 			getline(readSem, line);
 			menu[i] = line + " " + schoolyear;

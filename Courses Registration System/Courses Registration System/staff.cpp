@@ -27,7 +27,7 @@ void loadStudentList(string path, _Student*& head) {
 	wchar_t a = ',', b = '/';
 	_Student* pCur = head;
 	path.erase(path.end() - 4, path.end());
-	path.erase(path.begin(), path.begin() + dir.length() + dirClass.length());
+	path.erase(path.begin(), path.begin() + dirClass.length());
 	while (!fileIn.eof()) {
 		if (head == nullptr) {
 			head = new _Student;
@@ -75,10 +75,10 @@ void loadStudentList_changedPassword(string path,string path_Course ,_Student*& 
 	wchar_t a = ',', b = '/', c = '|';
 	_Student* pCur = head;
 	path.erase(path.end() - 4, path.end());
-	path.erase(path.begin(), path.begin() + dir.length() + dirClass.length());
+	path.erase(path.begin(), path.begin() + dirClass.length());
 
 	ifstream read;
-	read.open(dir + dirClass_Save + "save_Account_" + path + ".txt", ios_base::in);
+	read.open(dirClass_Save + "save_Account_" + path + ".txt", ios_base::in);
 
 	int stuID, numOfCourse;
 	wstring line;
@@ -158,7 +158,7 @@ void loadScoreboardStudentList(string path, _Student* head) {
 		string nameCourse;
 		getline(read, nameCourse);
 		wifstream fin;
-		fin.open(dir + dirCourse_Student + nameCourse + ".csv", ios::in);
+		fin.open(dirCourse_Student + nameCourse + ".csv", ios::in);
 
 		fin.imbue(std::locale(std::locale::empty(), new std::codecvt_utf8<wchar_t, 0x10ffff, std::generate_header>));
 
@@ -340,22 +340,22 @@ void listStudents(_Student*& head) {
 			cout << "Input name of Class to add into the system: ";
 			cin >> path;
 			ofstream fileOut;
-			fileOut.open(dir + dirClass_Save + "classes_In_System.txt", ios_base::app);
+			fileOut.open(dirClass_Save + "classes_In_System.txt", ios_base::app);
 
-			if (!is_Class_In_System(dir + dirClass_Save + "classes_In_System.txt", path)) {
+			if (!is_Class_In_System(dirClass_Save + "classes_In_System.txt", path)) {
 				cout << path << " is already in system. Pls add another class" << endl;
 				cout << " enter to continue";
 				temp = _getch();
 				continue;
 			}
 
-			loadStudentList(dir + dirClass + path + ".csv", headClass);
-			displayStudentList(dir + dirClass + path + "_Info" + ".csv", headClass);
+			loadStudentList(dirClass + path + ".csv", headClass);
+			displayStudentList(dirClass + path + "_Info" + ".csv", headClass);
 			listPush(head, headClass);
 			fileOut << path << endl;
 			fileOut.close();
-			convertAccountOfStudent(dir + dirClass_Save + "save_Account_" + path + ".txt", headClass);
-			convertCourseOfStudent(dir + dirCourse_Student + "Registered_Course_" + path + ".txt", headClass);
+			convertAccountOfStudent(dirClass_Save + "save_Account_" + path + ".txt", headClass);
+			convertCourseOfStudent(dirCourse_Student + "Registered_Course_" + path + ".txt", headClass);
 		}
 	} while (n != 1);
 }
@@ -363,16 +363,16 @@ void listStudents(_Student*& head) {
 void loadStu_Save(_Student*& pHead) {
 	_Student* headClass = nullptr;
 	ifstream read;
-	read.open(dir + dirClass_Save + "classes_In_System.txt", ios_base::in);
+	read.open(dirClass_Save + "classes_In_System.txt", ios_base::in);
 	if (!read.is_open()) return;
-	int line = check_Line(dir + dirClass_Save + "classes_In_System.txt");
+	int line = check_Line(dirClass_Save + "classes_In_System.txt");
 	for (int i = 1; i <= line; i++)  {
 		string path;
 		getline(read, path);
 		cout << "Added " << path << " in the system" << endl;
-		loadStudentList_changedPassword(dir + dirClass + path + ".csv", dir + dirCourse_Student + "Registered_Course_" + path + ".txt",headClass);
+		loadStudentList_changedPassword(dirClass + path + ".csv", dirCourse_Student + "Registered_Course_" + path + ".txt",headClass);
 		listPush(pHead, headClass);
-		loadScoreboardStudentList(dir + dirCourse_Student + "listOfCourses.txt", pHead);
+		loadScoreboardStudentList(dirCourse_Student + "listOfCourses.txt", pHead);
 	}
 	read.close();
 }
@@ -391,7 +391,7 @@ void staff_Login(string& username) {
 		cout << "Password: ";
 		cin >> password;
 
-		fileIn.open(dir + dirStaff + "Staff_Account.txt", ios_base::in);
+		fileIn.open(dirStaff + "Staff_Account.txt", ios_base::in);
 		while (!fileIn.eof()) {
 			string userTmp, passTmp;
 			getline(fileIn, userTmp, ',');
@@ -563,7 +563,7 @@ void createCourseList(string path) {
 
 void viewCourseList(string path) {
 	wifstream fileIn;
-	fileIn.open(dir + dirCourse + "CoursesRegistration.txt", ios_base::in);
+	fileIn.open(dirCourse + "CoursesRegistration.txt", ios_base::in);
 
 	if (!fileIn.is_open() || check_Line(path) == 0) {
 		cout << "You haven't created any course yet. Please create the course first" << endl;
@@ -610,8 +610,8 @@ void update_Course_Info() {
 	wifstream fileOld;
 	wofstream fileNew;
 
-	string dirOld = dir + dirCourse + "CoursesRegistration.txt";
-	string dirNew = dir + dirCourse + "change.txt";
+	string dirOld = dirCourse + "CoursesRegistration.txt";
+	string dirNew = dirCourse + "change.txt";
 
 	fileOld.open(dirOld, ios_base::in);
 	fileNew.open(dirNew, ios_base::out);
@@ -816,9 +816,9 @@ void update_Course_Info() {
 void delete_Courses() {
 	wifstream fileOld;
 
-	string dirFileOld = dir + dirCourse + "CoursesRegistration.txt";
+	string dirFileOld = dirCourse + "CoursesRegistration.txt";
 	fileOld.open(dirFileOld, ios_base::in);
-	int line = check_Line(dir + dirCourse + "CoursesRegistration.txt");
+	int line = check_Line(dirCourse + "CoursesRegistration.txt");
 
 	if (!fileOld.is_open() || line == 0) {
 		cout << "NOTHING TO DELETE!\n" << "================================================" << endl;
@@ -827,13 +827,13 @@ void delete_Courses() {
 	}
 
 	wofstream fileNew;
-	string dirFileNew = dir + dirCourse + "change.txt";
+	string dirFileNew = dirCourse + "change.txt";
 	fileNew.open(dirFileNew, ios_base::out);
 
 	fileOld.imbue(std::locale(std::locale::empty(), new std::codecvt_utf8<wchar_t, 0x10ffff, std::generate_header>));
 	fileNew.imbue(std::locale(std::locale::empty(), new std::codecvt_utf8<wchar_t, 0x10ffff, std::generate_header>));
 
-	viewCourseList(dir + dirCourse + "CoursesRegistration.txt");
+	viewCourseList(dirCourse + "CoursesRegistration.txt");
 	wchar_t a = ',';
 	cout << "TOTAL OF COURSES: " << line << endl;
 	cout << "Choose course to delete: " << endl;
@@ -876,7 +876,7 @@ void delete_Courses() {
 
 void showInfo_Staff(string username,int x,int y) {
 	ifstream fileIn;
-	fileIn.open(dir + dirStaff + "Staff_Info.txt", ios_base::in);
+	fileIn.open(dirStaff + "Staff_Info.txt", ios_base::in);
 	while (!fileIn.eof()) {
 		string tmp, name;
 		getline(fileIn, tmp, ',');
@@ -902,7 +902,7 @@ void create_Course_Registration() {
 	ofstream fileOut;
 	bool running = true;
 
-	fileOut.open(dir + dirRegis + "Registration.txt", ios_base::out);
+	fileOut.open(dirRegis + "Registration.txt", ios_base::out);
 
 	if (!fileOut.is_open()) {
 		GotoXY(25, 12);
@@ -977,7 +977,7 @@ void create_Course_Registration() {
 
 bool is_Created_Schoolyear_Before(string line) {
 	ifstream read;
-	read.open(dir + dirSchoolYear + "School_Year.txt", ios_base::in);
+	read.open(dirSchoolYear + "School_Year.txt", ios_base::in);
 
 	if (!read.is_open()) return true;
 
@@ -997,7 +997,7 @@ bool is_Created_Schoolyear_Before(string line) {
 
 bool is_Created_Sem_Before(string line, string schoolyear) {
 	ifstream read;
-	read.open(dir + dirSchoolYear + schoolyear + ".txt", ios_base::out);
+	read.open(dirSchoolYear + schoolyear + ".txt", ios_base::out);
 
 	string check;
 	while (!read.eof()) {
@@ -1027,8 +1027,8 @@ void arrange_Sem(string schoolyear, string sem) {
 	ifstream read;
 	ofstream fileNew;
 	
-	string oldName = dir + dirSchoolYear + schoolyear + ".txt";
-	string newName = dir + dirSchoolYear + "tmp.txt";
+	string oldName = dirSchoolYear + schoolyear + ".txt";
+	string newName = dirSchoolYear + "tmp.txt";
 
 	read.open(oldName, ios_base::in);
 	fileNew.open(newName, ios_base::out);
@@ -1100,13 +1100,13 @@ void add_Schoolyear(Date& schoolyear) {
 			if (choose == "Y" || choose == "y") {
 				ofstream out;
 				ofstream outFile;
-				outFile.open(dir + dirSchoolYear + "School_Year.txt", ios_base::app);
-				out.open(dir + dirSchoolYear + to_string(year) + "-" + to_string(year + 1) + ".txt", ios_base::out);
+				outFile.open(dirSchoolYear + "School_Year.txt", ios_base::app);
+				out.open(dirSchoolYear + to_string(year) + "-" + to_string(year + 1) + ".txt", ios_base::out);
 				if (!out.is_open()) {
 					GotoXY(40, 12);
 					cout << "Can't create School year!" << endl;
 				}
-				if (check_Line(dir + dirSchoolYear + "School_Year.txt") != 0) outFile << endl;
+				if (check_Line(dirSchoolYear + "School_Year.txt") != 0) outFile << endl;
 				outFile << year << "-" << year + 1;
 				outFile.close();
 				out.close();
@@ -1227,7 +1227,7 @@ void importResult(_Student* head) {
 	cout << "Input name of course to import score: ";
 	getline(cin, nameCourse, '\n');
 	wifstream readFile;
-	readFile.open(dir + dirCourse_Student + nameCourse + ".csv", ios_base::in);
+	readFile.open(dirCourse_Student + nameCourse + ".csv", ios_base::in);
 
 	readFile.imbue(std::locale(std::locale::empty(), new std::codecvt_utf8<wchar_t, 0x10ffff, std::generate_header>));
 
@@ -1240,8 +1240,8 @@ void importResult(_Student* head) {
 
 	else {
 		ofstream save;
-		save.open(dir + dirCourse_Student + "listOfCourses.txt", ios::app);
-		if (check_Line(dir + dirCourse_Student + "listOfCourses.txt") != 0) save << endl;
+		save.open(dirCourse_Student + "listOfCourses.txt", ios::app);
+		if (check_Line(dirCourse_Student + "listOfCourses.txt") != 0) save << endl;
 		save << nameCourse;
 		save.close();
 	}
