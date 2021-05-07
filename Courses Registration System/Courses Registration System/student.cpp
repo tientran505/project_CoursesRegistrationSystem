@@ -840,6 +840,12 @@ void menu_ScoreBoard_Student(_Student* Node) {
 void displayScoreboard_Student(_Subjects* Node, string schoolyear, int semCur) {
 	system("cls");
 	GotoXY(12, 4);
+	int numSub = list_Len_Available_Score(Node, schoolyear, semCur);
+	if (Node == nullptr || numSub == 0) {
+		cout << "No results!" << endl;
+		return;
+	}
+
 	cout << char(218); for (int i = 0; i < 94; i++) {
 		GotoXY(13 + i, 4);
 		if (i == 13 || i == 25 || i == 56 || i == 64 || i == 70 || i == 78 || i == 86) cout << char(194);
@@ -865,7 +871,7 @@ void displayScoreboard_Student(_Subjects* Node, string schoolyear, int semCur) {
 	}
 	cout << char(180) << endl;
 	
-	int numSub = list_Len_Available_Score(Node, schoolyear, semCur);
+	
 
 	_Subjects* cur = Node;
 	while (cur->subjects_Data.course_Data.schoolYear != schoolyear || cur->subjects_Data.course_Data.semNo != semCur) cur = cur->data_Next;

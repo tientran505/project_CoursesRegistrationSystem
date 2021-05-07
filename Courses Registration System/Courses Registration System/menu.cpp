@@ -500,6 +500,71 @@ void menu_Create_SY_Tmp() {
 	
 }
 
+void staff_Scoreboard_Management(_Student*& headStu) {
+	int temp;
+	int i = 0;
+	bool running = true;
+	string menu[5] = { "1. Import the Scoreboard", "2. Update student result", "3. View the Scoreboard of a Course", "4. View the Scoreboard of Class", "5. Back" };
+	do {
+		while (true) {
+			system("cls");
+			for (int j = 0; j < 5; j++) {
+				if (j == i) {
+					textcolor(12);
+					GotoXY(37, 9 + j);
+					cout << " > " << menu[j] << " > " << endl;
+					textcolor(15);
+				}
+				else {
+					textcolor(15);
+					GotoXY(38, 9 + j);
+					cout << " " << menu[j] << " " << endl;
+				}
+			}
+			temp = _getch();
+			if (temp == 's' || temp == 'S' || temp == 80) {
+				i++;
+				if (i == 5) i = 0;
+			}
+			if (temp == 'w' || temp == 'W' || temp == 72) {
+				i--;
+				if (i == -1) i = 4;
+			}
+			if (temp == 13 || temp == 32) break;
+		}
+	
+		switch (i) {
+		case 0: {
+			importResult(headStu);
+			cout << "Press any key to continue..." << endl;
+			temp = _getch();
+			break;
+		}
+		case 1: {
+			cout << "Still in progressing//Press any key to continue..." << endl;
+			temp = _getch();
+			break;
+		}
+		case 2: {
+			viewScoreboard_Course_Menu();
+			cout << "Press any key to continue..." << endl;
+			temp = _getch();
+			break;
+		}
+		case 3: {
+			cout << "Still in progressing//Press any key to continue..." << endl;
+			cout << "Press any key to continue..." << endl;
+			temp = _getch();
+			break;
+		}
+		case 4: {
+			running = false;
+			break;
+		}
+		}
+	} while (running);
+}
+
 void staff_Menu(string username, _Student*& headStu) {
 	int choose;
 	int i = 0;
@@ -508,7 +573,7 @@ void staff_Menu(string username, _Student*& headStu) {
 	system("cls");
 	ShowCur(0);
 	GotoXY(40, 5);
-	string menu[7] = { "1. View info","2. Create Course Registration Session", "3. Create School year/Semester System","4. Course Registration Management System", "5. Add student lists to the system" , "6. Import the scoreboard", "7. Log out" };
+	string menu[7] = { "1. View info","2. Create Course Registration Session", "3. Create School year/Semester System","4. Course Registration Management System", "5. Add student lists to the system" , "6. Student Scoreboard Management System", "7. Log out" };
 	do {
 		while (true) {
 			system("cls");
@@ -568,7 +633,7 @@ void staff_Menu(string username, _Student*& headStu) {
 			break;
 		}
 		case 5: {
-			importResult(headStu);
+			staff_Scoreboard_Management(headStu);
 			break;
 		}
 		case 6: {
@@ -774,8 +839,6 @@ void student_Menu(_Student* Node) {
 
 		case 4: {
 			menu_ScoreBoard_Student(Node);
-			cout << endl << " enter to continue";
-			temp = _getch();
 			break;
 		}
 		}

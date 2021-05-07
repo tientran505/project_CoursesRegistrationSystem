@@ -1272,3 +1272,98 @@ void importResult(_Student* head) {
 	int sth = _getch();
 	readFile.close();
 }
+
+void viewScoreboard_Course_Display(string nameCourse) {
+	wifstream read;
+	read.open(dirCourse_Student + nameCourse + ".csv", ios::in);
+	if (!read.is_open()) {
+		cout << nameCourse << " is not found!" << endl;
+		return;
+	}
+
+	read.imbue(std::locale(std::locale::empty(), new std::codecvt_utf8<wchar_t, 0x10ffff, std::generate_header>));
+
+	int no, stuID;
+	wchar_t a = ',';
+	int numLine = check_Line(dirCourse_Student + nameCourse + ".csv");
+	wstring fullName, tmp;
+	float score;
+
+	system("cls");
+	GotoXY(2, 2);
+	cout << char(218); for (int i = 0; i < 78; i++) {
+		GotoXY(3 + i, 2);
+		if (i == 2 || i == 15 || i == 50 || i == 56 || i == 64 || i == 70) cout << char(194);
+		else cout << char(196);
+	}
+	cout << char(191) << endl;
+	GotoXY(2, 3); cout << char(179);
+	GotoXY(3, 3); cout << "No";
+	GotoXY(5, 3); cout << char(179) << " Student ID";
+	GotoXY(18, 3); cout << char(179); GotoXY(32, 3); cout << "Full Name";
+	GotoXY(53, 3); cout << char(179) << "Total";
+	GotoXY(59, 3); cout << char(179) << " Final";
+	GotoXY(67, 3); cout << char(179) << " Mid";
+	GotoXY(73, 3); cout << char(179) << " Other";
+	GotoXY(81, 3); cout << char(179);
+
+	GotoXY(2, 4); cout << char(195);
+	for (int i = 0; i < 78; i++) {
+		if (i == 2 || i == 15 || i == 50 || i == 56 || i == 64 || i == 70) cout << char(197);
+		else cout << char(196);
+	}
+	cout << char(180) << endl;
+	for (int i = 0; i <= 2 * numLine - 1; i++) {
+		if (i % 2 == 0) {
+			read >> no >> a;
+			GotoXY(2, 5 + i); cout << char(179) << no;
+			GotoXY(5, 5 + i); cout << char(179);
+			read >> stuID >> a;
+			GotoXY(8, 5 + i); cout << stuID;
+			GotoXY(18, 5 + i); cout << char(179);
+			turnOnVietText();
+			getline(read, fullName, a);
+			GotoXY(19, 5 + i); wcout << fullName;
+			turnOffVietText();
+			GotoXY(53, 5 + i); cout << char(179);
+			for (int q = 0; q < 2; q++) getline(read, tmp, a);
+			read >> score >> a;
+			GotoXY(55, 5 + i); cout << score;
+			GotoXY(59, 5 + i); cout << char(179);
+			read >> score >> a;
+			GotoXY(62, 5 + i); cout << score;
+			GotoXY(67, 5 + i); cout << char(179);
+			read >> score >> a;
+			GotoXY(69, 5 + i); cout << score;
+			GotoXY(73, 5 + i); cout << char(179);
+			read >> score;
+			GotoXY(76, 5 + i); cout << score;
+			GotoXY(81, 5 + i); cout << char(179);
+			getline(read, tmp);
+		}
+		else {
+			GotoXY(2, 5 + i);
+			if (i == 2 * numLine - 1) cout << char(192);
+			else cout << char(195);
+			for (int k = 0; k < 78; k++) {
+				GotoXY(3 + k, 5 + i);
+				if (k == 2 || k == 15 || k == 50 || k == 56 || k == 64 || k == 70) {
+					if (i == 2 * numLine - 1) cout << char(193);
+					else cout << char(197);
+				}
+				else cout << char(196);
+			}
+			if (i == 2 * numLine - 1) cout << char(217);
+			else cout << char(180);
+		}
+	}
+
+	read.close();
+}
+
+void viewScoreboard_Course_Menu() {
+	cout << "Input name of Course to view the scoreboard: ";
+	string nameCourse;
+	getline(cin, nameCourse, '\n');
+	viewScoreboard_Course_Display(nameCourse);
+}
