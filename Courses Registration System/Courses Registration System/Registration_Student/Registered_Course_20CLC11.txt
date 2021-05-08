@@ -26,7 +26,12 @@ CSC00004,Introducing to IT,Trần Thái Sơn,4,THU,S3,THU,S4|2021-2022,1
 CSC10001,Programing 1,Trương Toàn Thịnh,4,SAT,S3,SAT,S4|2021-2022,1
 CSC10101,Soft Skills,Lương Vĩ Minh,4,THU,S1,THU,S2|2021-2022,1
 MTH00009,Discrete Mathematics,Nguyễn Viết Đông,4,MON,S1,MON,S2|2021-2022,1
-20127100,0
+20127100,5
+BAA00005,Basic Economics,Phạm Xuân Kiên,2,FRI,S1,FRI,S2|2021-2022,1
+CSC00004,Introducing to IT,Trần Thái Sơn,4,THU,S3,THU,S4|2021-2022,1
+CSC10001,Programing 1,Trương Toàn Thịnh,4,SAT,S3,SAT,S4|2021-2022,1
+CSC10101,Soft Skills,Lương Vĩ Minh,4,THU,S1,THU,S2|2021-2022,1
+MTH00009,Discrete Mathematics,Nguyễn Viết Đông,4,MON,S1,MON,S2|2021-2022,1
 20127101,4
 BAA00005,Basic Economics,Phạm Xuân Kiên,2,FRI,S1,FRI,S2|2021-2022,1
 CSC00004,Introducing to IT,Trần Thái Sơn,4,THU,S3,THU,S4|2021-2022,1

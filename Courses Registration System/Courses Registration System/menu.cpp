@@ -45,7 +45,61 @@ void FixConsoleWindow() {
 	return;
 
 }
-
+void Exit_Box(int a, int b) {
+	int y;
+	int x;
+	x = a + 15;
+	y = b + 6;
+	GotoXY(8 + x, 2 + y); cout << "EXIT";
+	GotoXY(x, y);
+	for (int i = x; i < x + 20; i++) {
+		cout << char(196);
+	}
+	GotoXY(x, y);
+	for (int i = y; i < y + 5; i++) {
+		GotoXY(x, i);
+		cout << char(179);
+	}
+	GotoXY(x, y + 4);
+	for (int i = x; i < x + 20; i++) {
+		cout << char(196);
+	}
+	for (int i = 1; i < 4; i++) {
+		GotoXY(20 + x, y + i);
+		cout << char(179);
+	}
+	GotoXY(x, y);	cout << char(218);
+	GotoXY(x, 4 + y);	cout << char(192);
+	GotoXY(20 + x, y);	cout << char(191);
+	GotoXY(20 + x, 4 + y);	cout << char(217);
+}
+void Choose_Exit(int a, int b) {
+	int x;
+	int y;
+	x = a + 15;
+	y = b + 6;
+	textcolor(3);
+	GotoXY(8 + x, 2 + y); cout << "EXIT";
+	GotoXY(x, y);	cout << char(201);
+	for (int i = x + 1; i < x + 20; i++) {
+		cout << char(205);
+	}
+	for (int i = y + 1; i < y + 4; i++) {
+		GotoXY(x, i);
+		cout << char(186);
+	}
+	GotoXY(x, 4 + y);	cout << char(200);
+	for (int i = x + 1; i < x + 20; i++) {
+		cout << char(205);
+	}
+	GotoXY(20 + x, y);	cout << char(187);
+	for (int i = y + 1; i < y + 4; i++) {
+		GotoXY(20 + x, i);
+		cout << char(186);
+	}
+	GotoXY(20 + x, 4 + y);	cout << char(188);
+	textcolor(15);
+}
 void ChoosedStaff(int x, int y) {
 	textcolor(3);
 	GotoXY(3 + x, 2 + y); cout << "LOGIN AS STAFF";
@@ -160,6 +214,7 @@ int MainMenu(int x, int y) {
 	currentDateTime();
 	ChoosedStaff(x, y);
 	StudentChoose(x, y);
+	Exit_Box(x, y);
 	while (true) {
 		//system("cls");
 		ShowCur;
@@ -167,10 +222,17 @@ int MainMenu(int x, int y) {
 		if (i == 0) {
 			StudentChoose(x, y);
 			ChoosedStaff(x, y);
+			Exit_Box(x, y);
 		}
 		if (i == 1) {
 			ChoosedStudent(x, y);
 			StaffChoose(x, y);
+			Exit_Box(x, y);
+		}
+		if (i == 2) {
+			StudentChoose(x, y);
+			StaffChoose(x, y);
+			Choose_Exit(x, y);
 		}
 		temp = _getch();
 		if (temp == 'a' || temp == 'A' || temp == 75) {
@@ -181,12 +243,20 @@ int MainMenu(int x, int y) {
 			if (i == 1) i--;
 			else i++;
 		}
+		if (temp == 's' || temp == 'S' || temp == 80) {
+			i = 2;
+		}
+		if (temp == 'w' || temp == 'W' || temp == 72) {
+			i = 0;
+		}
 		else if (temp == 13 || temp == 32) {
 			switch (i) {
 			case 0: system("cls");
 				return 1;
 			case 1:system("cls");
 				return 2;
+			default: system("cls");
+				return 0;
 			}
 		}
 	}
@@ -848,6 +918,7 @@ void student_Menu(_Student* Node) {
 void log_In_System(int x, int y) {
 	_Student* head = nullptr;
 	loadStu_Save(head);
+	int n;
 	cout << "Load success!" << endl;
 	int choose;
 	string username;
@@ -860,17 +931,21 @@ void log_In_System(int x, int y) {
 		switch (choose)
 		{
 		case 2: {
-			_Student* Node = logInSystem_Student(head);
+			n = 1;
+			_Student* Node = logInSystem_Student(head,n);
+			if (n == 0) break;
 			student_Menu(Node);
 			break;
 		}
 		case 1: {
-			staff_Login(username);
+			n = 1;
+			staff_Login(username,n);
+			if (n == 0) break;
 			staff_Menu(username, head);
 			break;
 		}
 		default:
-			break;
+			return;
 		}
 	} while (running);
 

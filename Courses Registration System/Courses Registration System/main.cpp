@@ -4,6 +4,6 @@
 
 int main() {
 	FixConsoleWindow();
-	log_In_System(33, 10);
+	log_In_System(33, 8);
 	return 0;
 }
