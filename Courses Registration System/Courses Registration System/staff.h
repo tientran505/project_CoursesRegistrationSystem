@@ -7,7 +7,7 @@ void convertAccountOfStudent(string path, _Student* head);
 void listStudents(_Student*& head);
 void loadStu_Save(_Student*& pHead);
 void staff_Menu(string username, _Student*& headStu);
-void staff_Login(string& username);
+void staff_Login(string& username, int &n);
 void showInfo_Staff(string username,int x, int y);
 void add_Schoolyear(Date& schoolyear);
 void createCourseList(string path);

@@ -34,15 +34,11 @@ void showInfo_Student(_Student* Node) {
 	cout << "Class: " << Node->data.class_Of_Student << endl;
 }
 
-_Student* logInSystem_Student(_Student* head) {
+_Student* logInSystem_Student(_Student* head,int& n) {
 	string userNameTmp, passWordTmp;
 
 	if (head == nullptr) {
-		
-		
-		
-		
-		(34, 10);
+		GotoXY(34, 10);
 		cout << "There is nothing any student lists in system" << endl;
 		GotoXY(34, 11);
 		cout << "Please contact to Academic Staff for more detail" << endl;
@@ -51,29 +47,31 @@ _Student* logInSystem_Student(_Student* head) {
 	while (true) {
 		int temp;
 		system("cls");
-		GotoXY(42, 11);
+		GotoXY(40, 11);
 		cout << "Username: ";
 		cin >> userNameTmp;
-		GotoXY(42, 13);
+		GotoXY(40, 13);
 		cout << "Password: ";
 		cin >> passWordTmp;
 		_Student* pCur = head;
 		while (pCur->pNext != nullptr) {
 			if (userNameTmp == pCur->data.student_Account.ID && passWordTmp == pCur->data.student_Account.password) {
 				system("cls");
-				GotoXY(40, 12);
+				GotoXY(38, 12);
 				Sleep(200);
 				cout<<"Login successfully" << endl;
 				return pCur;
 			}
 			pCur = pCur->pNext;
 		}
-		GotoXY(35,15);
+		GotoXY(35,14);
 		cout << "Invalid login, please try again" << endl;
-		GotoXY(40, 16);
-		cout << " (enter to return) "<<endl;
-
+		GotoXY(40, 15);
+		cout << " Enter to Try Again. "<<endl;
+		GotoXY(45, 16);
+		cout << " e to Exit";
 		temp = _getch();
+		if (temp == 'e') { n = 0; return nullptr; }
 	}
 }
 

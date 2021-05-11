@@ -56,8 +56,8 @@ struct GPA {
 struct Student {
 	wstring FirstName;
 	wstring LastName;
-	unsigned int Student_ID;
-	string Gender;
+	unsigned int Student_ID; //use N > 0 for ID
+	string Gender; //X or O
 	unsigned int social_ID;
 	Class Name_Of_Class;
 	Date dob;

@@ -376,7 +376,7 @@ void loadStu_Save(_Student*& pHead) {
 	read.close();
 }
 
-void staff_Login(string& username) {
+void staff_Login(string& username,int& n) {
 	ifstream fileIn;
 	int running = true;
 	string password;
@@ -402,9 +402,9 @@ void staff_Login(string& username) {
 		}
 		if (!running) {
 			system("cls");
-			GotoXY(45, 11);
+			GotoXY(45, 13);
 			cin.ignore(1000, '\n');
-			GotoXY(43, 11);
+			GotoXY(43, 12);
 			cout << "Login Successfully!" << endl;
 			Sleep(200);
 			system("cls");
@@ -412,12 +412,16 @@ void staff_Login(string& username) {
 		else {
 			
 			system("cls");
-			GotoXY(40, 11);
+			GotoXY(40, 12);
 			cout << "Invalid login, please try again" << endl;
 			GotoXY(45, 13);
-			cout << " (enter to return)"<<endl;
+			cout << " Enter to Try Again."<<endl;
+			GotoXY(50, 14);
+			cout << " e to Exit." << endl;
 			temp = _getch();
+			
 			system("cls");
+			if (temp == 'e') { n = 0; return; }
 		}
 		fileIn.close();
 	}
