@@ -1427,6 +1427,7 @@ void update_Student_Result(_Student* Node) {
 	while (Node != nullptr && Node->data.ID_Student != stuID) Node = Node->pNext;
 	if (Node == nullptr) {
 		cout << stuID << " is not found!" << endl;
+		_getch();
 		return;
 	}
 
@@ -1504,7 +1505,6 @@ void update_Student_Result(_Student* Node) {
 void viewScoreboard_Class(_Student* head, string schoolyear, int semCur, string nameClass) {
 	int numOfCourse = check_Line(dirCourse + "CoursesRegistration_" + schoolyear + "_" + to_string(semCur) + ".txt");
 	int numOfStu = check_Line(dirClass + nameClass + ".csv"); // 20CLC have 48 students
-
 	wifstream read;
 	read.open(dirCourse + "CoursesRegistration_" + schoolyear + "_" + to_string(semCur) + ".txt", ios::in);
 
