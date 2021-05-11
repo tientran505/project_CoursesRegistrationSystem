@@ -237,6 +237,7 @@ bool can_Register_Course(Date dateCur, Date dateStart, Date dateEnd, Time timeCu
 				else if (timeCur.hour == timeEnd.hour) return (timeCur.minute < timeEnd.minute);
 				else return false;
 			}
+			else return false;
 		}
 		else if (dateCur.month >= dateStart.month && dateCur.month < dateEnd.month) return true;
 		else return false;
@@ -451,6 +452,12 @@ void register_One_Course_TextFile(_Student* Node) {
 void register_One_Course(_Student* Node) {
 	wifstream read;
 	read.open(dirCourse + "CoursesRegistration.txt", ios_base::in);
+	
+	if (!read.is_open()) {
+		cout << "There is no subject to register" << endl;
+		return;
+	}
+
 	read.imbue(std::locale(std::locale::empty(), new std::codecvt_utf8<wchar_t, 0x10ffff, std::generate_header>));
 
 	wchar_t a = ',';
@@ -831,10 +838,90 @@ void menu_ScoreBoard_Student(_Student* Node) {
 			int sem = menu[step][9] - 48;
 			system("cls");
 			displayScoreboard_Student(Node->subregis, schoolyear, sem);
-			cout << endl << "Press any key to exit..." << endl;
+			cout << endl << "\t\t\t\t\t\tPress any key to exit..." << endl;
 			int sth = _getch();
 		}
 	}
+}
+
+float calGPA_One_Sem(_Subjects* Node, string schoolyear, int semCur) {
+	if (Node == nullptr) return 0;
+	int creSum = 0;
+	float sum = 0;
+	while (Node != nullptr) {
+		if (Node->subjects_Data.course_Data.schoolYear == schoolyear && Node->subjects_Data.course_Data.semNo == semCur && Node->subjects_Data.course_Data.score.isScore) {
+			sum += Node->subjects_Data.course_Data.score.totalMark * (float)Node->subjects_Data.course_Data.credit;
+			creSum += Node->subjects_Data.course_Data.credit;
+		}
+		Node = Node->data_Next;
+	}
+	if (creSum == 0) return 0;
+	return (sum / (float)creSum);
+}
+
+float total_GPA(_Subjects* Node, string schoolyear, int semCur) {
+	if (Node == nullptr) return 0;
+	int creSum = 0;
+	float sum = 0;
+	int tmp = list_Len_Available_Score(Node, schoolyear, semCur);
+	if (tmp == 0) {
+		while (Node != nullptr) {
+			if (Node->subjects_Data.course_Data.score.isScore) {
+				sum += Node->subjects_Data.course_Data.score.totalMark * (float)Node->subjects_Data.course_Data.credit;
+				creSum += Node->subjects_Data.course_Data.credit;
+			}
+			Node = Node->data_Next;
+		}
+		if (creSum == 0) return 0;
+		return (sum / (float)creSum);
+	}
+	while (Node != nullptr && tmp != 0) {
+		if (Node->subjects_Data.course_Data.score.isScore) {
+			if (Node->subjects_Data.course_Data.schoolYear == schoolyear && Node->subjects_Data.course_Data.semNo == semCur) tmp--;
+			sum += Node->subjects_Data.course_Data.score.totalMark * (float)Node->subjects_Data.course_Data.credit;
+			creSum += Node->subjects_Data.course_Data.credit;
+		}
+		Node = Node->data_Next;
+	}
+	if (creSum == 0) return 0;
+	return (sum / (float)creSum);
+}
+
+int credit_One_Sem(_Subjects* Node, string schoolyear, int semCur) {
+	if (Node == nullptr) return 0;
+	int creSum = 0;
+	while (Node != nullptr) {
+		if (Node->subjects_Data.course_Data.schoolYear == schoolyear && Node->subjects_Data.course_Data.semNo == semCur) creSum += Node->subjects_Data.course_Data.credit;
+		Node = Node->data_Next;
+	}
+	return creSum;
+}
+
+int passed_credit_One_Sem(_Subjects* Node, string schoolyear, int semCur) {
+	if (Node == nullptr) return 0;
+	int creSum = 0;
+	while (Node != nullptr) {
+		if (Node->subjects_Data.course_Data.schoolYear == schoolyear && Node->subjects_Data.course_Data.semNo == semCur && Node->subjects_Data.course_Data.score.isScore && Node->subjects_Data.course_Data.score.totalMark >= 5) {
+			creSum += Node->subjects_Data.course_Data.credit;
+		}
+		Node = Node->data_Next;
+	}
+	return creSum;
+}
+
+int total_Credits(_Subjects* Node, string schoolyear, int semCur) {
+	if (Node == nullptr) return 0;
+	int tmp = list_Len_Available_Score(Node, schoolyear, semCur);
+	
+	int creSum = 0;
+	while (Node != nullptr && tmp != 0) {
+		if (Node->subjects_Data.course_Data.schoolYear == schoolyear && Node->subjects_Data.course_Data.semNo == semCur) tmp--;
+		if (Node->subjects_Data.course_Data.score.isScore && Node->subjects_Data.course_Data.score.totalMark >= 5) {
+			creSum += Node->subjects_Data.course_Data.credit;
+		}
+		Node = Node->data_Next;
+	}
+	return creSum;
 }
 
 void displayScoreboard_Student(_Subjects* Node, string schoolyear, int semCur) {
@@ -913,4 +1000,9 @@ void displayScoreboard_Student(_Subjects* Node, string schoolyear, int semCur) {
 			else cout << char(180);
 		}
 	}
+	GotoXY(13, 7 + 2 * numSub); cout << "Registered credits in semster: " << credit_One_Sem(Node, schoolyear, semCur);
+	GotoXY(13, 7 + 2 * numSub + 1); cout << "Accumulated credits in semster: " << passed_credit_One_Sem(Node, schoolyear, semCur);
+	GotoXY(13, 7 + 2 * numSub + 2); cout << "Semester GPA: " << setprecision(3) << calGPA_One_Sem(Node, schoolyear, semCur);
+	GotoXY(13, 7 + 2 * numSub + 3); cout << "Accumulated credits: " << total_Credits(Node, schoolyear, semCur);
+	GotoXY(13, 7 + 2 * numSub + 4); cout << "Accumulated GPA: " << setprecision(3) << total_GPA(Node, schoolyear, semCur);
 }

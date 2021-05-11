@@ -500,6 +500,89 @@ void menu_Create_SY_Tmp() {
 	
 }
 
+
+void menu_View_ScoreBoard_Of_Class(_Student* head) {
+	ifstream readSem, readSchoolyear;
+
+	readSchoolyear.open(dirSchoolYear + "School_Year.txt", ios_base::in);
+
+	int numOfLine = check_Line(dirSchoolYear + "School_Year.txt");
+	int sumLine = 0;
+	string line, schoolyear;
+
+	for (int i = 0; i < numOfLine; i++) {
+		getline(readSchoolyear, line);
+		sumLine += check_Line(dirSchoolYear + line + ".txt") / 3;
+	}
+
+	readSchoolyear.seekg(0, readSchoolyear.beg);
+
+	string* menu = new string[sumLine + 1];
+
+	menu[sumLine] = "Back";
+	int i = sumLine - 1;
+	for (int k = 0; k < numOfLine; k++) {
+		getline(readSchoolyear, schoolyear);
+		readSem.open(dirSchoolYear + schoolyear + ".txt", ios_base::in);
+		int lineTmp = check_Line(dirSchoolYear + schoolyear + ".txt") / 3;
+		for (int k = 0; k < lineTmp; k++) {
+			getline(readSem, line);
+			menu[i] = line + " " + schoolyear;
+			for (int j = 0; j < 2; j++) getline(readSem, line);
+			i--;
+		}
+		readSem.close();
+	}
+
+	int step = 0, tmp;
+	bool running = true;
+	while (running) {
+		while (true) {
+			system("cls");
+			for (int k = 0; k < sumLine + 1; k++) {
+				if (k == step) {
+					textcolor(12);
+					GotoXY(44, 10 + k);
+					cout << " > " << menu[k] << " < " << endl;
+					textcolor(15);
+				}
+				else {
+					textcolor(15);
+					GotoXY(45, 10 + k);
+					cout << " " << menu[k] << " " << endl;
+				}
+			}
+			tmp = _getch();
+			if (tmp == 's' || tmp == 'S' || tmp == 80) {
+				step++;
+				if (step >= sumLine + 1) step = 0;
+			}
+			if (tmp == 'w' || tmp == 'W' || tmp == 72) {
+				step--;
+				if (step < 0) step = sumLine;
+			}
+			if (tmp == 13 || tmp == 32) break;
+		}
+		if (step == sumLine) {
+			delete[] menu;
+			running = false;
+			return;
+		}
+		else {
+			for (int k = 0; k < 9; k++) schoolyear[k] = menu[step][11 + k];
+			int sem = menu[step][9] - 48;
+			system("cls");
+			cout << "Input Name of class to view the scoreboard: ";
+			string nameclass;
+			cin >> nameclass;
+			viewScoreboard_Class(head, schoolyear, sem, nameclass);
+			cout << endl << "\t\t\t\t\t\tPress any key to exit..." << endl;
+			int sth = _getch();
+		}
+	}
+}
+
+
 void staff_Scoreboard_Management(_Student*& headStu) {
 	int temp;
 	int i = 0;
@@ -541,20 +624,17 @@ void staff_Scoreboard_Management(_Student*& headStu) {
 			break;
 		}
 		case 1: {
-			cout << "Still in progressing//Press any key to continue..." << endl;
-			temp = _getch();
+			update_Student_Result(headStu);
 			break;
 		}
 		case 2: {
 			viewScoreboard_Course_Menu();
-			cout << "Press any key to continue..." << endl;
+			cout << endl << "Press any key to continue..." << endl;
 			temp = _getch();
 			break;
 		}
 		case 3: {
-			cout << "Still in progressing//Press any key to continue..." << endl;
-			cout << "Press any key to continue..." << endl;
-			temp = _getch();
+			menu_View_ScoreBoard_Of_Class(headStu);
 			break;
 		}
 		case 4: {
@@ -564,6 +644,7 @@ void staff_Scoreboard_Management(_Student*& headStu) {
 		}
 	} while (running);
 }
+
 
 void staff_Menu(string username, _Student*& headStu) {
 	int choose;

@@ -47,7 +47,6 @@ void loadStudentList(string path, _Student*& head) {
 		fileIn >> pCur->data.Date_Of_Birth.year >> a;
 		fileIn >> pCur->data.Social_ID;
 		pCur->data.class_Of_Student = path;
-		pCur->data.number_Of_Courses = 0;
 		pCur->subregis = nullptr;
 		pCur->pNext = nullptr;
 	}
@@ -1290,24 +1289,24 @@ void viewScoreboard_Course_Display(string nameCourse) {
 	float score;
 
 	system("cls");
-	GotoXY(2, 2);
+	GotoXY(17, 2);
 	cout << char(218); for (int i = 0; i < 78; i++) {
-		GotoXY(3 + i, 2);
+		GotoXY(18 + i, 2);
 		if (i == 2 || i == 15 || i == 50 || i == 56 || i == 64 || i == 70) cout << char(194);
 		else cout << char(196);
 	}
 	cout << char(191) << endl;
-	GotoXY(2, 3); cout << char(179);
-	GotoXY(3, 3); cout << "No";
-	GotoXY(5, 3); cout << char(179) << " Student ID";
-	GotoXY(18, 3); cout << char(179); GotoXY(32, 3); cout << "Full Name";
-	GotoXY(53, 3); cout << char(179) << "Total";
-	GotoXY(59, 3); cout << char(179) << " Final";
-	GotoXY(67, 3); cout << char(179) << " Mid";
-	GotoXY(73, 3); cout << char(179) << " Other";
-	GotoXY(81, 3); cout << char(179);
+	GotoXY(17, 3); cout << char(179);
+	GotoXY(18, 3); cout << "No";
+	GotoXY(20, 3); cout << char(179) << " Student ID";
+	GotoXY(33, 3); cout << char(179); GotoXY(47, 3); cout << "Full Name";
+	GotoXY(68, 3); cout << char(179) << "Total";
+	GotoXY(74, 3); cout << char(179) << " Final";
+	GotoXY(82, 3); cout << char(179) << " Mid";
+	GotoXY(88, 3); cout << char(179) << " Other";
+	GotoXY(96, 3); cout << char(179);
 
-	GotoXY(2, 4); cout << char(195);
+	GotoXY(17, 4); cout << char(195);
 	for (int i = 0; i < 78; i++) {
 		if (i == 2 || i == 15 || i == 50 || i == 56 || i == 64 || i == 70) cout << char(197);
 		else cout << char(196);
@@ -1316,37 +1315,37 @@ void viewScoreboard_Course_Display(string nameCourse) {
 	for (int i = 0; i <= 2 * numLine - 1; i++) {
 		if (i % 2 == 0) {
 			read >> no >> a;
-			GotoXY(2, 5 + i); cout << char(179) << no;
-			GotoXY(5, 5 + i); cout << char(179);
+			GotoXY(17, 5 + i); cout << char(179) << no;
+			GotoXY(20, 5 + i); cout << char(179);
 			read >> stuID >> a;
-			GotoXY(8, 5 + i); cout << stuID;
-			GotoXY(18, 5 + i); cout << char(179);
+			GotoXY(23, 5 + i); cout << stuID;
+			GotoXY(33, 5 + i); cout << char(179);
 			turnOnVietText();
 			getline(read, fullName, a);
-			GotoXY(19, 5 + i); wcout << fullName;
+			GotoXY(34, 5 + i); wcout << fullName;
 			turnOffVietText();
-			GotoXY(53, 5 + i); cout << char(179);
+			GotoXY(68, 5 + i); cout << char(179);
 			for (int q = 0; q < 2; q++) getline(read, tmp, a);
 			read >> score >> a;
-			GotoXY(55, 5 + i); cout << score;
-			GotoXY(59, 5 + i); cout << char(179);
+			GotoXY(70, 5 + i); cout << score;
+			GotoXY(74, 5 + i); cout << char(179);
 			read >> score >> a;
-			GotoXY(62, 5 + i); cout << score;
-			GotoXY(67, 5 + i); cout << char(179);
+			GotoXY(77, 5 + i); cout << score;
+			GotoXY(82, 5 + i); cout << char(179);
 			read >> score >> a;
-			GotoXY(69, 5 + i); cout << score;
-			GotoXY(73, 5 + i); cout << char(179);
+			GotoXY(84, 5 + i); cout << score;
+			GotoXY(88, 5 + i); cout << char(179);
 			read >> score;
-			GotoXY(76, 5 + i); cout << score;
-			GotoXY(81, 5 + i); cout << char(179);
+			GotoXY(91, 5 + i); cout << score;
+			GotoXY(96, 5 + i); cout << char(179);
 			getline(read, tmp);
 		}
 		else {
-			GotoXY(2, 5 + i);
+			GotoXY(17, 5 + i);
 			if (i == 2 * numLine - 1) cout << char(192);
 			else cout << char(195);
 			for (int k = 0; k < 78; k++) {
-				GotoXY(3 + k, 5 + i);
+				GotoXY(18 + k, 5 + i);
 				if (k == 2 || k == 15 || k == 50 || k == 56 || k == 64 || k == 70) {
 					if (i == 2 * numLine - 1) cout << char(193);
 					else cout << char(197);
@@ -1366,4 +1365,305 @@ void viewScoreboard_Course_Menu() {
 	string nameCourse;
 	getline(cin, nameCourse, '\n');
 	viewScoreboard_Course_Display(nameCourse);
+}
+
+void update_Stu_Score(string nameCourse, _Subjects* Node, int IDStu) {
+	wifstream read;
+	wofstream write;
+
+	read.imbue(std::locale(std::locale::empty(), new std::codecvt_utf8<wchar_t, 0x10ffff, std::generate_header>));
+	write.imbue(std::locale(std::locale::empty(), new std::codecvt_utf8<wchar_t, 0x10ffff, std::generate_header>));
+
+	string oldName = dirCourse_Student + nameCourse + ".csv";
+	string newName = dirCourse_Student + "Change.csv";
+	read.open(oldName, ios::in);
+	write.open(newName, ios::out);
+
+	int numLine = check_Line(oldName);
+
+	wstring line;
+
+	wchar_t a = ',';
+	int stuID;
+	int tmp = 0;
+	while(tmp < numLine) {
+		if (tmp != 0) write << endl;
+		for (int i = 0; i < 2; i++) {
+			read >> stuID >> a;
+			write << stuID << a;
+		}
+		for (int i = 0; i < 3; i++) {
+			getline(read, line, a);
+			write << line << a;
+		}
+		if (stuID == IDStu) {
+			getline(read, line);
+			write << Node->subjects_Data.course_Data.score.totalMark << a;
+			write << Node->subjects_Data.course_Data.score.finalMark << a;
+			write << Node->subjects_Data.course_Data.score.midtermMark << a;
+			write << Node->subjects_Data.course_Data.score.otherMark;
+		}
+		else {
+			getline(read, line);
+			write << line;
+		}
+		tmp++;
+	}
+
+	read.close();
+	write.close();
+	remove(oldName.c_str());
+	rename(newName.c_str(), oldName.c_str());
+}
+
+void update_Student_Result(_Student* Node) {
+	cout << "Input Sudent ID: ";
+	int stuID;
+	cin >> stuID;
+	while (Node != nullptr && Node->data.ID_Student != stuID) Node = Node->pNext;
+	if (Node == nullptr) {
+		cout << stuID << " is not found!" << endl;
+		return;
+	}
+
+	int numOfCourse = list_Len(Node->subregis);
+	string* menu = new string[numOfCourse + 1];
+	
+	_Subjects* pTmp = Node->subregis;
+	for (int i = 0; i < numOfCourse; i++) {
+		menu[i] = pTmp->subjects_Data.course_Data.course_ID + " - " + pTmp->subjects_Data.course_Data.course_Name + " - Semester " + to_string(pTmp->subjects_Data.course_Data.semNo) + " " + pTmp->subjects_Data.course_Data.schoolYear;
+		pTmp = pTmp->data_Next;
+	}
+	menu[numOfCourse] = "Back";
+
+	int step = 0, tmp;
+	bool running = true;
+	while (running) {
+		while (true) {
+			system("cls");
+			GotoXY(44, 9);
+			cout << "Choose course to Update";
+			for (int k = 0; k < numOfCourse + 1; k++) {
+				if (k == step) {
+					textcolor(12);
+					GotoXY(44, 10 + k);
+					cout << " > " << menu[k] << " < " << endl;
+					textcolor(15);
+				}
+				else {
+					textcolor(15);
+					GotoXY(45, 10 + k);
+					cout << " " << menu[k] << " " << endl;
+				}
+			}
+			tmp = _getch();
+			if (tmp == 's' || tmp == 'S' || tmp == 80) {
+				step++;
+				if (step >= numOfCourse + 1) step = 0;
+			}
+			if (tmp == 'w' || tmp == 'W' || tmp == 72) {
+				step--;
+				if (step < 0) step = numOfCourse;
+			}
+			if (tmp == 13 || tmp == 32) break;
+		}
+		if (step == numOfCourse) {
+			delete[] menu;
+			running = false;
+			return;
+		}
+		else {
+			string courseIDTmp = menu[step];
+			courseIDTmp.erase(courseIDTmp.begin() + 8, courseIDTmp.end());
+			pTmp = Node->subregis;
+			while (pTmp->subjects_Data.course_Data.course_ID != courseIDTmp) pTmp = pTmp->data_Next;
+			cout << "Mid-term Score: ";
+			cin >> pTmp->subjects_Data.course_Data.score.midtermMark;
+			cout << "Other score: ";
+			cin >> pTmp->subjects_Data.course_Data.score.otherMark;
+			cout << "Final score: ";
+			cin >> pTmp->subjects_Data.course_Data.score.finalMark;
+			cout << "Total score: ";
+			cin >> pTmp->subjects_Data.course_Data.score.totalMark;
+
+			update_Stu_Score(pTmp->subjects_Data.course_Data.course_Name, pTmp, Node->data.ID_Student);
+
+			cout << "Editted successfully!" << endl;
+			cout << endl << "\t\t\t\t\t\tPress any key to exit..." << endl;
+			int sth = _getch();
+		}
+	}
+}
+
+
+
+void viewScoreboard_Class(_Student* head, string schoolyear, int semCur, string nameClass) {
+	int numOfCourse = check_Line(dirCourse + "CoursesRegistration_" + schoolyear + "_" + to_string(semCur) + ".txt");
+	int numOfStu = check_Line(dirClass + nameClass + ".csv"); // 20CLC have 48 students
+
+	wifstream read;
+	read.open(dirCourse + "CoursesRegistration_" + schoolyear + "_" + to_string(semCur) + ".txt", ios::in);
+
+	string* courseID = new string[numOfCourse];
+	for (int i = 0; i < numOfCourse; i++) {
+		wchar_t a = ',';
+		wstring lineTmp;
+		for (int k = 0; k < 2; k++) getline(read, lineTmp, a);
+		courseID[i] = WStringToString(lineTmp);
+		getline(read, lineTmp);
+	}
+
+	read.close();
+
+	system("cls");
+	
+	_Student* cur = head;
+	while (cur !=nullptr && cur->data.class_Of_Student != nameClass) cur = cur->pNext;
+	if (cur == nullptr) {
+		cout << nameClass << " is not found" << endl;
+		return;
+	}
+
+	GotoXY(2, 3); cout << char(218);
+	for (int i = 0; i < 43; i++) {
+		if (i == 2 || i == 13 || i == 42) {
+			GotoXY(3 + i, 3); cout << char(194);
+			GotoXY(3 + i, 5); cout << char(197);
+		}
+		else {
+			GotoXY(3 + i, 3); cout << char(196);
+			GotoXY(3 + i, 5); cout << char(196);
+		}
+	}
+
+	for (int i = 0; i < numOfCourse; i++) {
+		GotoXY(46 + 9 * i, 4); cout << courseID[i] << char(179);
+		for (int k = 0; k <= 8; k++) {
+			if (k == 8) {
+				GotoXY(46 + k + 9 * i, 3); cout << char(194);
+				GotoXY(46 + k + 9 * i, 5); cout << char(197);
+			}
+			else {
+				GotoXY(46 + k + 9 * i, 3); cout << char(196);
+				GotoXY(46 + k + 9 * i, 5); cout << char(196);
+			}
+		}
+	}
+
+	GotoXY(2, 4); cout << char(179) << "No";
+	GotoXY(5, 4); cout << char(179) << "Student ID";
+	GotoXY(16, 4); cout << char(179); GotoXY(26, 4); cout << "Full Name";
+	GotoXY(45, 4); cout << char(179);
+
+	for (int i = 0; i < 20; i++) {
+		if (i == 7) {
+			GotoXY(46 + 9 * numOfCourse + i, 3); cout << char(194);
+			GotoXY(46 + 9 * numOfCourse + i, 5); cout << char(197);
+		}
+		else if (i == 19) {
+			GotoXY(46 + 9 * numOfCourse + i, 3); cout << char(191);
+			GotoXY(46 + 9 * numOfCourse + i, 5); cout << char(180);
+		}
+		else {
+			GotoXY(46 + 9 * numOfCourse + i, 3); cout << char(196);
+			GotoXY(46 + 9 * numOfCourse + i, 5); cout << char(196);
+		}
+
+	}
+	GotoXY(46 + 9 * numOfCourse, 4); cout << "GPA Sem" << char(179);
+	GotoXY(46 + 9 * numOfCourse + 8, 4); cout << "GPA Overall" << char(179);
+	GotoXY(2, 5); cout << char(195);
+
+	
+	int count = 0;
+	for (int i = 0; i <= 2 * numOfStu - 1; i++) {
+		if (i % 2 == 0) {
+			// #
+			GotoXY(2, 6 + i); cout << char(179) << ++count;
+			// Stu ID
+			GotoXY(5, 6 + i); cout << char(179) << " " << cur->data.ID_Student;
+			// Stu Name
+			GotoXY(16, 6 + i); cout << char(179);
+			turnOnVietText();
+			wcout << cur->data.firstName << " " << cur->data.lastName;
+			turnOffVietText();
+
+			GotoXY(45, 6 + i); cout << char(179);
+
+
+			for (int x = 0; x < numOfCourse; x++) {
+				_Subjects* subCur = cur->subregis;
+				GotoXY(30, 30);
+				while (subCur != nullptr && !(subCur->subjects_Data.course_Data.schoolYear == schoolyear && subCur->subjects_Data.course_Data.semNo == semCur && subCur->subjects_Data.course_Data.course_ID == courseID[x] && subCur->subjects_Data.course_Data.score.isScore)) subCur = subCur->data_Next;
+
+				for (int k = 0; k <= 8; k++) {
+					if (k == 8) {
+						GotoXY(46 + k + 9 * x, 5 + i); cout << char(197);
+						GotoXY(46 + k + 9 * x, 6 + i); cout << char(179);
+						if (subCur == nullptr) {
+							GotoXY(49 + k + 9 * (x - 1), 6 + i); cout << "NULL";
+						}
+						// Print Score of x(th) Course ID
+						// Final
+						else {
+							GotoXY(47 + k + 9 * (x - 1), 6 + i); cout << subCur->subjects_Data.course_Data.score.finalMark;
+							// Total
+							GotoXY(50 + k + 9 * (x - 1), 6 + i); cout << "|" << subCur->subjects_Data.course_Data.score.totalMark;
+						}
+					}
+					else {
+						GotoXY(46 + k + 9 * x, 5 + i); cout << char(196);
+					}
+				}
+			}
+
+			// GPA sem - > GPA Overall
+			for (int x = 0; x < 20; x++) {
+				if (x == 7) {
+					GotoXY(46 + 9 * numOfCourse + x, 6 + i); cout << char(179);
+					GotoXY(49 + 9 * (numOfCourse - 1) + x, 6 + i); cout << setprecision(3) << calGPA_One_Sem(cur->subregis, schoolyear, semCur);
+					GotoXY(46 + 9 * numOfCourse + x, 7 + i); cout << char(197);
+				}
+				else if (x == 19) {
+					GotoXY(46 + 9 * numOfCourse + x, 6 + i); cout << char(179);
+					GotoXY(47 + 9 * (numOfCourse - 1) + x, 6 + i); cout << setprecision(3) << total_GPA(cur->subregis, schoolyear, semCur);
+					GotoXY(46 + 9 * numOfCourse + x, 7 + i); cout << char(180);
+				}
+				else {
+					GotoXY(46 + 9 * numOfCourse + x, 7 + i); cout << char(196);
+				}
+			}
+			cur = cur->pNext;
+
+		}
+		else {
+			GotoXY(2, 6 + i);
+			if (i == 2 * numOfStu - 1) cout << char(192);
+			else cout << char(195);
+			for (int k = 0; k < 43; k++) {
+				GotoXY(3 + k, 6 + i);
+				if (k == 2 || k == 13 || k == 42) {
+					if (i == 2 * numOfStu - 1) cout << char(193);
+					else cout << char(197);
+				}
+				else cout << char(196);
+			}
+
+			if (i == 2 * numOfStu - 1) {
+				for (int k = 0; k < numOfCourse; k++) {
+					for (int x = 0; x <= 8; x++) {
+						if (x == 8) {
+							GotoXY(46 + x + 9 * k, 6 + i); cout << char(193);
+						}
+						else {
+							GotoXY(46 + x + 9 * k, 6 + i); cout << char(196);
+						}
+					}
+				}
+				GotoXY(46 + 9 * numOfCourse + 7, 6 + i); cout << char(193);
+				GotoXY(46 + 9 * numOfCourse + 19, 6 + i); cout << char(217);
+			}
+
+		}
+	}
 }

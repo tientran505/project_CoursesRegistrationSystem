@@ -2,6 +2,7 @@
 #define _FUNCTION_H_
 
 #include <iostream>
+#include <iomanip>
 #include <fcntl.h>
 #include <fstream>
 #include <io.h>
@@ -84,11 +85,7 @@ struct Student {
 	wstring gender; //gioi tinh
 	int Social_ID;
 	Date Date_Of_Birth;
-	double GPA_Average;
-	double score_Average;
 	Account student_Account;
-	int number_Of_Courses;
-	int schoolYear;
 };
 
 struct _Student {
@@ -113,5 +110,7 @@ void FixConsoleWindow();
 int check_Line(string path);
 int list_Len(_Subjects* Node);
 void view_Reigstration_Results(_Subjects* Node, string schoolyear, int sem);
+float calGPA_One_Sem(_Subjects* Node, string schoolyear, int semCur);
+float total_GPA(_Subjects* Node, string schoolyear, int semCur);
 int list_Len_Available_Score(_Subjects* Node, string schoolyear, int semCur);
 #endif
