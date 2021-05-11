@@ -10,4 +10,5 @@ void view_Reigstration_Results(_Subjects* Node, string schoolyear, int sem);
 void remove_Courses(_Student*& Node);
 void displayScoreboard_Student(_Subjects* Node, string schoolyear, int semCur);
 void menu_ScoreBoard_Student(_Student* Node);
+void deallocateNode(_Student*& a);
 //void showcourseresult(_Student* Node);

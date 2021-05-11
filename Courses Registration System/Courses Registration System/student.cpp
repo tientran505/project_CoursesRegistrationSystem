@@ -1004,3 +1004,18 @@ void displayScoreboard_Student(_Subjects* Node, string schoolyear, int semCur) {
 	GotoXY(13, 7 + 2 * numSub + 3); cout << "Accumulated credits: " << total_Credits(Node, schoolyear, semCur);
 	GotoXY(13, 7 + 2 * numSub + 4); cout << "Accumulated GPA: " << setprecision(3) << total_GPA(Node, schoolyear, semCur);
 }
+void deallocateNode(_Student*& a)
+{
+	while (a != nullptr)
+	{
+		while (a->subregis != nullptr)
+		{
+			_Subjects* tmp = a->subregis;
+			a->subregis = a->subregis->data_Next;
+			delete tmp;
+		}
+		_Student* tmp = a;
+		a = a->pNext;
+		delete tmp;
+	}
+}
