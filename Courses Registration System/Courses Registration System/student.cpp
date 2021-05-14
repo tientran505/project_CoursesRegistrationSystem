@@ -862,7 +862,7 @@ float total_GPA(_Subjects* Node, string schoolyear, int semCur) {
 	int creSum = 0;
 	float sum = 0;
 	int tmp = list_Len_Available_Score(Node, schoolyear, semCur);
-	if (tmp == 0) {
+	/*if (tmp == 0) {
 		while (Node != nullptr) {
 			if (Node->subjects_Data.course_Data.score.isScore) {
 				sum += Node->subjects_Data.course_Data.score.totalMark * (float)Node->subjects_Data.course_Data.credit;
@@ -872,7 +872,7 @@ float total_GPA(_Subjects* Node, string schoolyear, int semCur) {
 		}
 		if (creSum == 0) return 0;
 		return (sum / (float)creSum);
-	}
+	}*/
 	while (Node != nullptr && tmp != 0) {
 		if (Node->subjects_Data.course_Data.score.isScore) {
 			if (Node->subjects_Data.course_Data.schoolYear == schoolyear && Node->subjects_Data.course_Data.semNo == semCur) tmp--;
@@ -1004,6 +1004,7 @@ void displayScoreboard_Student(_Subjects* Node, string schoolyear, int semCur) {
 	GotoXY(13, 7 + 2 * numSub + 3); cout << "Accumulated credits: " << total_Credits(Node, schoolyear, semCur);
 	GotoXY(13, 7 + 2 * numSub + 4); cout << "Accumulated GPA: " << setprecision(3) << total_GPA(Node, schoolyear, semCur);
 }
+
 void deallocateNode(_Student*& a)
 {
 	while (a != nullptr)

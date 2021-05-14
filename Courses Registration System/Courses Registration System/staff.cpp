@@ -1500,8 +1500,6 @@ void update_Student_Result(_Student* Node) {
 	}
 }
 
-
-
 void viewScoreboard_Class(_Student* head, string schoolyear, int semCur, string nameClass) {
 	int numOfCourse = check_Line(dirCourse + "CoursesRegistration_" + schoolyear + "_" + to_string(semCur) + ".txt");
 	int numOfStu = check_Line(dirClass + nameClass + ".csv"); // 20CLC have 48 students
@@ -1670,4 +1668,144 @@ void viewScoreboard_Class(_Student* head, string schoolyear, int semCur, string 
 
 		}
 	}
+	delete[] courseID;
+}
+
+void view_Student_List(_Student* head,string nameOfClass) {
+	int line = check_Line(dirClass + nameOfClass + ".csv");
+
+
+	while (head != nullptr && head->data.class_Of_Student != nameOfClass) head = head->pNext;
+	system("cls");
+	GotoXY(17, 2);
+	cout << char(218); for (int i = 0; i < 75; i++) {
+		GotoXY(18 + i, 2);
+		if (i == 2 || i == 15 || i == 50 || i == 59) cout << char(194);
+		else cout << char(196);
+	}
+	cout << char(191) << endl;
+	GotoXY(17, 3); cout << char(179);
+	GotoXY(18, 3); cout << "No";
+	GotoXY(20, 3); cout << char(179) << " Student ID";
+	GotoXY(33, 3); cout << char(179); GotoXY(47, 3); cout << "Full Name";
+	GotoXY(68, 3); cout << char(179) << " Gender";
+	GotoXY(77, 3); cout << char(179) << " Date Of Birth";
+	GotoXY(93, 3); cout << char(179);
+
+	GotoXY(17, 4); cout << char(195);
+	for (int i = 0; i < 75; i++) {
+		if (i == 2 || i == 15 || i == 50 || i == 59) cout << char(197);
+		else cout << char(196);
+	}
+	cout << char(180) << endl;
+
+
+	int no = 0;
+	for (int i = 0; i <= 2 * line - 1; i++) {
+		if (i % 2 == 0) {
+			GotoXY(17, 5 + i); cout << char(179);
+			GotoXY(18, 5 + i); cout << ++no;
+
+			GotoXY(20, 5 + i); cout << char(179);
+			GotoXY(23, 5 + i); cout << head->data.ID_Student;
+			
+			GotoXY(33, 5 + i); cout << char(179);
+			turnOnVietText();
+			GotoXY(34, 5 + i); wcout << head->data.firstName << " " << head->data.lastName;
+			turnOffVietText();
+
+			GotoXY(68, 5 + i); cout << char(179);
+			GotoXY(70, 5 + i); wcout << head->data.gender;
+
+
+			GotoXY(77, 5 + i); cout << char(179);
+			GotoXY(80, 5 + i);
+			if (head->data.Date_Of_Birth.day < 10) cout << "0";
+			cout << head->data.Date_Of_Birth.day << "/";
+			if (head->data.Date_Of_Birth.month < 10) cout << "0";
+			cout << head->data.Date_Of_Birth.month << "/" << head->data.Date_Of_Birth.year;
+			GotoXY(93, 5 + i); cout << char(179);
+			head = head->pNext;
+		}
+		else {
+			GotoXY(17, 5 + i);
+			if (i == 2 * line - 1) cout << char(192);
+			else cout << char(195);
+			for (int k = 0; k < 75; k++) {
+				GotoXY(18 + k, 5 + i);
+				if (k == 2 || k == 15 || k == 50 || k == 59) {
+					if (i == 2 * line - 1) cout << char(193);
+					else cout << char(197);
+				}
+				else cout << char(196);
+			}
+			if (i == 2 * line - 1) cout << char(217);
+			else cout << char(180);
+		}
+	}
+
+
+}
+
+void view_Student_List_Menu(_Student* head) {
+	ifstream read;
+	read.open(dirClass_Save + "classes_In_System.txt", ios::in);
+	if (!read.is_open()) {
+		cout << "There is no class in system" << endl;
+		return;
+
+	}
+	int line = check_Line(dirClass_Save + "classes_In_System.txt");
+	string* menu = new string[line + 1];
+
+	for (int i = 0; i < line; i++) {
+		string readLine;
+		getline(read, readLine);
+		menu[i] = readLine;
+	}
+	menu[line] = "Back";
+
+
+	int step = 0, tmp;
+	bool running = true;
+	while (running) {
+		while (true) {
+			system("cls");
+			for (int k = 0; k < line + 1; k++) {
+				if (k == step) {
+					textcolor(12);
+					GotoXY(44, 10 + k);
+					cout << " > " << menu[k] << " < " << endl;
+					textcolor(15);
+				}
+				else {
+					textcolor(15);
+					GotoXY(45, 10 + k);
+					cout << " " << menu[k] << " " << endl;
+				}
+			}
+			tmp = _getch();
+			if (tmp == 's' || tmp == 'S' || tmp == 80) {
+				step++;
+				if (step >= line + 1) step = 0;
+			}
+			if (tmp == 'w' || tmp == 'W' || tmp == 72) {
+				step--;
+				if (step < 0) step = line;
+			}
+			if (tmp == 13 || tmp == 32) break;
+		}
+		if (step == line) {
+			delete[] menu;
+			running = false;
+			return;
+		}
+		else {
+			view_Student_List(head, menu[step]);
+			cout << endl << "\t\t\t\t\t\tPress any key to exit..." << endl;
+			int sth = _getch();
+		}
+	}
+	read.close();
+	delete[] menu;
 }
