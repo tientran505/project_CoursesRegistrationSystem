@@ -1,0 +1,283 @@
+﻿20127001,5
+BAA00005,Basic Economics,Phạm Xuân Kiên,2,FRI,S1,FRI,S2|2020-2021,1
+CSC00004,Introducing to IT,Trần Thái Sơn,4,THU,S3,THU,S4|2020-2021,1
+CSC10001,Programing 1,Trương Toàn Thịnh,4,SAT,S3,SAT,S4|2020-2021,1
+CSC10101,Soft Skills,Lương Vĩ Minh,4,THU,S1,THU,S2|2020-2021,1
+MTH00009,Discrete Mathematics,Nguyễn Viết Đông,4,MON,S1,MON,S2|2020-2021,1
+20127005,4
+BAA00005,Basic Economics,Phạm Xuân Kiên,2,FRI,S1,FRI,S2|2020-2021,1
+CSC00004,Introducing to IT,Trần Thái Sơn,4,THU,S3,THU,S4|2020-2021,1
+CSC10001,Programing 1,Trương Toàn Thịnh,4,SAT,S3,SAT,S4|2020-2021,1
+MTH00009,Discrete Mathematics,Nguyễn Viết Đông,4,MON,S1,MON,S2|2020-2021,1
+20127013,5
+BAA00005,Basic Economics,Phạm Xuân Kiên,2,FRI,S1,FRI,S2|2020-2021,1
+CSC00004,Introducing to IT,Trần Thái Sơn,4,THU,S3,THU,S4|2020-2021,1
+CSC10001,Programing 1,Trương Toàn Thịnh,4,SAT,S3,SAT,S4|2020-2021,1
+CSC10101,Soft Skills,Lương Vĩ Minh,4,THU,S1,THU,S2|2020-2021,1
+MTH00009,Discrete Mathematics,Nguyễn Viết Đông,4,MON,S1,MON,S2|2020-2021,1
+20127027,5
+BAA00005,Basic Economics,Phạm Xuân Kiên,2,FRI,S1,FRI,S2|2020-2021,1
+CSC00004,Introducing to IT,Trần Thái Sơn,4,THU,S3,THU,S4|2020-2021,1
+CSC10001,Programing 1,Trương Toàn Thịnh,4,SAT,S3,SAT,S4|2020-2021,1
+CSC10101,Soft Skills,Lương Vĩ Minh,4,THU,S1,THU,S2|2020-2021,1
+MTH00009,Discrete Mathematics,Nguyễn Viết Đông,4,MON,S1,MON,S2|2020-2021,1
+20127056,5
+BAA00005,Basic Economics,Phạm Xuân Kiên,2,FRI,S1,FRI,S2|2020-2021,1
+CSC00004,Introducing to IT,Trần Thái Sơn,4,THU,S3,THU,S4|2020-2021,1
+CSC10001,Programing 1,Trương Toàn Thịnh,4,SAT,S3,SAT,S4|2020-2021,1
+CSC10101,Soft Skills,Lương Vĩ Minh,4,THU,S1,THU,S2|2020-2021,1
+MTH00009,Discrete Mathematics,Nguyễn Viết Đông,4,MON,S1,MON,S2|2020-2021,1
+20127100,5
+BAA00005,Basic Economics,Phạm Xuân Kiên,2,FRI,S1,FRI,S2|2020-2021,1
+CSC00004,Introducing to IT,Trần Thái Sơn,4,THU,S3,THU,S4|2020-2021,1
+CSC10001,Programing 1,Trương Toàn Thịnh,4,SAT,S3,SAT,S4|2020-2021,1
+CSC10101,Soft Skills,Lương Vĩ Minh,4,THU,S1,THU,S2|2020-2021,1
+MTH00009,Discrete Mathematics,Nguyễn Viết Đông,4,MON,S1,MON,S2|2020-2021,1
+20127101,4
+BAA00005,Basic Economics,Phạm Xuân Kiên,2,FRI,S1,FRI,S2|2020-2021,1
+CSC00004,Introducing to IT,Trần Thái Sơn,4,THU,S3,THU,S4|2020-2021,1
+CSC10001,Programing 1,Trương Toàn Thịnh,4,SAT,S3,SAT,S4|2020-2021,1
+CSC10101,Soft Skills,Lương Vĩ Minh,4,THU,S1,THU,S2|2020-2021,1
+20127114,5
+BAA00005,Basic Economics,Phạm Xuân Kiên,2,FRI,S1,FRI,S2|2020-2021,1
+CSC00004,Introducing to IT,Trần Thái Sơn,4,THU,S3,THU,S4|2020-2021,1
+CSC10001,Programing 1,Trương Toàn Thịnh,4,SAT,S3,SAT,S4|2020-2021,1
+CSC10101,Soft Skills,Lương Vĩ Minh,4,THU,S1,THU,S2|2020-2021,1
+MTH00009,Discrete Mathematics,Nguyễn Viết Đông,4,MON,S1,MON,S2|2020-2021,1
+20127118,5
+BAA00005,Basic Economics,Phạm Xuân Kiên,2,FRI,S1,FRI,S2|2020-2021,1
+CSC00004,Introducing to IT,Trần Thái Sơn,4,THU,S3,THU,S4|2020-2021,1
+CSC10001,Programing 1,Trương Toàn Thịnh,4,SAT,S3,SAT,S4|2020-2021,1
+CSC10101,Soft Skills,Lương Vĩ Minh,4,THU,S1,THU,S2|2020-2021,1
+MTH00009,Discrete Mathematics,Nguyễn Viết Đông,4,MON,S1,MON,S2|2020-2021,1
+20127121,5
+BAA00005,Basic Economics,Phạm Xuân Kiên,2,FRI,S1,FRI,S2|2020-2021,1
+CSC00004,Introducing to IT,Trần Thái Sơn,4,THU,S3,THU,S4|2020-2021,1
+CSC10001,Programing 1,Trương Toàn Thịnh,4,SAT,S3,SAT,S4|2020-2021,1
+CSC10101,Soft Skills,Lương Vĩ Minh,4,THU,S1,THU,S2|2020-2021,1
+MTH00009,Discrete Mathematics,Nguyễn Viết Đông,4,MON,S1,MON,S2|2020-2021,1
+20127125,5
+BAA00005,Basic Economics,Phạm Xuân Kiên,2,FRI,S1,FRI,S2|2020-2021,1
+CSC00004,Introducing to IT,Trần Thái Sơn,4,THU,S3,THU,S4|2020-2021,1
+CSC10001,Programing 1,Trương Toàn Thịnh,4,SAT,S3,SAT,S4|2020-2021,1
+CSC10101,Soft Skills,Lương Vĩ Minh,4,THU,S1,THU,S2|2020-2021,1
+MTH00009,Discrete Mathematics,Nguyễn Viết Đông,4,MON,S1,MON,S2|2020-2021,1
+20127165,5
+BAA00005,Basic Economics,Phạm Xuân Kiên,2,FRI,S1,FRI,S2|2020-2021,1
+CSC00004,Introducing to IT,Trần Thái Sơn,4,THU,S3,THU,S4|2020-2021,1
+CSC10001,Programing 1,Trương Toàn Thịnh,4,SAT,S3,SAT,S4|2020-2021,1
+CSC10101,Soft Skills,Lương Vĩ Minh,4,THU,S1,THU,S2|2020-2021,1
+MTH00009,Discrete Mathematics,Nguyễn Viết Đông,4,MON,S1,MON,S2|2020-2021,1
+20127203,5
+BAA00005,Basic Economics,Phạm Xuân Kiên,2,FRI,S1,FRI,S2|2020-2021,1
+CSC00004,Introducing to IT,Trần Thái Sơn,4,THU,S3,THU,S4|2020-2021,1
+CSC10001,Programing 1,Trương Toàn Thịnh,4,SAT,S3,SAT,S4|2020-2021,1
+CSC10101,Soft Skills,Lương Vĩ Minh,4,THU,S1,THU,S2|2020-2021,1
+MTH00009,Discrete Mathematics,Nguyễn Viết Đông,4,MON,S1,MON,S2|2020-2021,1
+20127210,5
+BAA00005,Basic Economics,Phạm Xuân Kiên,2,FRI,S1,FRI,S2|2020-2021,1
+CSC00004,Introducing to IT,Trần Thái Sơn,4,THU,S3,THU,S4|2020-2021,1
+CSC10001,Programing 1,Trương Toàn Thịnh,4,SAT,S3,SAT,S4|2020-2021,1
+CSC10101,Soft Skills,Lương Vĩ Minh,4,THU,S1,THU,S2|2020-2021,1
+MTH00009,Discrete Mathematics,Nguyễn Viết Đông,4,MON,S1,MON,S2|2020-2021,1
+20127271,5
+BAA00005,Basic Economics,Phạm Xuân Kiên,2,FRI,S1,FRI,S2|2020-2021,1
+CSC00004,Introducing to IT,Trần Thái Sơn,4,THU,S3,THU,S4|2020-2021,1
+CSC10001,Programing 1,Trương Toàn Thịnh,4,SAT,S3,SAT,S4|2020-2021,1
+CSC10101,Soft Skills,Lương Vĩ Minh,4,THU,S1,THU,S2|2020-2021,1
+MTH00009,Discrete Mathematics,Nguyễn Viết Đông,4,MON,S1,MON,S2|2020-2021,1
+20127285,5
+BAA00005,Basic Economics,Phạm Xuân Kiên,2,FRI,S1,FRI,S2|2020-2021,1
+CSC00004,Introducing to IT,Trần Thái Sơn,4,THU,S3,THU,S4|2020-2021,1
+CSC10001,Programing 1,Trương Toàn Thịnh,4,SAT,S3,SAT,S4|2020-2021,1
+CSC10101,Soft Skills,Lương Vĩ Minh,4,THU,S1,THU,S2|2020-2021,1
+MTH00009,Discrete Mathematics,Nguyễn Viết Đông,4,MON,S1,MON,S2|2020-2021,1
+20127298,5
+BAA00005,Basic Economics,Phạm Xuân Kiên,2,FRI,S1,FRI,S2|2020-2021,1
+CSC00004,Introducing to IT,Trần Thái Sơn,4,THU,S3,THU,S4|2020-2021,1
+CSC10001,Programing 1,Trương Toàn Thịnh,4,SAT,S3,SAT,S4|2020-2021,1
+CSC10101,Soft Skills,Lương Vĩ Minh,4,THU,S1,THU,S2|2020-2021,1
+MTH00009,Discrete Mathematics,Nguyễn Viết Đông,4,MON,S1,MON,S2|2020-2021,1
+20127303,5
+BAA00005,Basic Economics,Phạm Xuân Kiên,2,FRI,S1,FRI,S2|2020-2021,1
+CSC00004,Introducing to IT,Trần Thái Sơn,4,THU,S3,THU,S4|2020-2021,1
+CSC10001,Programing 1,Trương Toàn Thịnh,4,SAT,S3,SAT,S4|2020-2021,1
+CSC10101,Soft Skills,Lương Vĩ Minh,4,THU,S1,THU,S2|2020-2021,1
+MTH00009,Discrete Mathematics,Nguyễn Viết Đông,4,MON,S1,MON,S2|2020-2021,1
+20127317,5
+BAA00005,Basic Economics,Phạm Xuân Kiên,2,FRI,S1,FRI,S2|2020-2021,1
+CSC00004,Introducing to IT,Trần Thái Sơn,4,THU,S3,THU,S4|2020-2021,1
+CSC10001,Programing 1,Trương Toàn Thịnh,4,SAT,S3,SAT,S4|2020-2021,1
+CSC10101,Soft Skills,Lương Vĩ Minh,4,THU,S1,THU,S2|2020-2021,1
+MTH00009,Discrete Mathematics,Nguyễn Viết Đông,4,MON,S1,MON,S2|2020-2021,1
+20127337,5
+BAA00005,Basic Economics,Phạm Xuân Kiên,2,FRI,S1,FRI,S2|2020-2021,1
+CSC00004,Introducing to IT,Trần Thái Sơn,4,THU,S3,THU,S4|2020-2021,1
+CSC10001,Programing 1,Trương Toàn Thịnh,4,SAT,S3,SAT,S4|2020-2021,1
+CSC10101,Soft Skills,Lương Vĩ Minh,4,THU,S1,THU,S2|2020-2021,1
+MTH00009,Discrete Mathematics,Nguyễn Viết Đông,4,MON,S1,MON,S2|2020-2021,1
+20127343,5
+BAA00005,Basic Economics,Phạm Xuân Kiên,2,FRI,S1,FRI,S2|2020-2021,1
+CSC00004,Introducing to IT,Trần Thái Sơn,4,THU,S3,THU,S4|2020-2021,1
+CSC10001,Programing 1,Trương Toàn Thịnh,4,SAT,S3,SAT,S4|2020-2021,1
+CSC10101,Soft Skills,Lương Vĩ Minh,4,THU,S1,THU,S2|2020-2021,1
+MTH00009,Discrete Mathematics,Nguyễn Viết Đông,4,MON,S1,MON,S2|2020-2021,1
+20127349,5
+BAA00005,Basic Economics,Phạm Xuân Kiên,2,FRI,S1,FRI,S2|2020-2021,1
+CSC00004,Introducing to IT,Trần Thái Sơn,4,THU,S3,THU,S4|2020-2021,1
+CSC10001,Programing 1,Trương Toàn Thịnh,4,SAT,S3,SAT,S4|2020-2021,1
+CSC10101,Soft Skills,Lương Vĩ Minh,4,THU,S1,THU,S2|2020-2021,1
+MTH00009,Discrete Mathematics,Nguyễn Viết Đông,4,MON,S1,MON,S2|2020-2021,1
+20127355,5
+BAA00005,Basic Economics,Phạm Xuân Kiên,2,FRI,S1,FRI,S2|2020-2021,1
+CSC00004,Introducing to IT,Trần Thái Sơn,4,THU,S3,THU,S4|2020-2021,1
+CSC10001,Programing 1,Trương Toàn Thịnh,4,SAT,S3,SAT,S4|2020-2021,1
+CSC10101,Soft Skills,Lương Vĩ Minh,4,THU,S1,THU,S2|2020-2021,1
+MTH00009,Discrete Mathematics,Nguyễn Viết Đông,4,MON,S1,MON,S2|2020-2021,1
+20127369,4
+BAA00005,Basic Economics,Phạm Xuân Kiên,2,FRI,S1,FRI,S2|2020-2021,1
+CSC10001,Programing 1,Trương Toàn Thịnh,4,SAT,S3,SAT,S4|2020-2021,1
+CSC00004,Introducing to IT,Trần Thái Sơn,4,THU,S3,THU,S4|2020-2021,1
+MTH00009,Discrete Mathematics,Nguyễn Viết Đông,4,MON,S1,MON,S2|2020-2021,1
+20127370,3
+BAA00005,Basic Economics,Phạm Xuân Kiên,2,FRI,S1,FRI,S2|2020-2021,1
+CSC10001,Programing 1,Trương Toàn Thịnh,4,SAT,S3,SAT,S4|2020-2021,1
+MTH00009,Discrete Mathematics,Nguyễn Viết Đông,4,MON,S1,MON,S2|2020-2021,1
+20127376,5
+BAA00005,Basic Economics,Phạm Xuân Kiên,2,FRI,S1,FRI,S2|2020-2021,1
+CSC00004,Introducing to IT,Trần Thái Sơn,4,THU,S3,THU,S4|2020-2021,1
+CSC10001,Programing 1,Trương Toàn Thịnh,4,SAT,S3,SAT,S4|2020-2021,1
+CSC10101,Soft Skills,Lương Vĩ Minh,4,THU,S1,THU,S2|2020-2021,1
+MTH00009,Discrete Mathematics,Nguyễn Viết Đông,4,MON,S1,MON,S2|2020-2021,1
+20127400,5
+BAA00005,Basic Economics,Phạm Xuân Kiên,2,FRI,S1,FRI,S2|2020-2021,1
+CSC00004,Introducing to IT,Trần Thái Sơn,4,THU,S3,THU,S4|2020-2021,1
+CSC10001,Programing 1,Trương Toàn Thịnh,4,SAT,S3,SAT,S4|2020-2021,1
+CSC10101,Soft Skills,Lương Vĩ Minh,4,THU,S1,THU,S2|2020-2021,1
+MTH00009,Discrete Mathematics,Nguyễn Viết Đông,4,MON,S1,MON,S2|2020-2021,1
+20127437,5
+BAA00005,Basic Economics,Phạm Xuân Kiên,2,FRI,S1,FRI,S2|2020-2021,1
+CSC00004,Introducing to IT,Trần Thái Sơn,4,THU,S3,THU,S4|2020-2021,1
+CSC10001,Programing 1,Trương Toàn Thịnh,4,SAT,S3,SAT,S4|2020-2021,1
+CSC10101,Soft Skills,Lương Vĩ Minh,4,THU,S1,THU,S2|2020-2021,1
+MTH00009,Discrete Mathematics,Nguyễn Viết Đông,4,MON,S1,MON,S2|2020-2021,1
+20127467,5
+BAA00005,Basic Economics,Phạm Xuân Kiên,2,FRI,S1,FRI,S2|2020-2021,1
+CSC00004,Introducing to IT,Trần Thái Sơn,4,THU,S3,THU,S4|2020-2021,1
+CSC10001,Programing 1,Trương Toàn Thịnh,4,SAT,S3,SAT,S4|2020-2021,1
+CSC10101,Soft Skills,Lương Vĩ Minh,4,THU,S1,THU,S2|2020-2021,1
+MTH00009,Discrete Mathematics,Nguyễn Viết Đông,4,MON,S1,MON,S2|2020-2021,1
+20127468,5
+BAA00005,Basic Economics,Phạm Xuân Kiên,2,FRI,S1,FRI,S2|2020-2021,1
+CSC00004,Introducing to IT,Trần Thái Sơn,4,THU,S3,THU,S4|2020-2021,1
+CSC10001,Programing 1,Trương Toàn Thịnh,4,SAT,S3,SAT,S4|2020-2021,1
+CSC10101,Soft Skills,Lương Vĩ Minh,4,THU,S1,THU,S2|2020-2021,1
+MTH00009,Discrete Mathematics,Nguyễn Viết Đông,4,MON,S1,MON,S2|2020-2021,1
+20127501,5
+BAA00005,Basic Economics,Phạm Xuân Kiên,2,FRI,S1,FRI,S2|2020-2021,1
+CSC00004,Introducing to IT,Trần Thái Sơn,4,THU,S3,THU,S4|2020-2021,1
+CSC10001,Programing 1,Trương Toàn Thịnh,4,SAT,S3,SAT,S4|2020-2021,1
+CSC10101,Soft Skills,Lương Vĩ Minh,4,THU,S1,THU,S2|2020-2021,1
+MTH00009,Discrete Mathematics,Nguyễn Viết Đông,4,MON,S1,MON,S2|2020-2021,1
+20127520,5
+BAA00005,Basic Economics,Phạm Xuân Kiên,2,FRI,S1,FRI,S2|2020-2021,1
+CSC00004,Introducing to IT,Trần Thái Sơn,4,THU,S3,THU,S4|2020-2021,1
+CSC10001,Programing 1,Trương Toàn Thịnh,4,SAT,S3,SAT,S4|2020-2021,1
+CSC10101,Soft Skills,Lương Vĩ Minh,4,THU,S1,THU,S2|2020-2021,1
+MTH00009,Discrete Mathematics,Nguyễn Viết Đông,4,MON,S1,MON,S2|2020-2021,1
+20127530,5
+BAA00005,Basic Economics,Phạm Xuân Kiên,2,FRI,S1,FRI,S2|2020-2021,1
+CSC00004,Introducing to IT,Trần Thái Sơn,4,THU,S3,THU,S4|2020-2021,1
+CSC10001,Programing 1,Trương Toàn Thịnh,4,SAT,S3,SAT,S4|2020-2021,1
+CSC10101,Soft Skills,Lương Vĩ Minh,4,THU,S1,THU,S2|2020-2021,1
+MTH00009,Discrete Mathematics,Nguyễn Viết Đông,4,MON,S1,MON,S2|2020-2021,1
+20127572,5
+BAA00005,Basic Economics,Phạm Xuân Kiên,2,FRI,S1,FRI,S2|2020-2021,1
+CSC00004,Introducing to IT,Trần Thái Sơn,4,THU,S3,THU,S4|2020-2021,1
+CSC10001,Programing 1,Trương Toàn Thịnh,4,SAT,S3,SAT,S4|2020-2021,1
+CSC10101,Soft Skills,Lương Vĩ Minh,4,THU,S1,THU,S2|2020-2021,1
+MTH00009,Discrete Mathematics,Nguyễn Viết Đông,4,MON,S1,MON,S2|2020-2021,1
+20127575,5
+BAA00005,Basic Economics,Phạm Xuân Kiên,2,FRI,S1,FRI,S2|2020-2021,1
+CSC00004,Introducing to IT,Trần Thái Sơn,4,THU,S3,THU,S4|2020-2021,1
+CSC10001,Programing 1,Trương Toàn Thịnh,4,SAT,S3,SAT,S4|2020-2021,1
+CSC10101,Soft Skills,Lương Vĩ Minh,4,THU,S1,THU,S2|2020-2021,1
+MTH00009,Discrete Mathematics,Nguyễn Viết Đông,4,MON,S1,MON,S2|2020-2021,1
+20127576,5
+BAA00005,Basic Economics,Phạm Xuân Kiên,2,FRI,S1,FRI,S2|2020-2021,1
+CSC00004,Introducing to IT,Trần Thái Sơn,4,THU,S3,THU,S4|2020-2021,1
+CSC10001,Programing 1,Trương Toàn Thịnh,4,SAT,S3,SAT,S4|2020-2021,1
+CSC10101,Soft Skills,Lương Vĩ Minh,4,THU,S1,THU,S2|2020-2021,1
+MTH00009,Discrete Mathematics,Nguyễn Viết Đông,4,MON,S1,MON,S2|2020-2021,1
+20127577,5
+BAA00005,Basic Economics,Phạm Xuân Kiên,2,FRI,S1,FRI,S2|2020-2021,1
+CSC00004,Introducing to IT,Trần Thái Sơn,4,THU,S3,THU,S4|2020-2021,1
+CSC10001,Programing 1,Trương Toàn Thịnh,4,SAT,S3,SAT,S4|2020-2021,1
+CSC10101,Soft Skills,Lương Vĩ Minh,4,THU,S1,THU,S2|2020-2021,1
+MTH00009,Discrete Mathematics,Nguyễn Viết Đông,4,MON,S1,MON,S2|2020-2021,1
+20127583,5
+BAA00005,Basic Economics,Phạm Xuân Kiên,2,FRI,S1,FRI,S2|2020-2021,1
+CSC00004,Introducing to IT,Trần Thái Sơn,4,THU,S3,THU,S4|2020-2021,1
+CSC10001,Programing 1,Trương Toàn Thịnh,4,SAT,S3,SAT,S4|2020-2021,1
+CSC10101,Soft Skills,Lương Vĩ Minh,4,THU,S1,THU,S2|2020-2021,1
+MTH00009,Discrete Mathematics,Nguyễn Viết Đông,4,MON,S1,MON,S2|2020-2021,1
+20127584,5
+BAA00005,Basic Economics,Phạm Xuân Kiên,2,FRI,S1,FRI,S2|2020-2021,1
+CSC00004,Introducing to IT,Trần Thái Sơn,4,THU,S3,THU,S4|2020-2021,1
+CSC10001,Programing 1,Trương Toàn Thịnh,4,SAT,S3,SAT,S4|2020-2021,1
+CSC10101,Soft Skills,Lương Vĩ Minh,4,THU,S1,THU,S2|2020-2021,1
+MTH00009,Discrete Mathematics,Nguyễn Viết Đông,4,MON,S1,MON,S2|2020-2021,1
+20127585,5
+BAA00005,Basic Economics,Phạm Xuân Kiên,2,FRI,S1,FRI,S2|2020-2021,1
+CSC00004,Introducing to IT,Trần Thái Sơn,4,THU,S3,THU,S4|2020-2021,1
+CSC10001,Programing 1,Trương Toàn Thịnh,4,SAT,S3,SAT,S4|2020-2021,1
+CSC10101,Soft Skills,Lương Vĩ Minh,4,THU,S1,THU,S2|2020-2021,1
+MTH00009,Discrete Mathematics,Nguyễn Viết Đông,4,MON,S1,MON,S2|2020-2021,1
+20127610,5
+BAA00005,Basic Economics,Phạm Xuân Kiên,2,FRI,S1,FRI,S2|2020-2021,1
+CSC00004,Introducing to IT,Trần Thái Sơn,4,THU,S3,THU,S4|2020-2021,1
+CSC10001,Programing 1,Trương Toàn Thịnh,4,SAT,S3,SAT,S4|2020-2021,1
+CSC10101,Soft Skills,Lương Vĩ Minh,4,THU,S1,THU,S2|2020-2021,1
+MTH00009,Discrete Mathematics,Nguyễn Viết Đông,4,MON,S1,MON,S2|2020-2021,1
+20127620,5
+BAA00005,Basic Economics,Phạm Xuân Kiên,2,FRI,S1,FRI,S2|2020-2021,1
+CSC00004,Introducing to IT,Trần Thái Sơn,4,THU,S3,THU,S4|2020-2021,1
+CSC10001,Programing 1,Trương Toàn Thịnh,4,SAT,S3,SAT,S4|2020-2021,1
+CSC10101,Soft Skills,Lương Vĩ Minh,4,THU,S1,THU,S2|2020-2021,1
+MTH00009,Discrete Mathematics,Nguyễn Viết Đông,4,MON,S1,MON,S2|2020-2021,1
+20127645,5
+BAA00005,Basic Economics,Phạm Xuân Kiên,2,FRI,S1,FRI,S2|2020-2021,1
+CSC00004,Introducing to IT,Trần Thái Sơn,4,THU,S3,THU,S4|2020-2021,1
+CSC10001,Programing 1,Trương Toàn Thịnh,4,SAT,S3,SAT,S4|2020-2021,1
+CSC10101,Soft Skills,Lương Vĩ Minh,4,THU,S1,THU,S2|2020-2021,1
+MTH00009,Discrete Mathematics,Nguyễn Viết Đông,4,MON,S1,MON,S2|2020-2021,1
+20127653,5
+BAA00005,Basic Economics,Phạm Xuân Kiên,2,FRI,S1,FRI,S2|2020-2021,1
+CSC00004,Introducing to IT,Trần Thái Sơn,4,THU,S3,THU,S4|2020-2021,1
+CSC10001,Programing 1,Trương Toàn Thịnh,4,SAT,S3,SAT,S4|2020-2021,1
+CSC10101,Soft Skills,Lương Vĩ Minh,4,THU,S1,THU,S2|2020-2021,1
+MTH00009,Discrete Mathematics,Nguyễn Viết Đông,4,MON,S1,MON,S2|2020-2021,1
+20127659,5
+BAA00005,Basic Economics,Phạm Xuân Kiên,2,FRI,S1,FRI,S2|2020-2021,1
+CSC00004,Introducing to IT,Trần Thái Sơn,4,THU,S3,THU,S4|2020-2021,1
+CSC10001,Programing 1,Trương Toàn Thịnh,4,SAT,S3,SAT,S4|2020-2021,1
+CSC10101,Soft Skills,Lương Vĩ Minh,4,THU,S1,THU,S2|2020-2021,1
+MTH00009,Discrete Mathematics,Nguyễn Viết Đông,4,MON,S1,MON,S2|2020-2021,1
+20127660,5
+BAA00005,Basic Economics,Phạm Xuân Kiên,2,FRI,S1,FRI,S2|2020-2021,1
+CSC00004,Introducing to IT,Trần Thái Sơn,4,THU,S3,THU,S4|2020-2021,1
+CSC10001,Programing 1,Trương Toàn Thịnh,4,SAT,S3,SAT,S4|2020-2021,1
+CSC10101,Soft Skills,Lương Vĩ Minh,4,THU,S1,THU,S2|2020-2021,1
+MTH00009,Discrete Mathematics,Nguyễn Viết Đông,4,MON,S1,MON,S2|2020-2021,1
+20127673,5
+BAA00005,Basic Economics,Phạm Xuân Kiên,2,FRI,S1,FRI,S2|2020-2021,1
+CSC00004,Introducing to IT,Trần Thái Sơn,4,THU,S3,THU,S4|2020-2021,1
+CSC10001,Programing 1,Trương Toàn Thịnh,4,SAT,S3,SAT,S4|2020-2021,1
+CSC10101,Soft Skills,Lương Vĩ Minh,4,THU,S1,THU,S2|2020-2021,1
+MTH00009,Discrete Mathematics,Nguyễn Viết Đông,4,MON,S1,MON,S2|2020-2021,1
+20127678,5
+BAA00005,Basic Economics,Phạm Xuân Kiên,2,FRI,S1,FRI,S2|2020-2021,1
+CSC00004,Introducing to IT,Trần Thái Sơn,4,THU,S3,THU,S4|2020-2021,1
+CSC10001,Programing 1,Trương Toàn Thịnh,4,SAT,S3,SAT,S4|2020-2021,1
+CSC10101,Soft Skills,Lương Vĩ Minh,4,THU,S1,THU,S2|2020-2021,1
+MTH00009,Discrete Mathematics,Nguyễn Viết Đông,4,MON,S1,MON,S2|2020-2021,1

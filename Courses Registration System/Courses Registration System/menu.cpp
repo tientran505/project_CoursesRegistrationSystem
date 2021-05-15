@@ -208,9 +208,21 @@ int MainMenu(int x, int y) {
 	int i = 0;
 	system("cls");
 	ShowCur(0);
-	_Student* head = nullptr;
-	loadStu_Save(head);
-	cout << "Load success!" << endl;
+	
+	ifstream read;
+	read.open(dirClass_Save + "classes_In_System.txt", ios_base::in);
+
+	if (read.is_open()) {
+		int line = check_Line(dirClass_Save + "classes_In_System.txt");
+
+			for (int k = 1; k <= line; k++) {
+				string path;
+					getline(read, path);
+					cout << "Added " << path << " in the system" << endl;
+			}
+		read.close();
+	}
+	
 	currentDateTime();
 	ChoosedStaff(x, y);
 	StudentChoose(x, y);
@@ -715,7 +727,7 @@ void staff_Scoreboard_Management(_Student*& headStu) {
 	} while (running);
 }
 
-void studentListManage(_Student* head) {
+void studentListManage(_Student*& head) {
 	int choose;
 	int i = 0;
 	bool running = true;
@@ -781,11 +793,11 @@ void staff_Menu(string username, _Student*& headStu) {
 	system("cls");
 	ShowCur(0);
 	GotoXY(40, 5);
-	string menu[7] = { "1. View info","2. Create Course Registration Session", "3. Create School year/Semester System","4. Course Registration Management System", "5. Students List Management" , "6. Student Scoreboard Management System", "7. Log out" };
+	string menu[6] = { "1. View info", "2. Create School year/Semester System","3. Course Registration Management System", "4. Students List Management" , "5. Student Scoreboard Management System", "6. Log out" };
 	do {
 		while (true) {
 			system("cls");
-			for (int j = 0; j < 7; j++) {
+			for (int j = 0; j < 6; j++) {
 				if (j == i) {
 					textcolor(12);
 					GotoXY(37, 9 + j);
@@ -801,11 +813,11 @@ void staff_Menu(string username, _Student*& headStu) {
 			temp = _getch();
 			if (temp == 's' || temp == 'S' || temp == 80) {
 				i++;
-				if (i == 7) i = 0;
+				if (i == 6) i = 0;
 			}
 			if (temp == 'w' || temp == 'W' || temp == 72) {
 				i--;
-				if (i == -1) i = 6;
+				if (i == -1) i = 5;
 			}
 			if (temp == 13 || temp == 32) break;
 		}
@@ -821,30 +833,22 @@ void staff_Menu(string username, _Student*& headStu) {
 			break;
 		}
 		case 1: {
-			create_Course_Registration();
-			cout << endl;
-			GotoXY(35, 23);
-			cout << " enter to continue";
-			choose = _getch();
-			break;
-		}
-		case 2: {
 			menu_Create_SY_Tmp();
 			break;
 		}
-		case 3: {
+		case 2: {
 			menu_Course_Staff();
 			break;
 		}
-		case 4: {
+		case 3: {
 			studentListManage(headStu);
 			break;
 		}
-		case 5: {
+		case 4: {
 			staff_Scoreboard_Management(headStu);
 			break;
 		}
-		case 6: {
+		case 5: {
 			running = false;
 		}
 		}
@@ -862,11 +866,11 @@ void menu_Course_Staff() {
 	system("cls");
 	ShowCur(0);
 
-	string menu[5] = { "1. Create/Add Course", "2. View list of Course", "3. Update Course infomation", "4. Delete a course", "5. Exit"};
+	string menu[6] = {"1. Create Course Registration Session" ,"2. Create/Add Course", "3. View list of Course", "4. Update Course infomation", "5. Delete a course", "6. Exit"};
 	do {
 		while (true) {
 			system("cls");
-			for (int j = 0; j < 5; j++) {
+			for (int j = 0; j < 6; j++) {
 				if (j == i) {
 					textcolor(12);
 					GotoXY(40, 10 + j);
@@ -882,18 +886,21 @@ void menu_Course_Staff() {
 			temp = _getch();
 			if (temp == 's' || temp == 'S' || temp == 80) {
 				i++;
-				if (i == 5) i = 0;
+				if (i == 6) i = 0;
 			}
 			if (temp == 'w' || temp == 'W' || temp == 72) {
 				i--;
-				if (i == -1) i = 4;
+				if (i == -1) i = 5;
 			}
 			if (temp == 13 || temp == 32) break;
 		}
 		system("cls");
-		i++;
 		switch (i)
 		{
+		case 0: {
+			create_Course_Registration();
+			break;
+		}
 		case 1: {
 			createCourseList(dirCourse + "CoursesRegistration.txt");
 			cout << " enter to continue";
@@ -1065,11 +1072,21 @@ void log_In_System(int x, int y) {
 
 	int running = true;
 	do {
-
-		choose=MainMenu(x, y);
+		
+		choose = MainMenu(x, y);
 		
 		switch (choose)
 		{
+		
+		case 1: {
+
+			n = 1;
+			staff_Login(username, n);
+			if (n == 0) break;
+			staff_Menu(username, head);
+			break;
+		}
+
 		case 2: {
 			n = 1;
 			_Student* Node = logInSystem_Student(head,n);
@@ -1077,18 +1094,11 @@ void log_In_System(int x, int y) {
 			student_Menu(Node);
 			break;
 		}
-		case 1: {
-			n = 1;
-			staff_Login(username,n);
-			if (n == 0) break;
-			staff_Menu(username, head);
-			break;
-		}
+		
 		default:
-			return;
+			running = false;
 		}
 	} while (running);
-
-	deleteStudentList(head);
+	deallocateNode(head);
 }
 

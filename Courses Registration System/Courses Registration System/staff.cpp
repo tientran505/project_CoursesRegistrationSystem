@@ -13,7 +13,6 @@ string getSchoolYear(string path) {
 }
 
 void loadStudentList(string path, _Student*& head) {
-	head = nullptr;
 	wifstream fileIn;
 	fileIn.open(path, ios_base::in);
 	ifstream read;
@@ -261,6 +260,11 @@ void convertCourseOfStudent(string path, _Student* head) {
 	fileOut.close();
 }
 
+void changePassword_Staff(string username) {
+	ifstream read;
+	ofstream write;
+}
+
 void deleteStudentList(_Student*& head) {
 	if (head == nullptr) return;
 	_Student* cur = head;
@@ -368,7 +372,6 @@ void loadStu_Save(_Student*& pHead) {
 	for (int i = 1; i <= line; i++)  {
 		string path;
 		getline(read, path);
-		cout << "Added " << path << " in the system" << endl;
 		loadStudentList_changedPassword(dirClass + path + ".csv", dirCourse_Student + "Registered_Course_" + path + ".txt",headClass);
 		listPush(pHead, headClass);
 		loadScoreboardStudentList(dirCourse_Student + "listOfCourses.txt", pHead);
@@ -410,7 +413,6 @@ void staff_Login(string& username,int& n) {
 			system("cls");
 		}
 		else {
-			
 			system("cls");
 			GotoXY(40, 12);
 			cout << "Invalid login, please try again" << endl;
@@ -1271,8 +1273,6 @@ void importResult(_Student* head) {
 	}
 
 	cout << "Import score of " << nameCourse << " succesfully" << endl;
-	cout << "Press any key to continue...." << endl;
-	int sth = _getch();
 	readFile.close();
 }
 
