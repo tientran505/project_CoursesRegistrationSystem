@@ -735,11 +735,11 @@ void studentListManage(_Student*& head) {
 	system("cls");
 	ShowCur(0);
 	GotoXY(40, 5);
-	string menu[3] = { "1. Add student","2. View list of classes","3. Back" };
+	string menu[4] = { "1. Add student","2. View list of classes","3. View list of courses", "4. Back" };
 	do {
 		while (true) {
 			system("cls");
-			for (int j = 0; j < 3; j++) {
+			for (int j = 0; j < 4; j++) {
 				if (j == i) {
 					textcolor(12);
 					GotoXY(37, 9 + j);
@@ -755,11 +755,11 @@ void studentListManage(_Student*& head) {
 			temp = _getch();
 			if (temp == 's' || temp == 'S' || temp == 80) {
 				i++;
-				if (i == 3) i = 0;
+				if (i == 4) i = 0;
 			}
 			if (temp == 'w' || temp == 'W' || temp == 72) {
 				i--;
-				if (i == -1) i = 2;
+				if (i == -1) i = 3;
 			}
 			if (temp == 13 || temp == 32) break;
 		}
@@ -778,6 +778,10 @@ void studentListManage(_Student*& head) {
 			break;
 		}
 		case 2: {
+			view_List_Of_Course_Menu(head);
+			break;
+		}
+		case 3: {
 			running = false;
 			break;
 		}

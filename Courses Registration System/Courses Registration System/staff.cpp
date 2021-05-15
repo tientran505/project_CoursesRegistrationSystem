@@ -1743,8 +1743,6 @@ void view_Student_List(_Student* head,string nameOfClass) {
 			else cout << char(180);
 		}
 	}
-
-
 }
 
 void view_Student_List_Menu(_Student* head) {
@@ -1809,3 +1807,245 @@ void view_Student_List_Menu(_Student* head) {
 	read.close();
 	delete[] menu;
 }
+
+void view_List_Of_Course(_Student* head,string nameCourse, string schoolyear, int sem) {
+	int line = check_Line(dirCourse_Student + nameCourse + ".csv");
+	system("cls");
+	cout << "Name course: " << nameCourse << endl;
+	cout << "line = " << line << endl;
+	system("pause");
+	bool checkCourse = false;
+	while (head != nullptr && !checkCourse) {
+		_Subjects* subCur = head->subregis;
+		while (subCur != nullptr && subCur->subjects_Data.course_Data.course_Name != nameCourse && subCur->subjects_Data.course_Data.schoolYear != schoolyear && subCur->subjects_Data.course_Data.semNo != sem) subCur = subCur->data_Next;
+		if (subCur == nullptr) {
+			checkCourse = false;
+			head = head->pNext;
+		}
+		else checkCourse = true;
+	}
+	system("cls");
+	GotoXY(17, 2);
+	cout << char(218); for (int i = 0; i < 75; i++) {
+		GotoXY(18 + i, 2);
+		if (i == 2 || i == 15 || i == 50 || i == 59) cout << char(194);
+		else cout << char(196);
+	}
+	cout << char(191) << endl;
+	GotoXY(17, 3); cout << char(179);
+	GotoXY(18, 3); cout << "No";
+	GotoXY(20, 3); cout << char(179) << " Student ID";
+	GotoXY(33, 3); cout << char(179); GotoXY(47, 3); cout << "Full Name";
+	GotoXY(68, 3); cout << char(179) << " Gender";
+	GotoXY(77, 3); cout << char(179) << " Date Of Birth";
+	GotoXY(93, 3); cout << char(179);
+
+	GotoXY(17, 4); cout << char(195);
+	for (int i = 0; i < 75; i++) {
+		if (i == 2 || i == 15 || i == 50 || i == 59) cout << char(197);
+		else cout << char(196);
+	}
+	cout << char(180) << endl;
+
+
+	int no = 0;
+	for (int i = 0; i <= 2 * line - 1; i++) {
+		if (i % 2 == 0) {
+			GotoXY(17, 5 + i); cout << char(179);
+			GotoXY(18, 5 + i); cout << ++no;
+
+			GotoXY(20, 5 + i); cout << char(179);
+			GotoXY(23, 5 + i); cout << head->data.ID_Student;
+
+			GotoXY(33, 5 + i); cout << char(179);
+			turnOnVietText();
+			GotoXY(34, 5 + i); wcout << head->data.firstName << " " << head->data.lastName;
+			turnOffVietText();
+
+			GotoXY(68, 5 + i); cout << char(179);
+			GotoXY(70, 5 + i); wcout << head->data.gender;
+
+
+			GotoXY(77, 5 + i); cout << char(179);
+			GotoXY(80, 5 + i);
+			if (head->data.Date_Of_Birth.day < 10) cout << "0";
+			cout << head->data.Date_Of_Birth.day << "/";
+			if (head->data.Date_Of_Birth.month < 10) cout << "0";
+			cout << head->data.Date_Of_Birth.month << "/" << head->data.Date_Of_Birth.year;
+			GotoXY(93, 5 + i); cout << char(179);
+			head = head->pNext;
+			
+			checkCourse = false;
+			while (head != nullptr && !checkCourse) {
+				_Subjects* subCur = head->subregis;
+				while (subCur != nullptr && subCur->subjects_Data.course_Data.course_Name != nameCourse && subCur->subjects_Data.course_Data.schoolYear != schoolyear && subCur->subjects_Data.course_Data.semNo != sem) subCur = subCur->data_Next;
+				if (subCur == nullptr) {
+					checkCourse = false;
+					head = head->pNext;
+				}
+				else checkCourse = true;
+			}
+
+		}
+		else {
+			GotoXY(17, 5 + i);
+			if (i == 2 * line - 1) cout << char(192);
+			else cout << char(195);
+			for (int k = 0; k < 75; k++) {
+				GotoXY(18 + k, 5 + i);
+				if (k == 2 || k == 15 || k == 50 || k == 59) {
+					if (i == 2 * line - 1) cout << char(193);
+					else cout << char(197);
+				}
+				else cout << char(196);
+			}
+			if (i == 2 * line - 1) cout << char(217);
+			else cout << char(180);
+		}
+	}
+}
+
+void view_List_Of_Course_Menu2(_Student* head, string schoolyear, int sem) {
+	wifstream read;
+	read.open(dirCourse + "CoursesRegistration_" + schoolyear + "_" + to_string(sem) + ".txt", ios::in);
+
+	read.imbue(std::locale(std::locale::empty(), new std::codecvt_utf8<wchar_t, 0x10ffff, std::generate_header>));
+
+	int numOfCourse = check_Line(dirCourse + "CoursesRegistration_" + schoolyear + "_" + to_string(sem) + ".txt");
+
+	string* menu = new string[numOfCourse + 1];
+	menu[numOfCourse] = "Back";
+	for (int i = 0; i < numOfCourse; i++) {
+		wstring line, courseName;
+		wchar_t a = ',';
+		for (int k = 0; k < 2; k++) getline(read, line, a);
+		getline(read, courseName, a);
+		menu[i] = WStringToString(line) + " - " + WStringToString(courseName);
+		getline(read, line);
+	}
+
+	int step = 0, tmp;
+	bool running = true;
+	while (running) {
+		while (true) {
+			system("cls");
+			for (int k = 0; k < numOfCourse + 1; k++) {
+				if (k == step) {
+					textcolor(12);
+					GotoXY(44, 10 + k);
+					cout << " > " << menu[k] << " < " << endl;
+					textcolor(15);
+				}
+				else {
+					textcolor(15);
+					GotoXY(45, 10 + k);
+					cout << " " << menu[k] << " " << endl;
+				}
+			}
+			tmp = _getch();
+			if (tmp == 's' || tmp == 'S' || tmp == 80) {
+				step++;
+				if (step >= numOfCourse + 1) step = 0;
+			}
+			if (tmp == 'w' || tmp == 'W' || tmp == 72) {
+				step--;
+				if (step < 0) step = numOfCourse;
+			}
+			if (tmp == 13 || tmp == 32) break;
+		}
+		if (step == numOfCourse) {
+			delete[] menu;
+			running = false;
+			return;
+		}
+		else {
+			string tmp = menu[step];
+			tmp.erase(tmp.begin(), tmp.begin() + 11);
+			string nameOfCourse = tmp;
+			view_List_Of_Course(head, nameOfCourse, schoolyear, sem);
+			cout << endl << "\t\t\t\t\t\tPress any key to exit..." << endl;
+			int sth = _getch();
+		}
+	}
+
+	read.close();
+}
+
+void view_List_Of_Course_Menu(_Student* head) {
+	ifstream readSem, readSchoolyear;
+
+	readSchoolyear.open(dirSchoolYear + "School_Year.txt", ios_base::in);
+
+	int numOfLine = check_Line(dirSchoolYear + "School_Year.txt");
+	int sumLine = 0;
+	string line, schoolyear;
+
+	for (int i = 0; i < numOfLine; i++) {
+		getline(readSchoolyear, line);
+		sumLine += check_Line(dirSchoolYear + line + ".txt") / 3;
+	}
+
+	readSchoolyear.seekg(0, readSchoolyear.beg);
+
+	string* menu = new string[sumLine + 1];
+
+	menu[sumLine] = "Back";
+	int i = sumLine - 1;
+	for (int k = 0; k < numOfLine; k++) {
+		getline(readSchoolyear, schoolyear);
+		readSem.open(dirSchoolYear + schoolyear + ".txt", ios_base::in);
+		int lineTmp = check_Line(dirSchoolYear + schoolyear + ".txt") / 3;
+		for (int k = 0; k < lineTmp; k++) {
+			getline(readSem, line);
+			menu[i] = line + " " + schoolyear;
+			for (int j = 0; j < 2; j++) getline(readSem, line);
+			i--;
+		}
+		readSem.close();
+	}
+
+	int step = 0, tmp;
+	bool running = true;
+	while (running) {
+		while (true) {
+			system("cls");
+			for (int k = 0; k < sumLine + 1; k++) {
+				if (k == step) {
+					textcolor(12);
+					GotoXY(44, 10 + k);
+					cout << " > " << menu[k] << " < " << endl;
+					textcolor(15);
+				}
+				else {
+					textcolor(15);
+					GotoXY(45, 10 + k);
+					cout << " " << menu[k] << " " << endl;
+				}
+			}
+			tmp = _getch();
+			if (tmp == 's' || tmp == 'S' || tmp == 80) {
+				step++;
+				if (step >= sumLine + 1) step = 0;
+			}
+			if (tmp == 'w' || tmp == 'W' || tmp == 72) {
+				step--;
+				if (step < 0) step = sumLine;
+			}
+			if (tmp == 13 || tmp == 32) break;
+		}
+		if (step == sumLine) {
+			delete[] menu;
+			running = false;
+			return;
+		}
+		else {
+			for (int k = 0; k < 9; k++) schoolyear[k] = menu[step][11 + k];
+			int sem = menu[step][9] - 48;
+			system("cls");
+			view_List_Of_Course_Menu2(head, schoolyear, sem);;
+			cout << endl << "\t\t\t\t\t\tPress any key to exit..." << endl;
+			int sth = _getch();
+		}
+	}
+}
+

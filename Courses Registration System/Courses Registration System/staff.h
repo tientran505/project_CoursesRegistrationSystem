@@ -20,3 +20,4 @@ void importResult(_Student* head);
 void viewScoreboard_Course_Menu();
 void viewScoreboard_Class(_Student* head, string schoolyear, int semCur, string nameClass);
 void update_Student_Result(_Student* Node);
+void view_List_Of_Course_Menu(_Student* head);
